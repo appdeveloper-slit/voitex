@@ -81,11 +81,11 @@ class _SearchStocksState extends State<SearchStocks> {
       },
       child: Scaffold(
         bottomNavigationBar: bottomBarLayout(ctx, 0, '',b: true),
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         appBar: AppBar(
             elevation: 0,
             // shadowColor: Clr().lightShadow,
-          backgroundColor: Clr().white,
+          backgroundColor: Clr().black,
             leadingWidth: 40,
             leading: InkWell(
               onTap: () {
@@ -99,7 +99,7 @@ class _SearchStocksState extends State<SearchStocks> {
               },
               child: Padding(
                 padding: EdgeInsets.only(left: Dim().d20),
-                child: SvgPicture.asset('assets/back.svg'),
+                child: SvgPicture.asset('assets/back.svg',color: Clr().white),
               ),
             ),
             title: 
@@ -109,40 +109,17 @@ class _SearchStocksState extends State<SearchStocks> {
               keyboardType: TextInputType.name,
               textInputAction: TextInputAction.done,
               onChanged: searchresult,
-              decoration: Sty().textFileddarklinestyle.copyWith(
+              decoration: Sty().textFieldUnderlineStyle.copyWith(
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(Dim().d12),
                       child: SvgPicture.asset(
                         'assets/search.svg',
+                        color: Clr().white,
                       ),
                     ),
                     hintStyle: Sty().smallText.copyWith(
                           color: Clr().grey,
                         ),
-            // suffixIcon: serachCrl.text.isNotEmpty
-            //     ? InkWell(
-            //         onTap: () {
-            //           serachCrl.clear();
-            //           setState(() {
-            //             resultList = addToCart;
-            //           });
-            //         },
-            //         child: Padding(
-            //           padding: EdgeInsets.all(Dim().d12),
-            //           child: SvgPicture.asset(
-            //             'assets/close.svg',
-            //           ),
-            //         ),
-            //       )
-            //     : Container(),
-            //         filled: true,
-            //         fillColor: Clr().white,
-            //         hintText: "Search for any stocks",
-            //         counterText: "",
-            //         // prefixIcon: Icon(
-            //         //   Icons.call,
-            //         //   color: Clr().lightGrey,
-            //         // ),
                   ),
               validator: (value) {
                 if (value!.isEmpty) {
@@ -187,7 +164,7 @@ class _SearchStocksState extends State<SearchStocks> {
       child: Container(
       decoration: ShapeDecoration(
       shape: RoundedRectangleBorder(
-      side: BorderSide(width: 1, color: Color(0xFFA3A3A3)),
+      side: BorderSide(width: 0.3, color: Clr().clr67),
       borderRadius: BorderRadius.circular(15),
       ),),
         child: Padding(
@@ -202,14 +179,14 @@ class _SearchStocksState extends State<SearchStocks> {
                       children: [
                         Text(
                           '${v['symbol']}',
-                          style: Sty().smallText.copyWith(color: Clr().textcolor),
+                          style: Sty().smallText.copyWith(color: Clr().white),
                         ),
                         SizedBox(
                           height: Dim().d8,
                         ),
                         Text(
                           '${v['company_name']}',
-                          style: Sty().microText.copyWith(color: Clr().grey),
+                          style: Sty().microText.copyWith(color: Clr().clr67),
                         ),
                       ],
                     ),

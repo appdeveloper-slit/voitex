@@ -62,7 +62,7 @@ class _MyAccountState extends State<MyAccount> {
     {
       'Icon': Icon(
         Icons.person,
-        color: Clr().primaryColor,
+        color: Clr().white,
       ),
       'Text': 'Full Name',
       'name': 'Vivek Oberon',
@@ -71,7 +71,7 @@ class _MyAccountState extends State<MyAccount> {
     {
       'Icon': Icon(
         Icons.phone,
-        color: Clr().primaryColor,
+        color: Colors.white,
       ),
       'Text': 'Mobile Number',
       'name': '+91 2389293822',
@@ -80,7 +80,7 @@ class _MyAccountState extends State<MyAccount> {
     {
       'Icon': Icon(
         Icons.mail,
-        color: Clr().primaryColor,
+        color: Clr().white,
       ),
       'Text': 'Email Address',
       'name': 'Spectrai21@gmail.com',
@@ -89,7 +89,7 @@ class _MyAccountState extends State<MyAccount> {
     {
       'Icon': Icon(
         Icons.credit_card,
-        color: Clr().primaryColor,
+        color: Clr().white,
       ),
       'Text': 'Pan Card Number',
       'name': 'ADSDH8439N',
@@ -98,7 +98,7 @@ class _MyAccountState extends State<MyAccount> {
     {
       'Icon': Icon(
         Icons.account_balance,
-        color: Clr().primaryColor,
+        color: Clr().white,
       ),
       'Text': 'Bank Details',
       'name': 'ICICI Bank Limited',
@@ -134,11 +134,11 @@ class _MyAccountState extends State<MyAccount> {
       },
       child: Scaffold(
         bottomNavigationBar: bottomBarLayout(ctx, 4, ''),
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         appBar: AppBar(
           elevation: 0,
           shadowColor: Clr().lightShadow,
-          backgroundColor: Clr().white,
+          backgroundColor: Clr().black,
           leadingWidth: 40,
           leading: InkWell(
             onTap: () {
@@ -156,14 +156,14 @@ class _MyAccountState extends State<MyAccount> {
             },
             child: Padding(
               padding: EdgeInsets.only(left: Dim().d16),
-              child: SvgPicture.asset('assets/back.svg'),
+              child: SvgPicture.asset('assets/back.svg',color: Clr().white),
             ),
           ),
           centerTitle: true,
           title: Text(
             'Account Settings',
             style: Sty().mediumText.copyWith(
-                color: Clr().primaryColor,
+                color: Clr().white,
                 fontWeight: FontWeight.w600,
                 fontSize: Dim().d20),
           ),
@@ -206,7 +206,7 @@ class _MyAccountState extends State<MyAccount> {
               //               fontWeight: FontWeight.w500),
               //         ),
               //         Divider(
-              //           color: Clr().grey,
+              //           color: Clr().white,
               //         ),
               //         Padding(
               //           padding: EdgeInsets.symmetric(horizontal: Dim().d4),
@@ -223,7 +223,7 @@ class _MyAccountState extends State<MyAccount> {
               //                     'Client ID:',
               //                     style: Sty()
               //                         .microText
-              //                         .copyWith(color: Clr().grey),
+              //                         .copyWith(color: Clr().white),
               //                   ),
               //                   SizedBox(
               //                     height: Dim().d4,
@@ -262,7 +262,7 @@ class _MyAccountState extends State<MyAccount> {
               //                         'Mobile Number:',
               //                         style: Sty()
               //                             .microText
-              //                             .copyWith(color: Clr().grey),
+              //                             .copyWith(color: Clr().white),
               //                       ),
               //                       SizedBox(
               //                         height: Dim().d4,
@@ -292,7 +292,7 @@ class _MyAccountState extends State<MyAccount> {
               //               //     },
               //               //     child: Icon(
               //               //       Icons.edit,
-              //               //       color: Clr().grey,
+              //               //       color: Clr().white,
               //               //     ))
               //             ],
               //           ),
@@ -323,7 +323,7 @@ class _MyAccountState extends State<MyAccount> {
               //                           'Email Address:',
               //                           style: Sty()
               //                               .microText
-              //                               .copyWith(color: Clr().grey),
+              //                               .copyWith(color: Clr().white),
               //                         ),
               //                         SizedBox(
               //                           height: Dim().d4,
@@ -352,7 +352,7 @@ class _MyAccountState extends State<MyAccount> {
               //               //     },
               //               //     child: Icon(
               //               //       Icons.edit,
-              //               //       color: Clr().grey,
+              //               //       color: Clr().white,
               //               //     ))
               //             ],
               //           ),
@@ -375,7 +375,7 @@ class _MyAccountState extends State<MyAccount> {
               //                     'Pan Card Number:',
               //                     style: Sty()
               //                         .microText
-              //                         .copyWith(color: Clr().grey),
+              //                         .copyWith(color: Clr().white),
               //                   ),
               //                   SizedBox(
               //                     height: Dim().d4,
@@ -415,7 +415,7 @@ class _MyAccountState extends State<MyAccount> {
               //                           'Bank Details:',
               //                           style: Sty()
               //                               .microText
-              //                               .copyWith(color: Clr().grey),
+              //                               .copyWith(color: Clr().white),
               //                         ),
               //                         SizedBox(
               //                           height: Dim().d4,
@@ -459,7 +459,7 @@ class _MyAccountState extends State<MyAccount> {
               //                               profileList['bank_detail']['image'],
               //                             ]));
               //                   },
-              //                   child: Icon(Icons.edit, color: Clr().grey))
+              //                   child: Icon(Icons.edit, color: Clr().white))
               //             ],
               //           ),
               //         ),
@@ -474,8 +474,8 @@ class _MyAccountState extends State<MyAccount> {
               //         //       begin: Alignment(-1.0, 0.0),
               //         //       end: Alignment(1.0, 0.0),
               //         //       colors: [
-              //         //         Clr().white,
-              //         //         Clr().white,
+              //         //        Clr().white,
+              //         //        Clr().white,
               //         //       ],
               //         //     ),
               //         //     borderRadius: BorderRadius.circular(5),
@@ -492,7 +492,7 @@ class _MyAccountState extends State<MyAccount> {
               //         //       style: ElevatedButton.styleFrom(
               //         //           elevation: 1,
               //         //           backgroundColor: Colors.white,
-              //         //           shadowColor: Clr().grey,
+              //         //           shadowColor: Clr().white,
               //         //           shape: RoundedRectangleBorder(
               //         //               borderRadius: BorderRadius.circular(5))),
               //         //       child: Text(
@@ -512,7 +512,7 @@ class _MyAccountState extends State<MyAccount> {
               // ),
               // : Center(
               //     child:
-              //         CircularProgressIndicator(color: Clr().primaryColor)),
+              //         CircularProgressIndicator(color: Clr().Clr().white,)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dim().d16),
                 child: ListView.builder(
@@ -534,20 +534,20 @@ class _MyAccountState extends State<MyAccount> {
                               children: [
                                 Text('${widgetList[index]['Text']}',
                                     style: Sty().mediumText.copyWith(
-                                        color: Clr().primaryColor,
+                                        color: Clr().white,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w400)),
                                 SizedBox(height: Dim().d6),
                                 Text('${widgetList[index]['name']}',
                                     style: Sty().mediumText.copyWith(
-                                        color: Clr().clr16,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w400)),
                                 SizedBox(height: Dim().d6),
                                 widgetList[index]['subtitile'] != null
                                     ? Text('${widgetList[index]['subtitile']}',
                                         style: Sty().mediumText.copyWith(
-                                            color: Clr().clr16,
+                                            color: Clr().clr67,
                                             fontSize: Dim().d14,
                                             fontWeight: FontWeight.w400))
                                     : Container(),
@@ -564,7 +564,7 @@ class _MyAccountState extends State<MyAccount> {
                                       Radius.circular(Dim().d8))),
                               child: Text('Client ID: 49343567',
                                   style: Sty().mediumText.copyWith(
-                                      color: Clr().clr00,
+                                      color: Clr().black,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d12)),
                             ),
@@ -611,7 +611,7 @@ class _MyAccountState extends State<MyAccount> {
                     Text(
                       'Funds Available',
                       style: Sty().microText.copyWith(
-                          color: Clr().primaryColor,
+                          color: Clr().white,
                           fontSize: Dim().d14,
                           fontWeight: FontWeight.w400),
                     ),
@@ -620,7 +620,7 @@ class _MyAccountState extends State<MyAccount> {
                     Text(
                       '₹ ${profileList['wallet'] != null ? profileList['wallet'].toString() : '0'}',
                       style: Sty().microText.copyWith(
-                          color: Clr().clr00,
+                          color: Clr().white,
                           fontSize: Dim().d20,
                           fontWeight: FontWeight.w600),
                     ),
@@ -640,11 +640,11 @@ class _MyAccountState extends State<MyAccount> {
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(Dim().d12)),
                                   border: Border.all(
-                                      color: Clr().primaryColor, width: 1.0)),
+                                      color: Clr().white, width: 1.0)),
                               child: Text('Withdraw',
                                   textAlign: TextAlign.center,
                                   style: Sty().mediumText.copyWith(
-                                      color: Clr().clr0130,
+                                      color: Clr().white,
                                       fontSize: Dim().d16,
                                       fontWeight: FontWeight.w600)),
                             ),
@@ -663,11 +663,11 @@ class _MyAccountState extends State<MyAccount> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: Dim().d16, vertical: Dim().d12),
                               decoration: BoxDecoration(
-                                  color: Clr().clr0130,
+                                  color: Clr().clr52,
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(Dim().d12)),
                                   border: Border.all(
-                                      color: Clr().primaryColor, width: 1.0)),
+                                      color: Clr().white, width: 1.0)),
                               child: Text('Add Funds',
                                   textAlign: TextAlign.center,
                                   style: Sty().mediumText.copyWith(
@@ -709,7 +709,7 @@ class _MyAccountState extends State<MyAccount> {
               //                   elevation: 0,
               //                   side: BorderSide(color: Clr().accentColor),
               //                   shadowColor: Colors.transparent,
-              //                   backgroundColor: Clr().white,
+              //                   backgroundColor:Clr().white,
               //                   shape: RoundedRectangleBorder(
               //                       borderRadius: BorderRadius.circular(5))),
               //               child: Text(
@@ -742,7 +742,7 @@ class _MyAccountState extends State<MyAccount> {
               //                 'Add Funds',
               //                 style: Sty().mediumText.copyWith(
               //                       fontSize: 16,
-              //                       color: Clr().white,
+              //                       color:Clr().white,
               //                       fontWeight: FontWeight.w500,
               //                     ),
               //               )),
@@ -775,6 +775,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/pl.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -782,7 +783,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'P/L Limit Settings',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -791,7 +792,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -804,7 +805,7 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                     InkWell(
                       onTap: () {
-                        STM().redirect2page(ctx, TransactionHistory());
+                        // STM().redirect2page(ctx, TransactionHistory());
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -815,6 +816,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/transactionicon.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -822,7 +824,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Transaction History',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -831,7 +833,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -855,6 +857,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/contact.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -862,7 +865,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Contact Support',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -871,7 +874,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -893,14 +896,14 @@ class _MyAccountState extends State<MyAccount> {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               SvgPicture.asset('assets/profileicon.svg',
-                                  color: Clr().clr49),
+                                color: Clr().white,),
                               SizedBox(
                                 width: Dim().d20,
                               ),
                               Text(
                                 'About Us',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -909,7 +912,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -933,6 +936,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/terms.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -940,7 +944,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Terms &Conditions',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -949,7 +953,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -973,6 +977,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/privacy.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -980,7 +985,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Privacy Policy',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -989,7 +994,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -1013,6 +1018,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/disclosure.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -1020,7 +1026,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Disclosure Policy',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -1029,7 +1035,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -1053,6 +1059,7 @@ class _MyAccountState extends State<MyAccount> {
                               Image.asset(
                                 'assets/procedure.png',
                                 width: Dim().d20,
+                                color: Clr().white,
                               ),
                               SizedBox(
                                 width: Dim().d20,
@@ -1060,7 +1067,7 @@ class _MyAccountState extends State<MyAccount> {
                               Text(
                                 'Procedure & Policy',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr16,
+                                      color: Clr().clr67,
                                       fontWeight: FontWeight.w400,
                                       fontSize: Dim().d14,
                                     ),
@@ -1069,7 +1076,7 @@ class _MyAccountState extends State<MyAccount> {
                           ),
                           Icon(
                             Icons.arrow_forward_ios_sharp,
-                            color: Clr().grey,
+                            color: Clr().white,
                             size: 16,
                           )
                         ],
@@ -1096,7 +1103,7 @@ class _MyAccountState extends State<MyAccount> {
                         elevation: 0,
                         side: BorderSide(color: Clr().clr0130),
                         shadowColor: Colors.transparent,
-                        backgroundColor: Clr().white,
+                        backgroundColor:Clr().white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dim().d12))),
                     child: Padding(
@@ -1186,7 +1193,7 @@ class _MyAccountState extends State<MyAccount> {
                     // RichText(
                     //   text: TextSpan(
                     //     text: 'Fund Balance:',
-                    //     style: Sty().microText.copyWith(color: Clr().grey),
+                    //     style: Sty().microText.copyWith(color: Clr().white),
                     //     children: <TextSpan>[
                     //       TextSpan(
                     //         text:
@@ -1201,12 +1208,12 @@ class _MyAccountState extends State<MyAccount> {
                     //   ),
                     // ),
                     // Divider(
-                    //   color: Clr().grey,
+                    //   color: Clr().white,
                     // ),
                     Text(
                       'Enter Amount to be Added',
                       style: Sty().smallText.copyWith(
-                          color: Clr().primaryColor,
+                          color: Clr().black,
                           fontWeight: FontWeight.w600,
                           fontSize: Dim().d16),
                     ),
@@ -1218,7 +1225,7 @@ class _MyAccountState extends State<MyAccount> {
                       children: <Widget>[
                         TextFormField(
                           controller: valueCtrl,
-                          cursorColor: Clr().primaryColor,
+                          cursorColor: Clr().white,
                           style: Sty().mediumText,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
@@ -1232,17 +1239,17 @@ class _MyAccountState extends State<MyAccount> {
                                     borderRadius:
                                         BorderRadius.circular(Dim().d16)),
                                 hintStyle: Sty().smallText.copyWith(
-                                      color: Clr().grey,
+                                      color: Clr().white,
                                     ),
                                 filled: true,
-                                fillColor: Clr().white,
+                                fillColor:Clr().white,
                                 prefixText: '₹ ',
-                                prefixStyle: TextStyle(color: Clr().textcolor),
+                                prefixStyle: TextStyle(color: Clr().clr67),
                                 hintText: "Rupees",
                                 counterText: "",
                                 // prefixIcon: Icon(
                                 //   Icons.call,
-                                //   color: Clr().lightGrey,
+                                //   color: Clr().lightwhite,
                                 // ),
                               ),
                           validator: (value) {
@@ -1263,7 +1270,7 @@ class _MyAccountState extends State<MyAccount> {
                             child: Text(
                               'Add Amount',
                               style: TextStyle(
-                                  color: Clr().clr49,
+                                  color: Clr().clr67,
                                   fontSize: Dim().d14,
                                   fontWeight: FontWeight.w400),
                             ),
@@ -1295,10 +1302,10 @@ class _MyAccountState extends State<MyAccount> {
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   shadowColor: Colors.transparent,
-                                  backgroundColor: Clr().f5,
+                                  backgroundColor: Clr().clr52,
                                   shape: RoundedRectangleBorder(
                                       side:
-                                          BorderSide(color: Clr().primaryColor),
+                                          BorderSide(color: Clr().white,),
                                       borderRadius:
                                           BorderRadius.circular(Dim().d12))),
                               child: Padding(
@@ -1308,7 +1315,7 @@ class _MyAccountState extends State<MyAccount> {
                                   'Manual',
                                   style: Sty().mediumText.copyWith(
                                         fontSize: Dim().d16,
-                                        color: Clr().primaryColor,
+                                        color: Clr().white,
                                         fontWeight: FontWeight.w600,
                                       ),
                                 ),
@@ -1331,7 +1338,7 @@ class _MyAccountState extends State<MyAccount> {
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   shadowColor: Colors.transparent,
-                                  backgroundColor: Clr().primaryColor,
+                                  backgroundColor: Clr().clr52,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(Dim().d12))),
@@ -1383,7 +1390,7 @@ class _MyAccountState extends State<MyAccount> {
                     Text(
                       'Enter Amount to be Withdrawn',
                       style: Sty().smallText.copyWith(
-                          color: Clr().primaryColor,
+                          color: Clr().black,
                           fontWeight: FontWeight.w600,
                           fontSize: Dim().d16),
                     ),
@@ -1395,7 +1402,7 @@ class _MyAccountState extends State<MyAccount> {
                       children: <Widget>[
                         TextFormField(
                           controller: valueCtrl,
-                          cursorColor: Clr().primaryColor,
+                          cursorColor: Clr().white,
                           style: Sty().mediumText,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.done,
@@ -1431,17 +1438,17 @@ class _MyAccountState extends State<MyAccount> {
                                     borderRadius:
                                         BorderRadius.circular(Dim().d16)),
                                 hintStyle: Sty().smallText.copyWith(
-                                      color: Clr().grey,
+                                      color: Clr().white,
                                     ),
                                 filled: true,
-                                fillColor: Clr().white,
+                                fillColor:Clr().white,
                                 prefixText: '₹ ',
-                                prefixStyle: TextStyle(color: Clr().textcolor),
+                                prefixStyle: TextStyle(color: Clr().clr67),
                                 hintText: "Rupees",
                                 counterText: "",
                                 // prefixIcon: Icon(
                                 //   Icons.call,
-                                //   color: Clr().lightGrey,
+                                //   color: Clr().lightwhite,
                                 // ),
                               ),
                           validator: (value) {
@@ -1536,7 +1543,7 @@ class _MyAccountState extends State<MyAccount> {
                       ],
                     ),
                     Divider(
-                        color: Clr().grey, height: Dim().d12, thickness: 1.0),
+                        color: Clr().white, height: Dim().d12, thickness: 1.0),
                     Row(
                       children: [
                         Text(
@@ -1561,7 +1568,7 @@ class _MyAccountState extends State<MyAccount> {
                     loading == true
                         ? Center(
                             child: CircularProgressIndicator(
-                                color: Clr().primaryColor),
+                                color: Clr().white,),
                           )
                         : SizedBox(
                             height: 40,
@@ -1581,7 +1588,7 @@ class _MyAccountState extends State<MyAccount> {
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0,
                                     shadowColor: Colors.transparent,
-                                    backgroundColor: Clr().primaryColor,
+                                    backgroundColor: Clr().clr52,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(Dim().d12))),
@@ -1686,7 +1693,7 @@ class _MyAccountState extends State<MyAccount> {
                             style: Sty().mediumBoldText.copyWith(
                                 fontSize: Dim().d20,
                                 fontWeight: FontWeight.w600,
-                                color: Clr().primaryColor)),
+                                color: Clr().white,)),
                         SizedBox(height: Dim().d12),
                         Text('${result['message']}',
                             style: Sty()

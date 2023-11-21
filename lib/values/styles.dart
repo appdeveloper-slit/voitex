@@ -5,39 +5,39 @@ import 'dimens.dart';
 
 class Sty {
   TextStyle microText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().black,
     fontSize: 12.0,
   );
   TextStyle smallText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().black,
     fontSize: 14.0,
   );
   TextStyle mediumText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().black,
     fontSize: 16.0,
   );
   TextStyle mediumBoldText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().black,
     fontSize: 16.0,
     fontWeight: FontWeight.w700,
   );
   TextStyle largeText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().black,
     fontSize: 18.0,
     fontWeight: FontWeight.w700,
   );
   TextStyle extraLargeText = TextStyle(
-    fontFamily: 'OpenSans',
+    fontFamily: 'lato',
     letterSpacing: 0.5,
     color: Clr().primaryColor,
     fontSize: 24.0,
@@ -108,7 +108,7 @@ class Sty {
       ),
     ),
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 14.0,
@@ -125,7 +125,7 @@ class Sty {
     errorBorder: InputBorder.none,
     focusedErrorBorder: InputBorder.none,
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 14.0,
@@ -157,6 +157,27 @@ class Sty {
       ),
     ),
   );
+
+  InputDecoration textFieldUnderlineStyle = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(horizontal: Dim().d4, vertical: Dim().d12),
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Clr().clr67),
+    ),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: Clr().clr67),
+    ),
+    errorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Clr().errorRed,
+      ),
+    ),
+    focusedErrorBorder: UnderlineInputBorder(
+      borderSide: BorderSide(
+        color: Clr().errorRed,
+      ),
+    ),
+  );
+
 
   InputDecoration textFileddarklinestyle = InputDecoration(
     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -243,7 +264,7 @@ class Sty {
       ),
     ),
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 14.0,
@@ -290,7 +311,7 @@ class Sty {
       ),
     ),
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 12.0,
@@ -337,7 +358,7 @@ class Sty {
       ),
     ),
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 14.0,
@@ -371,7 +392,7 @@ class Sty {
       ),
     ),
     errorStyle: TextStyle(
-      fontFamily: 'OpenSans',
+      fontFamily: 'lato',
       letterSpacing: 0.5,
       color: Clr().errorRed,
       fontSize: 14.0,

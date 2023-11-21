@@ -79,17 +79,15 @@ class _SellPageState extends State<SellPage> {
             child: Padding(
               padding: EdgeInsets.all(Dim().d12),
               child: Text('Sell / Cancel',
-                  style: Sty()
-                      .mediumText
-                      .copyWith(color: Clr().white)),
+                  style: Sty().mediumText.copyWith(color: Clr().white)),
             ),
           ),
         ),
       ),
-      backgroundColor: Clr().white,
+      backgroundColor: Clr().black,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         leadingWidth: 40,
         leading: InkWell(
           onTap: () {
@@ -98,7 +96,8 @@ class _SellPageState extends State<SellPage> {
           child: Padding(
             padding: EdgeInsets.only(
                 left: Dim().d16, top: Dim().d12, bottom: Dim().d12),
-            child: SvgPicture.asset('assets/back.svg', height: Dim().d20),
+            child: SvgPicture.asset('assets/back.svg',
+                color: Clr().white, height: Dim().d20),
           ),
         ),
         centerTitle: true,
@@ -106,7 +105,7 @@ class _SellPageState extends State<SellPage> {
           'Stock Details',
           style: Sty()
               .mediumText
-              .copyWith(color: Clr().textcolor, fontWeight: FontWeight.w600),
+              .copyWith(color: Clr().white, fontWeight: FontWeight.w600),
         ),
         actions: [
           InkWell(
@@ -163,7 +162,7 @@ class _SellPageState extends State<SellPage> {
                                 Text(
                                   '${data['symbol']}',
                                   style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().white,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -177,7 +176,7 @@ class _SellPageState extends State<SellPage> {
                             Text(
                               '${data['company_name']}',
                               style: Sty().microText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().clr67,
                                   fontSize: Dim().d12,
                                   fontWeight: FontWeight.w400),
                             ),
@@ -220,7 +219,7 @@ class _SellPageState extends State<SellPage> {
                               Text(
                                 '${data['net_change']} (${data['net_change_ercentage']})',
                                 style: Sty().microText.copyWith(
-                                    color: Clr().clr49,
+                                    color: Clr().clr67,
                                     fontSize: Dim().d12,
                                     fontWeight: FontWeight.w400),
 
@@ -243,7 +242,7 @@ class _SellPageState extends State<SellPage> {
                 child: Text(
                   'Purchased Date/Time :',
                   style: Sty().microText.copyWith(
-                      color: Clr().clr49,
+                      color: Clr().white,
                       fontSize: 12,
                       fontWeight: FontWeight.w400),
                 ),
@@ -260,7 +259,7 @@ class _SellPageState extends State<SellPage> {
                         Text(
                           '${DateFormat('dd MMM yyyy').format(DateTime.parse(widget.details['buy_at']))}',
                           style: Sty().smallText.copyWith(
-                                color: Color(0xFF2B2B2B),
+                                color: Clr().clr67,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -269,7 +268,7 @@ class _SellPageState extends State<SellPage> {
                         Text(
                           ' ${DateFormat('h:mm a').format(DateTime.parse(widget.details['buy_at']))}',
                           style: Sty().smallText.copyWith(
-                                color: Color(0xFF2B2B2B),
+                                color: Clr().clr67,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -296,7 +295,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Buy Price : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -307,7 +306,7 @@ class _SellPageState extends State<SellPage> {
                                             '₹ ${widget.details['buying_price']}',
                                         //'${widget.details['net_floating_p_l']}',
                                         style: Sty().smallText.copyWith(
-                                              color: Clr().clr2c,
+                                              color: Clr().clr67,
                                               fontSize: Dim().d14,
                                               fontWeight: FontWeight.w600,
                                               // widget.details['net_floating_p_l']
@@ -325,7 +324,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Quantity : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -333,7 +332,7 @@ class _SellPageState extends State<SellPage> {
                                     text: '${widget.details['quantity']}',
                                     //'${widget.details['quantity']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -351,7 +350,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Leverage : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -359,7 +358,7 @@ class _SellPageState extends State<SellPage> {
                                     text: '${widget.details['leverage']}x',
                                     //'${widget.details['leverage']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -377,7 +376,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Leverage Amount : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -386,7 +385,7 @@ class _SellPageState extends State<SellPage> {
                                         '₹ ${widget.details['leverage_amount']}',
                                     //'${widget.details['net_floating_p_l']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -404,7 +403,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Pre-payment : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -414,7 +413,7 @@ class _SellPageState extends State<SellPage> {
                                         : '₹ ${widget.details['pre_payment']}',
                                     //'${widget.details['net_floating_p_l']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -430,7 +429,7 @@ class _SellPageState extends State<SellPage> {
                         text: TextSpan(
                             text: 'Market Value : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().white,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -438,7 +437,7 @@ class _SellPageState extends State<SellPage> {
                                   text: '₹ ${widget.details['market_capital']}',
                                   //'${widget.details['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // widget.details['net_floating_p_l']
@@ -467,7 +466,7 @@ class _SellPageState extends State<SellPage> {
                                   EdgeInsets.symmetric(horizontal: Dim().d8),
                               child: Text('Transaction Details',
                                   style: Sty().mediumText.copyWith(
-                                      color: Clr().clr01,
+                                      color: Clr().white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: Dim().d16,
                                       decoration: TextDecoration.none)),
@@ -488,7 +487,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Floating P/L : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -497,7 +496,7 @@ class _SellPageState extends State<SellPage> {
                                         '₹ ${widget.details['floating_p_l']} (${widget.details['floating_p_l_percent']})%',
                                     //'${widget.details['net_floating_p_l']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -515,7 +514,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Transaction Fees : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -524,7 +523,7 @@ class _SellPageState extends State<SellPage> {
                                         '₹ ${widget.details['transaction_fee']}',
                                     //'${widget.details['net_floating_p_l']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -542,7 +541,7 @@ class _SellPageState extends State<SellPage> {
                           text: TextSpan(
                               text: 'Deferred Fees : ',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().white,
                                   fontWeight: FontWeight.w400,
                                   fontSize: Dim().d14),
                               children: [
@@ -550,7 +549,7 @@ class _SellPageState extends State<SellPage> {
                                     text: '₹ ${widget.details['deffered_fee']}',
                                     //'${widget.details['net_floating_p_l']}',
                                     style: Sty().smallText.copyWith(
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w600,
                                           // widget.details['net_floating_p_l']
@@ -566,7 +565,7 @@ class _SellPageState extends State<SellPage> {
                         text: TextSpan(
                             text: 'Net Floating P/L : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().white,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -575,7 +574,7 @@ class _SellPageState extends State<SellPage> {
                                       '₹ ${widget.details['net_floating_p_l']} (${widget.details['net_floating_p_l_percent']})%',
                                   //'${widget.details['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // widget.details['net_floating_p_l']
@@ -597,7 +596,7 @@ class _SellPageState extends State<SellPage> {
                                   left: Dim().d12, right: Dim().d12),
                               child: Text('Stoploss Limit',
                                   style: Sty().mediumText.copyWith(
-                                      color: Clr().clr01,
+                                      color: Clr().white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: Dim().d16,
                                       decoration: TextDecoration.none)),
@@ -614,7 +613,7 @@ class _SellPageState extends State<SellPage> {
                                   right: Dim().d16, left: Dim().d12),
                               child: Text('Profit Limit',
                                   style: Sty().mediumText.copyWith(
-                                      color: Clr().clr01,
+                                      color: Clr().white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: Dim().d16,
                                       decoration: TextDecoration.none)),
@@ -640,7 +639,7 @@ class _SellPageState extends State<SellPage> {
                                     Text('Lost value :',
                                         style: Sty().mediumText.copyWith(
                                             decoration: TextDecoration.none,
-                                            color: Clr().clr49,
+                                            color: Clr().white,
                                             fontSize: Dim().d14,
                                             fontWeight: FontWeight.w400)),
                                     Text(
@@ -651,7 +650,7 @@ class _SellPageState extends State<SellPage> {
                                             : '₹ ${widget.details['stop_loss_limit']} (${widget.details['stop_loss_limit_percentage']}%)',
                                         style: Sty().mediumText.copyWith(
                                             decoration: TextDecoration.none,
-                                            color: Clr().clr2c,
+                                            color: Clr().clr67,
                                             fontWeight: FontWeight.w600,
                                             fontSize: Dim().d14)),
                                   ],
@@ -671,7 +670,7 @@ class _SellPageState extends State<SellPage> {
                                     Text('Profit value :',
                                         style: Sty().mediumText.copyWith(
                                             decoration: TextDecoration.none,
-                                            color: Clr().clr49,
+                                            color: Clr().white,
                                             fontSize: Dim().d14,
                                             fontWeight: FontWeight.w400)),
                                     Text(
@@ -682,7 +681,7 @@ class _SellPageState extends State<SellPage> {
                                             : '₹ ${widget.details['profit_limit']} (${widget.details['profit_limit_percentage']}%)',
                                         style: Sty().mediumText.copyWith(
                                             decoration: TextDecoration.none,
-                                            color: Clr().clr2c,
+                                            color: Clr().clr67,
                                             fontWeight: FontWeight.w600,
                                             fontSize: Dim().d14)),
                                   ],
@@ -765,7 +764,10 @@ class _SellPageState extends State<SellPage> {
                   children: [
                     Text(
                       'Add more pre-payment amount to this order.',
-                      style: Sty().smallText.copyWith(color: Clr().primaryColor,fontSize: Dim().d16,fontWeight: FontWeight.w600),
+                      style: Sty().smallText.copyWith(
+                          color: Clr().primaryColor,
+                          fontSize: Dim().d16,
+                          fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: Dim().d20,
@@ -785,29 +787,28 @@ class _SellPageState extends State<SellPage> {
                             }
                           },
                           decoration: Sty().textFieldOutlineStyle.copyWith(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: Dim().d12,
-                                  horizontal: Dim().d12),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(Dim().d16)),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius:
-                                  BorderRadius.circular(Dim().d16)),
-                            hintStyle: Sty().smallText.copyWith(
-                              color: Clr().grey,
-                            ),
-                            filled: true,
-                            fillColor: Clr().white,
-                            prefixText: '₹ ',
-                            prefixStyle: TextStyle(color: Clr().textcolor),
-                            hintText: "Enter Amount",
-                            counterText: "",
-                            // prefixIcon: Icon(
-                            //   Icons.call,
-                            //   color: Clr().lightGrey,
-                            // ),
-                          ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: Dim().d12, horizontal: Dim().d12),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(Dim().d16)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(Dim().d16)),
+                                hintStyle: Sty().smallText.copyWith(
+                                      color: Clr().grey,
+                                    ),
+                                filled: true,
+                                fillColor: Clr().white,
+                                prefixText: '₹ ',
+                                prefixStyle: TextStyle(color: Clr().textcolor),
+                                hintText: "Enter Amount",
+                                counterText: "",
+                                // prefixIcon: Icon(
+                                //   Icons.call,
+                                //   color: Clr().lightGrey,
+                                // ),
+                              ),
                         ),
                         Positioned(
                           left: 30,
@@ -845,7 +846,8 @@ class _SellPageState extends State<SellPage> {
                               shadowColor: Colors.transparent,
                               backgroundColor: Clr().primaryColor,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(Dim().d12))),
+                                  borderRadius:
+                                      BorderRadius.circular(Dim().d12))),
                           child: Text(
                             'Proceed',
                             style: Sty().mediumText.copyWith(

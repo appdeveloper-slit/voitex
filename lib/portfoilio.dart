@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -87,662 +88,414 @@ class _PortfolioState extends State<Portfolio> {
         return false;
       },
       child: Scaffold(
-        bottomNavigationBar: bottomBarLayout(ctx, 1, stream),
-        backgroundColor: Clr().white,
-        body: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(Duration(seconds: 6), () {
-              setState(() {
-                apiprotfolio(apiname: 'get_portfolio', type: 'get');
-              });
-            });
-          },
-          color: Clr().primaryColor,
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: loading == true
-                ? SizedBox(
-                    height: MediaQuery.of(ctx).size.height / 1.3,
-                    child: Center(
-                        child: CircularProgressIndicator(
-                            color: Clr().primaryColor)),
-                  )
-                : Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Clr().clr01,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(Dim().d28),
-                                bottomLeft: Radius.circular(Dim().d28)),
-                            border:
-                                Border.all(color: Clr().clr164a, width: 1.0)),
-                        child: Padding(
-                          padding: EdgeInsets.all(12.0),
+          bottomNavigationBar: bottomBarLayout(ctx, 1, stream),
+          body: SizedBox(
+            height: MediaQuery.of(ctx).size.height,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                    Color(0xff060D15),
+                    Color(0xff131F2E),
+                  ])),
+              child: RefreshIndicator(
+                onRefresh: () {
+                  return Future.delayed(Duration(seconds: 6), () {
+                    setState(() {
+                      apiprotfolio(apiname: 'get_portfolio', type: 'get');
+                    });
+                  });
+                },
+                color: Clr().primaryColor,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: loading == true
+                      ? SizedBox(
+                          height: MediaQuery.of(ctx).size.height / 1.3,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                                  color: Clr().white)),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: Dim().d36, horizontal: Dim().d16),
                           child: Column(
                             children: [
-                              SizedBox(height: Dim().d24),
+                              SizedBox(height: Dim().d28),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
                                     onTap: () {
                                       STM().finishAffinity(ctx, Home());
                                     },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: Dim().d16),
-                                      child: SvgPicture.asset(
-                                        'assets/back.svg',
-                                        color: Clr().white,
-                                        height: Dim().d16,
-                                      ),
+                                    child: Image.asset(
+                                      'assets/backicon.png',
+                                      height: Dim().d36,
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: Dim().d100,
+                                  ),
                                   Text(
-                                    'Portfolio',
+                                    'My Portfolio',
                                     style: Sty().mediumText.copyWith(
                                         color: Clr().white,
                                         fontSize: Dim().d20,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.all(Dim().d16),
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                            onTap: () {
-                                              STM().replacePage(ctx,
-                                                  SearchStocks(type: 'port'));
-                                            },
-                                            child: SvgPicture.asset(
-                                                'assets/search.svg',
-                                                color: Clr().white)),
-                                        SizedBox(
-                                          width: Dim().d12,
-                                        ),
-                                      ],
-                                    ),
-                                  )
                                 ],
                               ),
                               SizedBox(height: Dim().d16),
                               Container(
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dim().d16)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white10,
+                                        spreadRadius: 1,
+                                      )
+                                    ],
+                                    color: Clr().black,
                                     border: Border.all(
-                                        color: Clr().clr164a, width: 1)),
-                                child: Padding(
-                                  padding: EdgeInsets.all(Dim().d16),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 2,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      right: BorderSide(
-                                                          color: Clr().clr164a,
-                                                          width: 1.0))),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text('Current Value:',
-                                                      style: Sty()
-                                                          .mediumText
-                                                          .copyWith(
-                                                              color:
-                                                                  Clr().white,
-                                                              fontSize:
-                                                                  Dim().d12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400)),
-                                                  SizedBox(height: Dim().d8),
-                                                  if(portfolioData != null)
-                                                  Text(
-                                                      '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['current_value'])}',
-                                                      style: Sty()
-                                                          .mediumText
-                                                          .copyWith(
-                                                              color:
-                                                                  Clr().white,
-                                                              fontSize:
-                                                                  Dim().d20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 2,
-                                            child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: Dim().d12),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text('Total Investment:',
-                                                      style: Sty()
-                                                          .mediumText
-                                                          .copyWith(
-                                                              color:
-                                                                  Clr().white,
-                                                              fontSize:
-                                                                  Dim().d12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400)),
-                                                  SizedBox(height: Dim().d8),
-                                                  Text(
-                                                      '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['investment_value'])}',
-                                                      style: Sty()
-                                                          .mediumText
-                                                          .copyWith(
-                                                              color:
-                                                                  Clr().white,
-                                                              fontSize:
-                                                                  Dim().d20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600)),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        color: Clr().clr164a,
-                                        thickness: 1.0,
-                                        height: 15,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 8.0),
-                                        child: Wrap(
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.center,
-                                          children: [
-                                            Image.asset('assets/nifty.png',
-                                                height: Dim().d20),
-                                            SizedBox(width: Dim().d14),
-                                            Text(
-                                              'Total P/L:',
-                                              style: Sty().mediumText.copyWith(
-                                                  color: Clr().white,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: Dim().d14),
-                                            ),
-                                            SizedBox(width: Dim().d12),
-                                            Wrap(
+                                        color: Clr().white, width: 0.1),
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(Dim().d12))),
+                                child: BlurryContainer(
+                                  blur: 10,
+                                  width: double.infinity,
+                                  color: Clr().transparent,
+                                  elevation: 1.0,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(Dim().d12)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(Dim().d4),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    right: BorderSide(
+                                                        color: Clr().clr67,
+                                                        width: 1.0))),
+                                            child: Column(
                                               crossAxisAlignment:
-                                                  WrapCrossAlignment.center,
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                portfolioData['percent']
-                                                        .toString()
-                                                        .contains('-')
-                                                    ? Image.asset(
-                                                        'assets/failedarrow.png',
-                                                        height: Dim().d24,
-                                                        width: Dim().d16,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/successarrow.png',
-                                                        height: Dim().d24,
-                                                        width: Dim().d16,
-                                                      ),
+                                                Wrap(
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.center,
+                                                  children: [
+                                                    Text('Current \nValue: ',
+                                                        style: Sty()
+                                                            .mediumText
+                                                            .copyWith(
+                                                                color:
+                                                                    Clr().clr67,
+                                                                fontSize:
+                                                                    Dim().d12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400)),
+                                                    if (portfolioData != null)
+                                                      Text(
+                                                          ' ₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['current_value'])}',
+                                                          style: Sty()
+                                                              .mediumText
+                                                              .copyWith(
+                                                                  color: Clr()
+                                                                      .white,
+                                                                  fontSize:
+                                                                      Dim().d16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600)),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: Dim().d20,
+                                                ),
+                                                Wrap(
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.center,
+                                                  children: [
+                                                    Text('Total \nInvestment:',
+                                                        style: Sty()
+                                                            .mediumText
+                                                            .copyWith(
+                                                                color:
+                                                                    Clr().clr67,
+                                                                fontSize:
+                                                                    Dim().d12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400)),
+                                                    Text(
+                                                        ' ₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['investment_value'])}',
+                                                        style: Sty()
+                                                            .mediumText
+                                                            .copyWith(
+                                                                color:
+                                                                    Clr().white,
+                                                                fontSize:
+                                                                    Dim().d16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600)),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                left: Dim().d20),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
                                                 Text(
-                                                  '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['profit_loss'])}',
+                                                  'Total P/L:',
                                                   style: Sty()
                                                       .mediumText
                                                       .copyWith(
-                                                        fontSize: Dim().d16,
-                                                        color: portfolioData[
-                                                                    'percent']
-                                                                .toString()
-                                                                .contains('-')
-                                                            ? Clr().red
-                                                            : Clr().green,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
+                                                          color: Clr().clr67,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: Dim().d14),
+                                                ),
+                                                SizedBox(height: Dim().d8),
+                                                Wrap(
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.center,
+                                                  children: [
+                                                    portfolioData['percent']
+                                                            .toString()
+                                                            .contains('-')
+                                                        ? Image.asset(
+                                                            'assets/failedarrow.png',
+                                                            height: Dim().d24,
+                                                            width: Dim().d16,
+                                                          )
+                                                        : Image.asset(
+                                                            'assets/successarrow.png',
+                                                            height: Dim().d24,
+                                                            width: Dim().d16,
+                                                          ),
+                                                    Text(
+                                                      '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['profit_loss'])}',
+                                                      style: Sty()
+                                                          .mediumText
+                                                          .copyWith(
+                                                            fontSize: Dim().d16,
+                                                            color: portfolioData[
+                                                                        'percent']
+                                                                    .toString()
+                                                                    .contains(
+                                                                        '-')
+                                                                ? Clr().red
+                                                                : Clr().green,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          ),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(height: Dim().d8),
+                                                Text(
+                                                  portfolioData['percent']
+                                                          .toString()
+                                                          .contains('-')
+                                                      ? '(${portfolioData['percent']}%)'
+                                                      : '(+${portfolioData['percent']}%)',
+                                                  style: Sty()
+                                                      .mediumText
+                                                      .copyWith(
+                                                          color: Clr().clr67,
+                                                          fontSize: Dim().d14,
+                                                          fontWeight:
+                                                              FontWeight.w400),
                                                 )
                                               ],
                                             ),
-                                            SizedBox(width: Dim().d24),
-                                            Text(
-                                              portfolioData['percent']
-                                                      .toString()
-                                                      .contains('-')
-                                                  ? '(${portfolioData['percent']}%)'
-                                                  : '(+${portfolioData['percent']}%)',
-                                              style: Sty().mediumText.copyWith(
-                                                  color: Clr().clr56,
-                                                  fontSize: Dim().d14,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
+                                          ),
                                         ),
-                                      )
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                               SizedBox(height: Dim().d16),
+                              portfolioData['stock_trades'].length == 0
+                                  ? Container()
+                                  : Container(
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.white10,
+                                              spreadRadius: 1,
+                                            )
+                                          ],
+                                          color: Clr().black,
+                                          border: Border.all(
+                                              color: Clr().white, width: 0.1),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(Dim().d12))),
+                                      child: BlurryContainer(
+                                        blur: 10,
+                                        width: double.infinity,
+                                        color: Clr().transparent,
+                                        elevation: 1.0,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dim().d12)),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(Dim().d4),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('My Stocks',
+                                                  style:
+                                                      Sty().mediumText.copyWith(
+                                                            color: Clr().white,
+                                                            fontSize: Dim().d24,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                          )),
+                                              ListView.separated(
+                                                padding: EdgeInsets.zero,
+                                                shrinkWrap: true,
+                                                physics:
+                                                    BouncingScrollPhysics(),
+                                                itemCount: portfolioData[
+                                                        'stock_trades']
+                                                    .length,
+                                                itemBuilder: (ctx, index) {
+                                                  return cardLayout(
+                                                      ctx,
+                                                      portfolioData[
+                                                              'stock_trades']
+                                                          [index]);
+                                                },
+                                                separatorBuilder:
+                                                    (context, index) {
+                                                  return SizedBox(
+                                                    height: Dim().d8,
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: Dim().d20),
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //         color: Clr().grey.withOpacity(0.1),
-                      //         spreadRadius: 0.1,
-                      //         blurRadius: 12,
-                      //         offset:
-                      //             Offset(0, 7), // changes position of shadow
-                      //       ),
-                      //     ],
-                      //   ),
-                      //   child: Card(
-                      //     color: Color(0xffF8F9F8),
-                      //     margin: EdgeInsets.zero,
-                      //     elevation: 0,
-                      //     shape: RoundedRectangleBorder(
-                      //       // side: BorderSide(color: Clr().borderColor),
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     child: Padding(
-                      //       padding: EdgeInsets.symmetric(
-                      //         vertical: Dim().d16,
-                      //       ),
-                      //       child: Row(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Expanded(
-                      //             child: Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: [
-                      //                 Text(
-                      //                   'Current\nValue',
-                      //                   textAlign: TextAlign.center,
-                      //                   style: Sty()
-                      //                       .smallText
-                      //                       .copyWith(color: Clr().grey),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: Dim().d12,
-                      //                 ),
-                      //                 Text(
-                      //                   // '₹ ${currentValue == null ? '000' : currentValue!.toStringAsFixed(2)}',
-                      //                   '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['current_value'])}',
-                      //                   style: Sty()
-                      //                       .mediumText
-                      //                       .copyWith(color: Clr().textcolor),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           Container(
-                      //             height: 100,
-                      //             width: 1,
-                      //             color: Clr().grey,
-                      //           ),
-                      //           Expanded(
-                      //             child: Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: [
-                      //                 Text(
-                      //                   'Total\nInvestment',
-                      //                   textAlign: TextAlign.center,
-                      //                   style: Sty()
-                      //                       .smallText
-                      //                       .copyWith(color: Clr().grey),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: Dim().d12,
-                      //                 ),
-                      //                 Text(
-                      //                   '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['investment_value'])}',
-                      //                   style: Sty()
-                      //                       .mediumText
-                      //                       .copyWith(color: Clr().textcolor),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           Container(
-                      //             height: 100,
-                      //             width: 1,
-                      //             color: Clr().grey,
-                      //           ),
-                      //           Expanded(
-                      //             child: Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: [
-                      //                 Text(
-                      //                   'Total\nP/L',
-                      //                   textAlign: TextAlign.center,
-                      //                   style: Sty()
-                      //                       .smallText
-                      //                       .copyWith(color: Clr().grey),
-                      //                 ),
-                      //                 SizedBox(
-                      //                   height: Dim().d12,
-                      //                 ),
-                      //                 portfolioData.isEmpty
-                      //                     ? Container()
-                      //                     : Wrap(
-                      //                         crossAxisAlignment:
-                      //                             WrapCrossAlignment.center,
-                      //                         children: [
-                      //                           portfolioData['percent']
-                      //                                   .toString()
-                      //                                   .contains('-')
-                      //                               ? Icon(
-                      //                                   Icons
-                      //                                       .arrow_downward_outlined,
-                      //                                   color: Clr().red,
-                      //                                   size: Dim().d20)
-                      //                               : Icon(
-                      //                                   Icons
-                      //                                       .arrow_upward_outlined,
-                      //                                   color: Clr().green,
-                      //                                   size: Dim().d20),
-                      //                           SizedBox(
-                      //                             width: Dim().d8,
-                      //                           ),
-                      //                           Text(
-                      //                             '₹ ${portfolioData.isEmpty ? 00 : formatAmount(portfolioData['profit_loss'])}',
-                      //                             style: Sty()
-                      //                                 .mediumText
-                      //                                 .copyWith(
-                      //                                     color: portfolioData[
-                      //                                                 'percent']
-                      //                                             .toString()
-                      //                                             .contains('-')
-                      //                                         ? Clr().red
-                      //                                         : Clr().green),
-                      //                           )
-                      //                         ],
-                      //                       ),
-                      //                 SizedBox(
-                      //                   height: Dim().d8,
-                      //                 ),
-                      //                 portfolioData.isEmpty
-                      //                     ? Container()
-                      //                     : Text(
-                      //                         portfolioData['percent']
-                      //                                 .toString()
-                      //                                 .contains('-')
-                      //                             ? '(${portfolioData['percent']}%)'
-                      //                             : '(+${portfolioData['percent']}%)',
-                      //                         style: Sty()
-                      //                             .smallText
-                      //                             .copyWith(color: Clr().grey),
-                      //                       ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: Dim().d20,
-                      // ),
-                      // portfolioData.isEmpty
-                      //     ? Container(
-                      //         child: Padding(
-                      //           padding: EdgeInsets.all(20.0),
-                      //           child: Text('You do not have any Active orders',
-                      //               style: Sty().mediumText),
-                      //         ),
-                      //       )
-                      //     :
-                      // StreamBuilder(
-                      //         stream: stream,
-                      //         builder: (context, AsyncSnapshot snapshot) {
-                      //           return ListView.separated(
-                      //             padding: EdgeInsets.zero,
-                      //             shrinkWrap: true,
-                      //             physics: BouncingScrollPhysics(),
-                      //             itemCount: 3,
-                      //                 // portfolioData['stock_trades'].length,
-                      //             itemBuilder: (ctx, index) {
-                      //               return cardLayout(ctx, List
-                      //                   // portfolioData['stock_trades'][index]
-                      //               );
-                      //             },
-                      //             separatorBuilder: (context, index) {
-                      //               return SizedBox(
-                      //                 height: Dim().d8,
-                      //               );
-                      //             },
-                      //           );
-                      //         })
-                      ListView.separated(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: portfolioData['stock_trades'].length,
-                        itemBuilder: (ctx, index) {
-                          return cardLayout(
-                              ctx, portfolioData['stock_trades'][index]);
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: Dim().d8,
-                          );
-                        },
-                      )
-                    ],
-                  ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            ),
+          )),
     );
   }
 
   Widget cardLayout(ctx, v) {
-    return Padding(
-      padding: EdgeInsets.only(left: Dim().d12, right: Dim().d12),
-      child: InkWell(
-        onTap: () {
-          // STM().redirect2page(ctx, PortfolioStock());
-          STM().redirect2page(
-              ctx,
-              SellPage(
-                details: v,
-              ));
-        },
+    return InkWell(
+      onTap: () {
+        // STM().redirect2page(ctx, PortfolioStock());
+        STM().redirect2page(
+            ctx,
+            SellPage(
+              details: v,
+            ));
+      },
+      child: Padding(
+        padding:
+            EdgeInsets.only(top: Dim().d12, right: Dim().d8),
         child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Clr().clrec, width: 1.0),
-              borderRadius: BorderRadius.all(Radius.circular(Dim().d14))),
-          child: Padding(
-            padding: EdgeInsets.all(Dim().d12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          '${v['stock']['symbol']}',
-                          // '${v['stock']['symbol']}',
-                          style: Sty().smallText.copyWith(
-                              color: Clr().clr2c,
-                              fontSize: Dim().d16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(width: Dim().d8),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xffD1E4FF),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(Dim().d8))),
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Text(
-                              'Qty: ${v['quantity']}',
-                              //'Qty: ${v['quantity']}',
-                              style: Sty().microText.copyWith(
-                                  color: Clr().clr00,
-                                  fontSize: Dim().d12,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '₹ ${v['buying_price']}',
-                      style: Sty().mediumText.copyWith(
-                          color: Clr().clr2c,
-                          fontWeight: FontWeight.w600,
-                          fontSize: Dim().d16),
-                    )
-                  ],
-                ),
-                Divider(
-                  color: Clr().clrec,
-                  thickness: 1.0,
-                  height: 15,
-                ),
-                SizedBox(
-                  height: Dim().d16,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
+          decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Clr().clrec, width: 0.1))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text('Total P/L : ',
-                          style: Sty().mediumText.copyWith(
-                              color: Clr().clr49,
-                              fontSize: Dim().d14,
-                              fontWeight: FontWeight.w400)),
                       Text(
-                          ' ₹ ${v['net_floating_p_l'].toString().contains('.') ? double.parse(v['net_floating_p_l'].toString()).toStringAsFixed(2) : v['net_floating_p_l']}',
-                          style: Sty().mediumText.copyWith(
-                              color: v['net_floating_p_l_percent']
-                                      .toString()
-                                      .contains('-')
-                                  ? Clr().red
-                                  : Clr().greenaa,
-                              fontSize: Dim().d14,
-                              fontWeight: FontWeight.w600)),
-                      Text(
-                          v['net_floating_p_l_percent'].toString().contains('-')
-                              ? ' (${v['net_floating_p_l_percent']}%)'
-                              : ' (+${v['net_floating_p_l_percent']}%)',
-                          style: Sty().mediumText.copyWith(
-                              color: Clr().clr49,
-                              fontSize: Dim().d14,
-                              fontWeight: FontWeight.w400)),
+                        '${v['stock']['symbol']}',
+                        // '${v['stock']['symbol']}',
+                        style: Sty().smallText.copyWith(
+                            color: Clr().white,
+                            fontSize: Dim().d16,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ],
                   ),
-                ),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Text(
-                //             'TITAN',// '${v['stock']['symbol']}',
-                //             style: Sty().smallText.copyWith(
-                //                 color: Clr().clr2c,
-                //                 fontSize: Dim().d16,
-                //                 fontWeight: FontWeight.w600),
-                //           ),
-                //           SizedBox(
-                //             height: Dim().d8,
-                //           ),
-                //           Text(
-                //             'Qty: ${v['quantity']}',
-                //             style: Sty().microText.copyWith(color: Clr().grey),
-                //           ),
-                //           // SizedBox(
-                //           //   height: Dim().d8,
-                //           // ),
-                //           // Text(
-                //           //   'Avg: ${v['average']}',
-                //           //   style: Sty().microText.copyWith(color: Clr().grey),
-                //           // ),
-                //         ],
-                //       ),
-                //     ),
-                //     Expanded(
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.end,
-                //         children: [
-                //           Text(
-                //             '₹ ${v['buying_price']}',
-                //             style: Sty().smallText.copyWith(),
-                //           ),
-                //           SizedBox(
-                //             height: Dim().d8,
-                //           ),
-                //           RichText(
-                //             text: TextSpan(
-                //                 text: 'Total P/L:',
-                //                 style: Sty().microText.copyWith(color: Clr().grey),
-                //                 children: [
-                //                   TextSpan(
-                //                       text:
-                //                           ' ₹ ${v['net_floating_p_l'].toString().contains('.') ? double.parse(v['net_floating_p_l'].toString()).toStringAsFixed(2) : v['net_floating_p_l']}',
-                //                       style: Sty().smallText.copyWith(
-                //                           color: v['net_floating_p_l_percent']
-                //                                   .toString()
-                //                                   .contains('-')
-                //                               ? Clr().red
-                //                               : Clr().green))
-                //                 ]),
-                //           ),
-                //           SizedBox(
-                //             height: Dim().d8,
-                //           ),
-                //           Text(
-                //             v['net_floating_p_l_percent'].toString().contains('-')
-                //                 ? '(${v['net_floating_p_l_percent']}%)'
-                //                 : '(+${v['net_floating_p_l_percent']}%)',
-                //             style: Sty().smallText.copyWith(color: Clr().grey),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
+                  Text(
+                    '₹ ${v['buying_price']}',
+                    style: Sty().mediumText.copyWith(
+                        color: Clr().white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: Dim().d16),
+                  )
+                ],
+              ),
+              SizedBox(height: Dim().d12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text('Total P/L : ',
+                            style: Sty().mediumText.copyWith(
+                                color: Clr().clr67,
+                                fontSize: Dim().d14,
+                                fontWeight: FontWeight.w400)),
+                        Text(
+                            ' ₹ ${v['net_floating_p_l'].toString().contains('.') ? double.parse(v['net_floating_p_l'].toString()).toStringAsFixed(2) : v['net_floating_p_l']} ',
+                            style: Sty().mediumText.copyWith(
+                                color: v['net_floating_p_l_percent']
+                                        .toString()
+                                        .contains('-')
+                                    ? Clr().red
+                                    : Clr().greenaa,
+                                fontSize: Dim().d14,
+                                fontWeight: FontWeight.w600)),
+                        Text(
+                            v['net_floating_p_l_percent'].toString().contains('-')
+                                ? ' (${v['net_floating_p_l_percent']}%)'
+                                : ' (+${v['net_floating_p_l_percent']}%)',
+                            style: Sty().mediumText.copyWith(
+                                color: Clr().clr67,
+                                fontSize: Dim().d14,
+                                fontWeight: FontWeight.w400)),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    'Qty: ${v['quantity']}',
+                    //'Qty: ${v['quantity']}',
+                    style: Sty().microText.copyWith(
+                        color: Clr().clr67,
+                        fontSize: Dim().d12,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+              SizedBox(height: Dim().d12),
+            ],
           ),
         ),
       ),

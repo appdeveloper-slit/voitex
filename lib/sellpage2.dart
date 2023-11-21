@@ -53,7 +53,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
   Widget build(BuildContext context) {
     ctx = context;
     return Scaffold(
-      backgroundColor: Clr().white,
+      backgroundColor: Clr().black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: InkWell(
         onTap: () {
@@ -150,7 +150,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
       appBar: AppBar(
         elevation: 0,
         shadowColor: Clr().lightShadow,
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         leadingWidth: 40,
         leading: InkWell(
           onTap: () {
@@ -158,10 +158,10 @@ class _SellPageFinalState extends State<SellPageFinal> {
           },
           child: Padding(
             padding: EdgeInsets.only(left: Dim().d12),
-            child: SvgPicture.asset('assets/back.svg'),
+            child: SvgPicture.asset('assets/back.svg',color: Clr().white,height: Dim().d20),
           ),
         ),
-        title: Text('Stock Sell',style: Sty().mediumText.copyWith(color: Clr().clr0130,fontWeight: FontWeight.w600,fontSize: Dim().d16)),
+        title: Text('Stock Sell',style: Sty().mediumText.copyWith(color: Clr().white,fontWeight: FontWeight.w600,fontSize: Dim().d16)),
         centerTitle: true,
       ),
       body: Padding(
@@ -183,7 +183,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
                         Text(
                           '${data['symbol']}',
                           style: Sty().smallText.copyWith(
-                              color: Clr().clr2c,
+                              color: Clr().white,
                               fontSize: Dim().d14,
                               fontWeight: FontWeight.w600),
                         ),
@@ -197,7 +197,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
                     Text(
                       '${data['company_name']}',
                       style: Sty().microText.copyWith(
-                          color: Clr().clr49,
+                          color: Clr().clr67,
                           fontSize: Dim().d12,
                           fontWeight: FontWeight.w400),
                     ),
@@ -240,7 +240,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
                       Text(
                         '${data['net_change']} (${data['net_change_ercentage']})',
                         style: Sty().microText.copyWith(
-                            color: Clr().clr49,
+                            color: Clr().clr67,
                             fontSize: Dim().d12,
                             fontWeight: FontWeight.w400),
 
@@ -260,77 +260,46 @@ class _SellPageFinalState extends State<SellPageFinal> {
             SizedBox(height: Dim().d4),
             Text('${widget.details['quantity']}', style: Sty().mediumText),
             SizedBox(height: Dim().d20),
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                TextFormField(
-                  controller: priceCtrl,
-                  readOnly: markettypevalue == 'Market' ? true : false,
-                  cursorColor: Clr().primaryColor,
-                  style: Sty().mediumText,
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Price is required';
-                    } else {
-                      return null;
-                    }
-                  },
-                  decoration: Sty().textFieldOutlineStyle.copyWith(
-                    contentPadding: EdgeInsets.symmetric(
-                        vertical: Dim().d12,
-                        horizontal: Dim().d12),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(Dim().d16)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.circular(Dim().d16)),
-                    hintStyle: Sty().smallText.copyWith(
-                      color: Clr().grey,
-                    ),
-                    filled: true,
-                    fillColor: Clr().white,
-                    prefixText: '₹ ',
-                    prefixStyle: TextStyle(color: Clr().textcolor),
-                    hintText: "Enter Price",
-                    counterText: "",
-                    // prefixIcon: Icon(
-                    //   Icons.call,
-                    //   color: Clr().lightGrey,
-                    // ),
-                  ),
+            TextFormField(
+              controller: priceCtrl,
+              readOnly: markettypevalue == 'Market' ? true : false,
+              cursorColor: Clr().primaryColor,
+              style: Sty().mediumText.copyWith(color: Clr().white),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Price is required';
+                } else {
+                  return null;
+                }
+              },
+              decoration: Sty().textFieldUnderlineStyle.copyWith(
+                hintStyle: Sty().smallText.copyWith(
+                  color: Clr().clr67,
                 ),
-                Positioned(
-                  left: 30,
-                  top: -10,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Price',
-                      style: TextStyle(
-                          color: Clr().clr49,
-                          fontSize: Dim().d14,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ),
-              ],
+                prefixText: '₹ ',
+                prefixStyle: TextStyle(color: Clr().clr67),
+                hintText: "Enter Price",
+                counterText: "",
+                // prefixIcon: Icon(
+                //   Icons.call,
+                //   color: Clr().lightGrey,
+                // ),
+              ),
             ),
             SizedBox(height: Dim().d20),
             Container(
               height: 50,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Dim().d16),
-                  border: Border.all(color: Clr().primaryColor)),
+                  border: Border.all(color: Clr().white,width: 0.3)),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dim().d16),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<dynamic>(
                     value: markettypevalue,
+                    dropdownColor: Clr().clr67,
                     isDense: true,
                     hint: Text(
                       markettypevalue ?? 'Select Market',
@@ -338,18 +307,18 @@ class _SellPageFinalState extends State<SellPageFinal> {
                       style: TextStyle(
                         fontSize: 14,
                         color: markettypevalue != null
-                            ? Clr().black
-                            : Color(0xff787882),
+                            ? Clr().white
+                            : Clr().clr67,
                         // color: Color(0xff787882),
                         fontFamily: 'Inter',
                       ),
                     ),
                     isExpanded: true,
-                    icon: SvgPicture.asset('assets/dropdown.svg',color: Clr().primaryColor),
+                    icon: SvgPicture.asset('assets/dropdown.svg',color: Clr().white),
                     style: TextStyle(
                         color: markettypevalue != null
-                            ? Clr().black
-                            : Color(0xff000000)),
+                            ? Clr().white
+                            : Clr().clr67),
                     // style: TextStyle(color: Color(0xff787882)),
                     items: marketype.map((string) {
                       return DropdownMenuItem<String>(
@@ -359,7 +328,7 @@ class _SellPageFinalState extends State<SellPageFinal> {
                           string,
                           // string['name'],
                           style:
-                          TextStyle(color: Clr().black, fontSize: 14),
+                          TextStyle(color: Clr().white, fontSize: 14),
                         ),
                       );
                     }).toList(),

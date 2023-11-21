@@ -55,11 +55,11 @@ class _plSettingsState extends State<plSettings> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         appBar: AppBar(
           elevation: 0,
           shadowColor: Clr().lightShadow,
-          backgroundColor: Clr().white,
+          backgroundColor: Clr().black,
           leadingWidth: 40,
           leading: InkWell(
             onTap: () {
@@ -68,14 +68,14 @@ class _plSettingsState extends State<plSettings> {
             child: Padding(
               padding: EdgeInsets.only(left: Dim().d16),
               child: SvgPicture.asset('assets/back.svg',
-                  color: Clr().primaryColor),
+                  color: Clr().white),
             ),
           ),
           centerTitle: true,
           title: Text(
             'P/L Limit Settings',
             style: Sty().mediumText.copyWith(
-                color: Clr().primaryColor,
+                color: Clr().white,
                 fontSize: Dim().d20,
                 fontWeight: FontWeight.w600),
           ),
@@ -103,113 +103,56 @@ class _plSettingsState extends State<plSettings> {
                       child: Column(
                         children: [
                           SizedBox(height: Dim().d20),
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              TextFormField(
-                                controller: profitCtrl,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.done,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please add profit limit';
-                                  }
-                                  if (int.parse(value.toString()) < 100) {
-                                    return 'Please put profit limit greater than 100';
-                                  }
-                                  if (int.parse(value.toString()) > 400) {
-                                    return 'Please put profit limit less than 400';
-                                  }
-                                },
-                                decoration: Sty()
-                                    .TextFormFieldOutlineDarkStyle
-                                    .copyWith(
-                                      fillColor: Clr().white,
-                                      filled: true,
-                                      suffixText: '%',
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: Dim().d12,
-                                          horizontal: Dim().d12),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(Dim().d16)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(Dim().d16)),
-                                    ),
+                          TextFormField(
+                            controller: profitCtrl,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            style: Sty().smallText.copyWith(color: Clr().white),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please add profit limit';
+                              }
+                              if (int.parse(value.toString()) < 100) {
+                                return 'Please put profit limit greater than 100';
+                              }
+                              if (int.parse(value.toString()) > 400) {
+                                return 'Please put profit limit less than 400';
+                              }
+                            },
+                            decoration: Sty()
+                                .textFieldUnderlineStyle
+                                .copyWith(
+                              hintText: 'Profit Limit',
+                              hintStyle: Sty().smallText.copyWith(
+                                color: Clr().clr67
                               ),
-                              Positioned(
-                                left: 30,
-                                top: -10,
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      bottom: 10, left: 10, right: 10),
-                                  color: Colors.white,
-                                  child: Text(
-                                    'Profit Limit',
-                                    style: TextStyle(
-                                        color: Clr().clr49,
-                                        fontSize: Dim().d14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              suffixText: '%',
+                            ),
                           ),
                           SizedBox(height: Dim().d20),
-                          Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              TextFormField(
-                                controller: lossCtrl,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.done,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please add loss limit';
-                                  }
-                                  if (int.parse(value.toString()) < 10) {
-                                    return 'Please put loss limit greater than -10';
-                                  }
-                                  if (int.parse(value.toString()) > 70) {
-                                    return 'Please put loss limit less than -70';
-                                  }
-                                },
-                                decoration: Sty()
-                                    .TextFormFieldOutlineDarkStyle
-                                    .copyWith(
-                                      fillColor: Clr().white,
-                                      filled: true,
-                                      prefixText: '-',
-                                      suffixText: '%',
-                                      contentPadding: EdgeInsets.symmetric(
-                                          vertical: Dim().d12,
-                                          horizontal: Dim().d12),
-                                      enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(Dim().d16)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(Dim().d16)),
-                                    ),
-                              ),
-                              Positioned(
-                                left: 30,
-                                top: -10,
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      bottom: 10, left: 10, right: 10),
-                                  color: Colors.white,
-                                  child: Text(
-                                    'Loss Limit',
-                                    style: TextStyle(
-                                        color: Clr().clr49,
-                                        fontSize: Dim().d14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                              ),
-                            ],
+                          TextFormField(
+                            controller: lossCtrl,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            style: Sty().smallText.copyWith(color: Clr().white),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please add loss limit';
+                              }
+                              if (int.parse(value.toString()) < 10) {
+                                return 'Please put loss limit greater than -10';
+                              }
+                              if (int.parse(value.toString()) > 70) {
+                                return 'Please put loss limit less than -70';
+                              }
+                            },
+                            decoration: Sty()
+                                .textFieldUnderlineStyle
+                                .copyWith(
+                              suffixText: '%',
+                              hintText: 'Loss Limit',
+                              hintStyle: Sty().smallText.copyWith(color: Clr().clr67)
+                            ),
                           ),
                         ],
                       ),
@@ -221,13 +164,13 @@ class _plSettingsState extends State<plSettings> {
                           SizedBox(height: Dim().d20),
                           Text('{Range: 100% - 400%}',
                               style: Sty().mediumText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().clr67,
                                   fontSize: Dim().d14,
                                   fontWeight: FontWeight.w400)),
                           SizedBox(height: Dim().d52),
                           Text('{Range: -70% - -10%}',
                               style: Sty().mediumText.copyWith(
-                                  color: Clr().clr49,
+                                  color: Clr().clr67,
                                   fontSize: Dim().d14,
                                   fontWeight: FontWeight.w400)),
                         ],
@@ -240,7 +183,7 @@ class _plSettingsState extends State<plSettings> {
                   width: MediaQuery.of(context).size.width * 100,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Clr().primaryColor,
+                    color: Clr().clr52,
                     borderRadius: BorderRadius.circular(Dim().d12),
                   ),
                   child: ElevatedButton(

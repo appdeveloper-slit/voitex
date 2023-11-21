@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +33,11 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
         // extendBodyBehindAppBar: false,
         backgroundColor: Clr().black,
-        // bottomNavigationBar: Image.asset('assets/bottom_chart.png'),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Clr().transparent,
+          leading: Container(),
+        ),
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -39,129 +46,190 @@ class _SignInState extends State<SignIn> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: Dim().d48, bottom: Dim().d20),
+                  padding: EdgeInsets.only(bottom: Dim().d20),
                   child: Image.asset("assets/loc.png",
                       height: Dim().d260, width: Dim().d260),
                 ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage('assets/bg.png'),fit: BoxFit.fitWidth)
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: Dim().d56, left: Dim().d12, right: Dim().d12),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                          top: -50.0,
+                          right: 2.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset('assets/b1.png', height: Dim().d40),
+                              Image.asset('assets/b1.png',
+                                  height: Dim().d140),
+                            ],
+                          )),
+                      Positioned(
+                          left: 2.0,
+                          bottom: -56.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset('assets/b1.png',
+                                  height: Dim().d120),
+                            ],
+                          )),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dim().d28),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Clr().white,width: 0.2),
+                              borderRadius: BorderRadius.all(Radius.circular(Dim().d12))
+                          ),
+                          child: BlurryContainer(
+                            blur: 10,
+                            width: double.infinity,
+                            color: Clr().transparent,
+                            elevation: 0.5,
+                            borderRadius: BorderRadius.all(Radius.circular(Dim().d12)),
+                            child: Padding(
+                              padding: EdgeInsets.all(Dim().d14),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'Sign In',
+                                    style: Sty().extraLargeText.copyWith(
+                                        color: Clr().white,
+                                        fontSize: Dim().d24,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(
+                                    height: Dim().d8,
+                                  ),
+                                  TextFormField(
+                                    controller: mobileCtrl,
+                                    cursorColor: Clr().primaryColor,
+                                    style: Sty().smallText.copyWith(
+                                        color: Clr().white,
+                                        fontSize: Dim().d14,
+                                        fontWeight: FontWeight.w400),
+                                    maxLength: 10,
+                                    keyboardType: TextInputType.number,
+                                    textInputAction: TextInputAction.done,
+                                    decoration: Sty()
+                                        .textFieldUnderlineStyle
+                                        .copyWith(
+                                      hintStyle: Sty().smallText.copyWith(
+                                        color: Clr().clr67,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: Dim().d14,
+                                      ),
+                                      prefixText: mobileCtrl.text.isNotEmpty
+                                          ? "+91 "
+                                          : "",
+                                      prefixStyle: Sty().smallText.copyWith(
+                                          color: mobileCtrl.text.isNotEmpty
+                                              ? Clr().clr16
+                                              : Clr().transparent),
+                                      hintText: "Enter Mobile Number",
+                                      counterText: "",
+                                      // prefixIcon: Icon(
+                                      //   Icons.call,
+                                      //   color: Clr().lightGrey,
+                                      // ),
+                                    ),
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Mobile field is required';
+                                      }
+                                      if (value.length != 10) {
+                                        return 'Mobile number must be 10 digits';
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: Dim().d20,
+                                  ),
+                                  Column(
+                                    children: [
+                                      _ischanged
+                                          ? Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Clr().clr52,
+                                          borderRadius:
+                                          BorderRadius.circular(Dim().d12),
+                                        ),
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                sendOtp();
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                primary: Colors.transparent,
+                                                onSurface: Colors.transparent,
+                                                shadowColor: Colors.transparent,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        5))),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: Dim().d12),
+                                              child: Text(
+                                                'Send OTP',
+                                                style: Sty().largeText.copyWith(
+                                                    fontSize: Dim().d16,
+                                                    color: Clr().white,
+                                                    fontWeight:
+                                                    FontWeight.w500),
+                                              ),
+                                            )),
+                                      )
+                                          : CircularProgressIndicator(
+                                        color: Clr().white,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "you haven't joined us yet ?",
+                                            style: Sty().smallText.copyWith(
+                                                fontSize: Dim().d14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Clr().white),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              STM().redirect2page(ctx, SignUp());
+                                            },
+                                            child: Text(
+                                              'Sign Up',
+                                              style: Sty().mediumText.copyWith(
+                                                  color: Clr().clref,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: Dim().d16),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Clr().transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(Dim().d12))
-                    ),
-                  ),
-                )
-                // Text(
-                //   'Sign In',
-                //   style: Sty().extraLargeText.copyWith(
-                //       color: Clr().primaryColor,
-                //       fontSize: Dim().d24,
-                //       fontWeight: FontWeight.w600),
-                // ),
-                // SizedBox(
-                //   height: Dim().d8,
-                // ),
-                // Text(
-                //   'Fill the detail to sign in into your account.',
-                //   style: Sty().smallText.copyWith(
-                //       color: Clr().threezero,
-                //       fontWeight: FontWeight.w400,
-                //       fontSize: Dim().d16),
-                // ),
-                // SizedBox(
-                //   height: Dim().d24,
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(horizontal: Dim().d14),
-                //   child: TextFormField(
-                //     controller: mobileCtrl,
-                //     cursorColor: Clr().primaryColor,
-                //     style: Sty().smallText.copyWith(
-                //         color: Clr().clr16,
-                //         fontSize: Dim().d14,
-                //         fontWeight: FontWeight.w400),
-                //     maxLength: 10,
-                //     keyboardType: TextInputType.number,
-                //     textInputAction: TextInputAction.done,
-                //     decoration: Sty().textFileddarklinestyle.copyWith(
-                //           prefixIcon: Icon(
-                //               mobileCtrl.text.isNotEmpty ? Icons.phone : Icons.phone_outlined,
-                //               color: mobileCtrl.text.isNotEmpty ? Clr().primaryColor : Clr().a4),
-                //           hintStyle: Sty().smallText.copyWith(
-                //                 color: Clr().a4,
-                //                 fontWeight: FontWeight.w400,
-                //                 fontSize: Dim().d14,
-                //               ),
-                //           prefixText: mobileCtrl.text.isNotEmpty ? "+91 " : "",
-                //           prefixStyle: Sty().smallText.copyWith(
-                //               color:
-                //                   mobileCtrl.text.isNotEmpty ? Clr().clr16 : Clr().transparent),
-                //           hintText: "Enter Mobile Number",
-                //           counterText: "",
-                //           // prefixIcon: Icon(
-                //           //   Icons.call,
-                //           //   color: Clr().lightGrey,
-                //           // ),
-                //         ),
-                //     validator: (value) {
-                //       if (value!.isEmpty) {
-                //         return 'Mobile field is required';
-                //       }
-                //       if (value.length != 10) {
-                //         return 'Mobile number must be 10 digits';
-                //       }
-                //     },
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: Dim().d32,
-                // ),
-                // _ischanged
-                //     ? Padding(
-                //         padding:
-                //             EdgeInsets.symmetric(horizontal: Dim().d20),
-                //         child: Container(
-                //           width: double.infinity,
-                //           decoration: BoxDecoration(
-                //             color: Clr().clr01,
-                //             borderRadius: BorderRadius.circular(Dim().d16),
-                //           ),
-                //           child: ElevatedButton(
-                //               onPressed: () {
-                //                 if (_formKey.currentState!.validate()) {
-                //                   sendOtp();
-                //                 }
-                //                 // STM().redirect2page(
-                //                 //     ctx, Verification(mobileCtrl.text.toString(), 'login'));
-                //                 // updateProfile();
-                //               },
-                //               style: ElevatedButton.styleFrom(
-                //                   elevation: 0,
-                //                   primary: Colors.transparent,
-                //                   onSurface: Colors.transparent,
-                //                   shadowColor: Colors.transparent,
-                //                   shape: RoundedRectangleBorder(
-                //                       borderRadius:
-                //                           BorderRadius.circular(5))),
-                //               child: Text(
-                //                 'Send OTP',
-                //                 style: Sty().largeText.copyWith(
-                //                     fontSize: 16,
-                //                     color: Clr().f5,
-                //                     fontWeight: FontWeight.w600),
-                //               )),
-                //         ),
-                //       )
-                //     : CircularProgressIndicator(
-                //         color: Clr().primaryColor,
-                //       ),
-                // SizedBox(
-                //   height: Dim().d12,
-                // ),
+                ),
               ],
             ),
           ),

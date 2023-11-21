@@ -89,10 +89,10 @@ class _BuyStockState extends State<BuyStock> {
     ctx = context;
     return Scaffold(
       bottomNavigationBar: bottomBarLayout(ctx, 0, stream, b: true),
-      backgroundColor: Clr().white,
+      backgroundColor: Clr().black,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         leadingWidth: 40,
         leading: InkWell(
           onTap: () {
@@ -101,7 +101,7 @@ class _BuyStockState extends State<BuyStock> {
           child: Padding(
             padding: EdgeInsets.only(
                 left: Dim().d16, top: Dim().d12, bottom: Dim().d12),
-            child: SvgPicture.asset('assets/back.svg', height: Dim().d20),
+            child: SvgPicture.asset('assets/back.svg',color: Clr().white,height: Dim().d20),
           ),
         ),
         centerTitle: true,
@@ -109,7 +109,7 @@ class _BuyStockState extends State<BuyStock> {
           'Stock Buy',
           style: Sty()
               .mediumText
-              .copyWith(color: Clr().textcolor, fontWeight: FontWeight.w600),
+              .copyWith(color: Clr().white, fontWeight: FontWeight.w600),
         ),
         actions: [
           // Padding(
@@ -210,7 +210,7 @@ class _BuyStockState extends State<BuyStock> {
       body: data == null
           ? Center(
               child: CircularProgressIndicator(
-              color: Clr().primaryColor,
+              color: Clr().white,
             ))
           : SingleChildScrollView(
               child: Form(
@@ -236,7 +236,7 @@ class _BuyStockState extends State<BuyStock> {
                                             Text(
                                               '${data['symbol']}',
                                               style: Sty().smallText.copyWith(
-                                                  color: Clr().clr2c,
+                                                  color: Clr().white,
                                                   fontSize: Dim().d14,
                                                   fontWeight: FontWeight.w600),
                                             ),
@@ -266,7 +266,7 @@ class _BuyStockState extends State<BuyStock> {
                                         Text(
                                           '${data['company_name']}',
                                           style: Sty().microText.copyWith(
-                                              color: Clr().clr49,
+                                              color: Clr().clr67,
                                               fontSize: Dim().d12,
                                               fontWeight: FontWeight.w400),
                                         ),
@@ -320,7 +320,7 @@ class _BuyStockState extends State<BuyStock> {
                                           Text(
                                             '${data['net_change']} (${data['net_change_ercentage']})',
                                             style: Sty().microText.copyWith(
-                                                color: Clr().clr49,
+                                                color: Clr().clr67,
                                                 fontSize: Dim().d12,
                                                 fontWeight: FontWeight.w400),
 
@@ -444,684 +444,579 @@ class _BuyStockState extends State<BuyStock> {
                           //     ),
                           //   ],
                           // ),
+                          TextFormField(
+                            controller: shareCtrl,
+                            cursorColor: Clr().white,
+                            style: Sty().mediumText.copyWith(color: Clr().white),
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            decoration: Sty()
+                                .textFieldUnderlineStyle
+                                .copyWith(
+                              hintStyle: Sty().smallText.copyWith(
+                                color: Clr().clr67,
+                              ),
+                              // prefixText: '₹ ',
+                              prefixStyle: TextStyle(
+                                  color: Clr().textcolor),
+                              hintText: "No. of Shares",
+                              counterText: "",
+                              // prefixIcon: Icon(
+                              //   Icons.call,
+                              //   color: Clr().lightGrey,
+                              // ),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter quantity';
+                              } else {
+                                return null;
+                              }
+                            },
+                            onChanged: (v) {
+                              setState(() {
+                                aa = v.toString();
+                                marketValueAmt(
+                                    shareCtrl.text.toString(),
+                                    priceCtrl.text.contains('-')
+                                        ? data['last_price']
+                                        .toString()
+                                        : priceCtrl.text.toString());
+                              });
+                            },
+                          ),
+                          // StreamBuilder(
+                          //   builder: (BuildContext context,
+                          //       AsyncSnapshot<dynamic> snapshot) {
+                          //     return Text(
+                          //       'No. of shares',
+                          //       style: Sty()
+                          //           .microText
+                          //           .copyWith(color: Clr().textcolor),
+                          //     );
+                          //   },
+                          // ),
+                          // SizedBox(
+                          //   height: Dim().d12,
+                          // ),
+                          // TextFormField(
+                          //   controller: shareCtrl,
+                          //   cursorColor: Clr().primaryColor,
+                          //   style: Sty().mediumText,
+                          //   autofocus: false,
+                          //   keyboardType: TextInputType.number,
+                          //   textInputAction: TextInputAction.done,
+                          //   decoration:
+                          //       Sty().textFieldOutlineStyle.copyWith(
+                          //             hintStyle: Sty().smallText.copyWith(
+                          //                   color: Clr().grey,
+                          //                 ),
+                          //             filled: true,
+                          //             fillColor: Clr().white,
+                          //             hintText: "0",
+                          //             counterText: "",
+                          //             // prefixIcon: Icon(
+                          //             //   Icons.call,
+                          //             //   color: Clr().lightGrey,
+                          //             // ),
+                          //           ),
+                          //   validator: (value) {
+                          //     if (value!.isEmpty) {
+                          //       return Str().invalidMobile;
+                          //     } else {
+                          //       return null;
+                          //     }
+                          //   },
+                          //   onChanged: (v) {
+                          //     setState(() {
+                          //       aa = v.toString();
+                          //       marketValueAmt(
+                          //           shareCtrl.text.toString(),
+                          //           priceCtrl.text.contains('-')
+                          //               ? data['last_price'].toString()
+                          //               : priceCtrl.text.toString());
+                          //     });
+                          //   },
+                          // ),
+                          SizedBox(
+                            height: Dim().d32,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                controller: priceCtrl,
+                                readOnly:
+                                markettypevalue == 'Market'
+                                    ? true
+                                    : false,
+                                cursorColor: Clr().white,
+                                style: Sty().mediumText.copyWith(color: Clr().white),
+                                keyboardType: TextInputType.number,
+                                textInputAction:
+                                TextInputAction.done,
+                                decoration: Sty()
+                                    .textFieldUnderlineStyle
+                                    .copyWith(
+                                  hintStyle:
+                                  Sty().smallText.copyWith(
+                                    color: Clr().white,
+                                  ),
+                                  // prefixText: '₹ ',
+                                  prefixStyle: TextStyle(
+                                      color: Clr().textcolor),
+                                  hintText: "Price",
+                                  counterText: "",
+                                  // prefixIcon: Icon(
+                                  //   Icons.call,
+                                  //   color: Clr().lightGrey,
+                                  // ),
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return Str().invalidMobile;
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                onChanged: (v) {
+                                  setState(() {
+                                    bb = v.toString();
+                                    marketValueAmt(
+                                        shareCtrl.text.toString(),
+                                        priceCtrl.text.toString());
+                                  });
+                                },
+                            ),
+                              ),
+                              SizedBox(width: Dim().d12),
+                              Expanded(
+                                child: Container(
+                                  width: 60,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.circular(15),
+                                      border: Border.all(
+                                          color: Color(0xFF494949))),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: Dim().d16),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<dynamic>(
+                                        value: markettypevalue,
+                                        dropdownColor: Clr().clr67,
+                                        hint: Text(
+                                          markettypevalue ??
+                                              'Select Market',
+                                          // 'Select State',
+                                          style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            fontSize: 14,
+                                            color: markettypevalue != null
+                                                ? Clr().white
+                                                : Color(0xff787882),
+                                            // color: Color(0xff787882),
+                                          ),
+                                        ),
+                                        isExpanded: true,
+                                        icon: Icon(
+                                            Icons
+                                                .arrow_drop_down_outlined,
+                                            color: Clr().white),
+                                        style: TextStyle(
+                                            color: markettypevalue != null
+                                                ? Clr().black
+                                                : Color(0xff000000)),
+                                        // style: TextStyle(color: Color(0xff787882)),
+                                        items: marketype.map((string) {
+                                          return DropdownMenuItem<String>(
+                                            value: string,
+                                            // value: string['id'].toString(),
+                                            child: Text(
+                                              string,
+                                              // string['name'],
+                                              style: TextStyle(
+                                                  color: Clr().white,
+                                                  fontSize: 14),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (v) {
+                                          setState(() {
+                                            markettypevalue =
+                                                v.toString();
+                                          });
+                                          if (v.toString() == 'Market') {
+                                            setState(() {
+                                              priceCtrl =
+                                                  TextEditingController(
+                                                      text: data[
+                                                      'last_price']
+                                                          .toString());
+                                              marketValueAmt(
+                                                  shareCtrl.text
+                                                      .toString(),
+                                                  priceCtrl.text
+                                                      .toString());
+                                            });
+                                          } else {
+                                            setState(() {
+                                              priceCtrl =
+                                                  TextEditingController(
+                                                      text: widget
+                                                          .details[
+                                                      'last_price']
+                                                          .toString());
+                                              marketValueAmt(
+                                                  shareCtrl.text
+                                                      .toString(),
+                                                  priceCtrl.text
+                                                      .toString());
+                                              // totalAmountlayut(
+                                              //     lev: marketValue,
+                                              //     price: widget
+                                              //         .details['last_price']
+                                              //         .toString());
+                                            });
+                                          }
+                                          // setState(() {
+                                          //   // genderValue = v.toString();
+                                          //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
+                                          //   // stateId = genderlist[postion]['id'].toString();
+                                          //   // cityValue = null;
+                                          //   // cityList = genderlist[postion]['city'];
+                                          // });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          // Text(
+                          //   'Price',
+                          //   style: Sty()
+                          //       .microText
+                          //       .copyWith(color: Clr().textcolor),
+                          // ),
+                          // SizedBox(
+                          //   height: Dim().d12,
+                          // ),
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+                          //     Expanded(
+                          //       child: TextFormField(
+                          //         controller: priceCtrl,
+                          //         readOnly: markettypevalue == 'Market'
+                          //             ? true
+                          //             : false,
+                          //         cursorColor: Clr().primaryColor,
+                          //         style: Sty().mediumText,
+                          //         keyboardType: TextInputType.number,
+                          //         textInputAction: TextInputAction.done,
+                          //         decoration: Sty()
+                          //             .textFieldOutlineStyle
+                          //             .copyWith(
+                          //               contentPadding:
+                          //                   EdgeInsets.symmetric(
+                          //                       vertical: Dim().d0,
+                          //                       horizontal: Dim().d8),
+                          //               hintStyle:
+                          //                   Sty().smallText.copyWith(
+                          //                         color: Clr().grey,
+                          //                       ),
+                          //               filled: true,
+                          //               fillColor: Clr().white,
+                          //
+                          //               hintText: "Price",
+                          //               counterText: "",
+                          //               // prefixIcon: Icon(
+                          //               //   Icons.call,
+                          //               //   color: Clr().lightGrey,
+                          //               // ),
+                          //             ),
+                          //         validator: (value) {
+                          //           if (value!.isEmpty) {
+                          //             return Str().invalidMobile;
+                          //           } else {
+                          //             return null;
+                          //           }
+                          //         },
+                          //         onChanged: (v) {
+                          //           setState(() {
+                          //             bb = v.toString();
+                          //             marketValueAmt(
+                          //                 shareCtrl.text.toString(),
+                          //                 priceCtrl.text.toString());
+                          //           });
+                          //         },
+                          //       ),
+                          //     ),
+                          //     SizedBox(width: Dim().d12),
+                          //     Expanded(
+                          //       child: Container(
+                          //         width: 60,
+                          //         height: 50,
+                          //         decoration: BoxDecoration(
+                          //             borderRadius:
+                          //                 BorderRadius.circular(5),
+                          //             border: Border.all(
+                          //                 color: Clr().borderColor)),
+                          //         child: Padding(
+                          //           padding: EdgeInsets.symmetric(
+                          //               horizontal: Dim().d16),
+                          //           child: DropdownButtonHideUnderline(
+                          //             child: DropdownButton<dynamic>(
+                          //               value: markettypevalue,
+                          //               hint: Text(
+                          //                 markettypevalue ??
+                          //                     'Select Market',
+                          //                 // 'Select State',
+                          //                 style: TextStyle(
+                          //                   fontSize: 14,
+                          //                   color: markettypevalue != null
+                          //                       ? Clr().black
+                          //                       : Color(0xff787882),
+                          //                   // color: Color(0xff787882),
+                          //                   fontFamily: 'Inter',
+                          //                 ),
+                          //               ),
+                          //               isExpanded: true,
+                          //               icon: SvgPicture.asset(
+                          //                   'assets/dropdown.svg'),
+                          //               style: TextStyle(
+                          //                   color: markettypevalue != null
+                          //                       ? Clr().black
+                          //                       : Color(0xff000000)),
+                          //               // style: TextStyle(color: Color(0xff787882)),
+                          //               items: marketype.map((string) {
+                          //                 return DropdownMenuItem<String>(
+                          //                   value: string,
+                          //                   // value: string['id'].toString(),
+                          //                   child: Text(
+                          //                     string,
+                          //                     // string['name'],
+                          //                     style: TextStyle(
+                          //                         color: Clr().black,
+                          //                         fontSize: 14),
+                          //                   ),
+                          //                 );
+                          //               }).toList(),
+                          //               onChanged: (v) {
+                          //                 setState(() {
+                          //                   markettypevalue =
+                          //                       v.toString();
+                          //                 });
+                          //                 if (v.toString() == 'Market') {
+                          //                   setState(() {
+                          //                     priceCtrl =
+                          //                         TextEditingController(
+                          //                             text: data[
+                          //                                     'last_price']
+                          //                                 .toString());
+                          //                     marketValueAmt(
+                          //                         shareCtrl.text
+                          //                             .toString(),
+                          //                         priceCtrl.text
+                          //                             .toString());
+                          //                   });
+                          //                 } else {
+                          //                   setState(() {
+                          //                     priceCtrl =
+                          //                         TextEditingController(
+                          //                             text: widget
+                          //                                 .details[
+                          //                                     'last_price']
+                          //                                 .toString());
+                          //                     marketValueAmt(
+                          //                         shareCtrl.text
+                          //                             .toString(),
+                          //                         priceCtrl.text
+                          //                             .toString());
+                          //                     // totalAmountlayut(
+                          //                     //     lev: marketValue,
+                          //                     //     price: widget
+                          //                     //         .details['last_price']
+                          //                     //         .toString());
+                          //                   });
+                          //                 }
+                          //                 // setState(() {
+                          //                 //   // genderValue = v.toString();
+                          //                 //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
+                          //                 //   // stateId = genderlist[postion]['id'].toString();
+                          //                 //   // cityValue = null;
+                          //                 //   // cityList = genderlist[postion]['city'];
+                          //                 // });
+                          //               },
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          SizedBox(
+                            height: Dim().d32,
+                          ),
+
                           Container(
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: <Widget>[
-                                    TextFormField(
-                                      controller: shareCtrl,
-                                      cursorColor: Clr().primaryColor,
-                                      style: Sty().mediumText,
-                                      keyboardType: TextInputType.number,
-                                      textInputAction: TextInputAction.done,
-                                      decoration: Sty()
-                                          .textFieldOutlineStyle
-                                          .copyWith(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    vertical: Dim().d12,
-                                                    horizontal: Dim().d12),
-                                            enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dim().d16)),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        Dim().d16)),
-                                            hintStyle: Sty().smallText.copyWith(
-                                                  color: Clr().grey,
-                                                ),
-                                            filled: true,
-                                            fillColor: Clr().white,
-                                            // prefixText: '₹ ',
-                                            prefixStyle: TextStyle(
-                                                color: Clr().textcolor),
-                                            hintText: "0",
-                                            counterText: "",
-                                            // prefixIcon: Icon(
-                                            //   Icons.call,
-                                            //   color: Clr().lightGrey,
-                                            // ),
-                                          ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Please enter quantity';
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      onChanged: (v) {
-                                        setState(() {
-                                          aa = v.toString();
-                                          marketValueAmt(
-                                              shareCtrl.text.toString(),
-                                              priceCtrl.text.contains('-')
-                                                  ? data['last_price']
-                                                      .toString()
-                                                  : priceCtrl.text.toString());
-                                        });
-                                      },
+                            width: 162,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                BorderRadius.circular(15),
+                                border:
+                                Border.all(color: Clr().white,width: 0.3)),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dim().d8),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<dynamic>(
+                                  // value: sState,
+                                  dropdownColor: Clr().clr67,
+                                  hint: Text(
+                                    marketValue ?? 'Leverage',
+                                    // 'Select State',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: marketValue != null
+                                          ? Clr().white
+                                          : Color(0xff787882),
+                                      // color: Color(0xff787882),
+                                      fontFamily: 'Inter',
                                     ),
-                                    Positioned(
-                                      left: 30,
-                                      top: -10,
-                                      child: Container(
-                                        padding: EdgeInsets.only(
-                                            bottom: 10, left: 10, right: 10),
-                                        color: Colors.white,
-                                        child: Text(
-                                          'No. of Shares',
-                                          style: TextStyle(
-                                              color: Clr().clr49,
-                                              fontSize: Dim().d14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
+                                  ),
+                                  isExpanded: true,
+                                  // icon: SvgPicture.asset(
+                                  //     'assets/dropdown.svg'),
+                                  icon: Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      color: Clr().grey),
+                                  style: TextStyle(
+                                      color: marketValue != null
+                                          ? Clr().white
+                                          : Color(0xff000000)),
+                                  // style: TextStyle(color: Color(0xff787882)),
+                                  items: marketList.map((string) {
+                                    return DropdownMenuItem<String>(
+                                      value: string,
+                                      // value: string['id'].toString(),
+                                      child: Text(
+                                        string,
+                                        // string['name'],
+                                        style: TextStyle(
+                                            color: Clr().white,
+                                            fontSize: 14),
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  }).toList(),
+                                  onChanged: (v) {
+                                    setState(() {
+                                      marketValue = v.toString();
+                                      // totalAmountlayut(
+                                      //     lev: marketValue);
+                                      requiredFundAmt();
+                                    });
+                                    // setState(() {
+                                    //   // genderValue = v.toString();
+                                    //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
+                                    //   // stateId = genderlist[postion]['id'].toString();
+                                    //   // cityValue = null;
+                                    //   // cityList = genderlist[postion]['city'];
+                                    // });
+                                  },
                                 ),
-                                // StreamBuilder(
-                                //   builder: (BuildContext context,
-                                //       AsyncSnapshot<dynamic> snapshot) {
-                                //     return Text(
-                                //       'No. of shares',
-                                //       style: Sty()
-                                //           .microText
-                                //           .copyWith(color: Clr().textcolor),
-                                //     );
-                                //   },
-                                // ),
-                                // SizedBox(
-                                //   height: Dim().d12,
-                                // ),
-                                // TextFormField(
-                                //   controller: shareCtrl,
-                                //   cursorColor: Clr().primaryColor,
-                                //   style: Sty().mediumText,
-                                //   autofocus: false,
-                                //   keyboardType: TextInputType.number,
-                                //   textInputAction: TextInputAction.done,
-                                //   decoration:
-                                //       Sty().textFieldOutlineStyle.copyWith(
-                                //             hintStyle: Sty().smallText.copyWith(
-                                //                   color: Clr().grey,
-                                //                 ),
-                                //             filled: true,
-                                //             fillColor: Clr().white,
-                                //             hintText: "0",
-                                //             counterText: "",
-                                //             // prefixIcon: Icon(
-                                //             //   Icons.call,
-                                //             //   color: Clr().lightGrey,
-                                //             // ),
-                                //           ),
-                                //   validator: (value) {
-                                //     if (value!.isEmpty) {
-                                //       return Str().invalidMobile;
-                                //     } else {
-                                //       return null;
-                                //     }
-                                //   },
-                                //   onChanged: (v) {
-                                //     setState(() {
-                                //       aa = v.toString();
-                                //       marketValueAmt(
-                                //           shareCtrl.text.toString(),
-                                //           priceCtrl.text.contains('-')
-                                //               ? data['last_price'].toString()
-                                //               : priceCtrl.text.toString());
-                                //     });
-                                //   },
-                                // ),
-                                SizedBox(
-                                  height: Dim().d32,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: <Widget>[
-                                          TextFormField(
-                                            controller: priceCtrl,
-                                            readOnly:
-                                                markettypevalue == 'Market'
-                                                    ? true
-                                                    : false,
-                                            cursorColor: Clr().primaryColor,
-                                            style: Sty().mediumText,
-                                            keyboardType: TextInputType.number,
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            decoration: Sty()
-                                                .textFieldOutlineStyle
-                                                .copyWith(
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                          vertical: Dim().d12,
-                                                          horizontal:
-                                                              Dim().d12),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(Dim()
-                                                                      .d16)),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(Dim()
-                                                                      .d16)),
-                                                  hintStyle:
-                                                      Sty().smallText.copyWith(
-                                                            color: Clr().grey,
-                                                          ),
-                                                  filled: true,
-                                                  fillColor: Clr().white,
-                                                  // prefixText: '₹ ',
-                                                  prefixStyle: TextStyle(
-                                                      color: Clr().textcolor),
-                                                  hintText: "Price",
-                                                  counterText: "",
-                                                  // prefixIcon: Icon(
-                                                  //   Icons.call,
-                                                  //   color: Clr().lightGrey,
-                                                  // ),
-                                                ),
-                                            validator: (value) {
-                                              if (value!.isEmpty) {
-                                                return Str().invalidMobile;
-                                              } else {
-                                                return null;
-                                              }
-                                            },
-                                            onChanged: (v) {
-                                              setState(() {
-                                                bb = v.toString();
-                                                marketValueAmt(
-                                                    shareCtrl.text.toString(),
-                                                    priceCtrl.text.toString());
-                                              });
-                                            },
-                                          ),
-                                          Positioned(
-                                            left: 30,
-                                            top: -10,
-                                            child: Container(
-                                              padding: EdgeInsets.only(
-                                                  bottom: 10,
-                                                  left: 10,
-                                                  right: 10),
-                                              color: Colors.white,
-                                              child: Text(
-                                                'Price',
-                                                style: TextStyle(
-                                                    color: Clr().clr49,
-                                                    fontSize: Dim().d14,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(width: Dim().d12),
-                                    Expanded(
-                                      child: Container(
-                                        width: 60,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            border: Border.all(
-                                                color: Color(0xFF494949))),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: Dim().d16),
-                                          child: DropdownButtonHideUnderline(
-                                            child: DropdownButton<dynamic>(
-                                              value: markettypevalue,
-                                              hint: Text(
-                                                markettypevalue ??
-                                                    'Select Market',
-                                                // 'Select State',
-                                                style: TextStyle(
-                                                  fontFamily: 'OpenSans',
-                                                  fontSize: 14,
-                                                  color: markettypevalue != null
-                                                      ? Clr().black
-                                                      : Color(0xff787882),
-                                                  // color: Color(0xff787882),
-                                                ),
-                                              ),
-                                              isExpanded: true,
-                                              icon: Icon(
-                                                  Icons
-                                                      .arrow_drop_down_outlined,
-                                                  color: Clr().grey),
-                                              style: TextStyle(
-                                                  color: markettypevalue != null
-                                                      ? Clr().black
-                                                      : Color(0xff000000)),
-                                              // style: TextStyle(color: Color(0xff787882)),
-                                              items: marketype.map((string) {
-                                                return DropdownMenuItem<String>(
-                                                  value: string,
-                                                  // value: string['id'].toString(),
-                                                  child: Text(
-                                                    string,
-                                                    // string['name'],
-                                                    style: TextStyle(
-                                                        color: Clr().black,
-                                                        fontSize: 14),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                              onChanged: (v) {
-                                                setState(() {
-                                                  markettypevalue =
-                                                      v.toString();
-                                                });
-                                                if (v.toString() == 'Market') {
-                                                  setState(() {
-                                                    priceCtrl =
-                                                        TextEditingController(
-                                                            text: data[
-                                                                    'last_price']
-                                                                .toString());
-                                                    marketValueAmt(
-                                                        shareCtrl.text
-                                                            .toString(),
-                                                        priceCtrl.text
-                                                            .toString());
-                                                  });
-                                                } else {
-                                                  setState(() {
-                                                    priceCtrl =
-                                                        TextEditingController(
-                                                            text: widget
-                                                                .details[
-                                                                    'last_price']
-                                                                .toString());
-                                                    marketValueAmt(
-                                                        shareCtrl.text
-                                                            .toString(),
-                                                        priceCtrl.text
-                                                            .toString());
-                                                    // totalAmountlayut(
-                                                    //     lev: marketValue,
-                                                    //     price: widget
-                                                    //         .details['last_price']
-                                                    //         .toString());
-                                                  });
-                                                }
-                                                // setState(() {
-                                                //   // genderValue = v.toString();
-                                                //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
-                                                //   // stateId = genderlist[postion]['id'].toString();
-                                                //   // cityValue = null;
-                                                //   // cityList = genderlist[postion]['city'];
-                                                // });
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                // Text(
-                                //   'Price',
-                                //   style: Sty()
-                                //       .microText
-                                //       .copyWith(color: Clr().textcolor),
-                                // ),
-                                // SizedBox(
-                                //   height: Dim().d12,
-                                // ),
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   children: [
-                                //     Expanded(
-                                //       child: TextFormField(
-                                //         controller: priceCtrl,
-                                //         readOnly: markettypevalue == 'Market'
-                                //             ? true
-                                //             : false,
-                                //         cursorColor: Clr().primaryColor,
-                                //         style: Sty().mediumText,
-                                //         keyboardType: TextInputType.number,
-                                //         textInputAction: TextInputAction.done,
-                                //         decoration: Sty()
-                                //             .textFieldOutlineStyle
-                                //             .copyWith(
-                                //               contentPadding:
-                                //                   EdgeInsets.symmetric(
-                                //                       vertical: Dim().d0,
-                                //                       horizontal: Dim().d8),
-                                //               hintStyle:
-                                //                   Sty().smallText.copyWith(
-                                //                         color: Clr().grey,
-                                //                       ),
-                                //               filled: true,
-                                //               fillColor: Clr().white,
-                                //
-                                //               hintText: "Price",
-                                //               counterText: "",
-                                //               // prefixIcon: Icon(
-                                //               //   Icons.call,
-                                //               //   color: Clr().lightGrey,
-                                //               // ),
-                                //             ),
-                                //         validator: (value) {
-                                //           if (value!.isEmpty) {
-                                //             return Str().invalidMobile;
-                                //           } else {
-                                //             return null;
-                                //           }
-                                //         },
-                                //         onChanged: (v) {
-                                //           setState(() {
-                                //             bb = v.toString();
-                                //             marketValueAmt(
-                                //                 shareCtrl.text.toString(),
-                                //                 priceCtrl.text.toString());
-                                //           });
-                                //         },
-                                //       ),
-                                //     ),
-                                //     SizedBox(width: Dim().d12),
-                                //     Expanded(
-                                //       child: Container(
-                                //         width: 60,
-                                //         height: 50,
-                                //         decoration: BoxDecoration(
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color: Clr().borderColor)),
-                                //         child: Padding(
-                                //           padding: EdgeInsets.symmetric(
-                                //               horizontal: Dim().d16),
-                                //           child: DropdownButtonHideUnderline(
-                                //             child: DropdownButton<dynamic>(
-                                //               value: markettypevalue,
-                                //               hint: Text(
-                                //                 markettypevalue ??
-                                //                     'Select Market',
-                                //                 // 'Select State',
-                                //                 style: TextStyle(
-                                //                   fontSize: 14,
-                                //                   color: markettypevalue != null
-                                //                       ? Clr().black
-                                //                       : Color(0xff787882),
-                                //                   // color: Color(0xff787882),
-                                //                   fontFamily: 'Inter',
-                                //                 ),
-                                //               ),
-                                //               isExpanded: true,
-                                //               icon: SvgPicture.asset(
-                                //                   'assets/dropdown.svg'),
-                                //               style: TextStyle(
-                                //                   color: markettypevalue != null
-                                //                       ? Clr().black
-                                //                       : Color(0xff000000)),
-                                //               // style: TextStyle(color: Color(0xff787882)),
-                                //               items: marketype.map((string) {
-                                //                 return DropdownMenuItem<String>(
-                                //                   value: string,
-                                //                   // value: string['id'].toString(),
-                                //                   child: Text(
-                                //                     string,
-                                //                     // string['name'],
-                                //                     style: TextStyle(
-                                //                         color: Clr().black,
-                                //                         fontSize: 14),
-                                //                   ),
-                                //                 );
-                                //               }).toList(),
-                                //               onChanged: (v) {
-                                //                 setState(() {
-                                //                   markettypevalue =
-                                //                       v.toString();
-                                //                 });
-                                //                 if (v.toString() == 'Market') {
-                                //                   setState(() {
-                                //                     priceCtrl =
-                                //                         TextEditingController(
-                                //                             text: data[
-                                //                                     'last_price']
-                                //                                 .toString());
-                                //                     marketValueAmt(
-                                //                         shareCtrl.text
-                                //                             .toString(),
-                                //                         priceCtrl.text
-                                //                             .toString());
-                                //                   });
-                                //                 } else {
-                                //                   setState(() {
-                                //                     priceCtrl =
-                                //                         TextEditingController(
-                                //                             text: widget
-                                //                                 .details[
-                                //                                     'last_price']
-                                //                                 .toString());
-                                //                     marketValueAmt(
-                                //                         shareCtrl.text
-                                //                             .toString(),
-                                //                         priceCtrl.text
-                                //                             .toString());
-                                //                     // totalAmountlayut(
-                                //                     //     lev: marketValue,
-                                //                     //     price: widget
-                                //                     //         .details['last_price']
-                                //                     //         .toString());
-                                //                   });
-                                //                 }
-                                //                 // setState(() {
-                                //                 //   // genderValue = v.toString();
-                                //                 //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
-                                //                 //   // stateId = genderlist[postion]['id'].toString();
-                                //                 //   // cityValue = null;
-                                //                 //   // cityList = genderlist[postion]['city'];
-                                //                 // });
-                                //               },
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                SizedBox(
-                                  height: Dim().d32,
-                                ),
-
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: <Widget>[
-                                    Container(
-                                      width: 162,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          border:
-                                              Border.all(color: Clr().black)),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: Dim().d8),
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton<dynamic>(
-                                            // value: sState,
-                                            hint: Text(
-                                              marketValue,
-                                              // 'Select State',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: marketValue != null
-                                                    ? Clr().black
-                                                    : Color(0xff787882),
-                                                // color: Color(0xff787882),
-                                                fontFamily: 'Inter',
-                                              ),
-                                            ),
-                                            isExpanded: true,
-                                            // icon: SvgPicture.asset(
-                                            //     'assets/dropdown.svg'),
-                                            icon: Icon(
-                                                Icons.arrow_drop_down_outlined,
-                                                color: Clr().grey),
-                                            style: TextStyle(
-                                                color: marketValue != null
-                                                    ? Clr().black
-                                                    : Color(0xff000000)),
-                                            // style: TextStyle(color: Color(0xff787882)),
-                                            items: marketList.map((string) {
-                                              return DropdownMenuItem<String>(
-                                                value: string,
-                                                // value: string['id'].toString(),
-                                                child: Text(
-                                                  string,
-                                                  // string['name'],
-                                                  style: TextStyle(
-                                                      color: Clr().black,
-                                                      fontSize: 14),
-                                                ),
-                                              );
-                                            }).toList(),
-                                            onChanged: (v) {
-                                              setState(() {
-                                                marketValue = v.toString();
-                                                // totalAmountlayut(
-                                                //     lev: marketValue);
-                                                requiredFundAmt();
-                                              });
-                                              // setState(() {
-                                              //   // genderValue = v.toString();
-                                              //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
-                                              //   // stateId = genderlist[postion]['id'].toString();
-                                              //   // cityValue = null;
-                                              //   // cityList = genderlist[postion]['city'];
-                                              // });
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 30,
-                                      top: -10,
-                                      child: Container(
-                                        padding: EdgeInsets.only(
-                                            bottom: 10, left: 10, right: 10),
-                                        color: Colors.white,
-                                        child: Text(
-                                          'Leverage:',
-                                          style: TextStyle(
-                                              color: Clr().clr49,
-                                              fontSize: Dim().d14,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                // Row(
-                                //   children: [
-                                //
-                                //     SizedBox(
-                                //       width: Dim().d12,
-                                //     ),
-                                //     Container(
-                                //       width: 60,
-                                //       height: 40,
-                                //       decoration: BoxDecoration(
-                                //           borderRadius:
-                                //               BorderRadius.circular(5),
-                                //           border: Border.all(
-                                //               color: Clr().borderColor)),
-                                //       child: Padding(
-                                //         padding: EdgeInsets.symmetric(
-                                //             horizontal: Dim().d8),
-                                //         child: DropdownButtonHideUnderline(
-                                //           child: DropdownButton<dynamic>(
-                                //             // value: sState,
-                                //             hint: Text(
-                                //               marketValue,
-                                //               // 'Select State',
-                                //               style: TextStyle(
-                                //                 fontSize: 14,
-                                //                 color: marketValue != null
-                                //                     ? Clr().black
-                                //                     : Color(0xff787882),
-                                //                 // color: Color(0xff787882),
-                                //                 fontFamily: 'Inter',
-                                //               ),
-                                //             ),
-                                //             isExpanded: true,
-                                //             icon: SvgPicture.asset(
-                                //                 'assets/dropdown.svg'),
-                                //             style: TextStyle(
-                                //                 color: marketValue != null
-                                //                     ? Clr().black
-                                //                     : Color(0xff000000)),
-                                //             // style: TextStyle(color: Color(0xff787882)),
-                                //             items: marketList.map((string) {
-                                //               return DropdownMenuItem<String>(
-                                //                 value: string,
-                                //                 // value: string['id'].toString(),
-                                //                 child: Text(
-                                //                   string,
-                                //                   // string['name'],
-                                //                   style: TextStyle(
-                                //                       color: Clr().black,
-                                //                       fontSize: 14),
-                                //                 ),
-                                //               );
-                                //             }).toList(),
-                                //             onChanged: (v) {
-                                //               setState(() {
-                                //                 marketValue = v.toString();
-                                //                 // totalAmountlayut(
-                                //                 //     lev: marketValue);
-                                //                 requiredFundAmt();
-                                //               });
-                                //               // setState(() {
-                                //               //   // genderValue = v.toString();
-                                //               //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
-                                //               //   // stateId = genderlist[postion]['id'].toString();
-                                //               //   // cityValue = null;
-                                //               //   // cityList = genderlist[postion]['city'];
-                                //               // });
-                                //             },
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                              ],
+                              ),
                             ),
                           ),
+                          // Row(
+                          //   children: [
+                          //
+                          //     SizedBox(
+                          //       width: Dim().d12,
+                          //     ),
+                          //     Container(
+                          //       width: 60,
+                          //       height: 40,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius:
+                          //               BorderRadius.circular(5),
+                          //           border: Border.all(
+                          //               color: Clr().borderColor)),
+                          //       child: Padding(
+                          //         padding: EdgeInsets.symmetric(
+                          //             horizontal: Dim().d8),
+                          //         child: DropdownButtonHideUnderline(
+                          //           child: DropdownButton<dynamic>(
+                          //             // value: sState,
+                          //             hint: Text(
+                          //               marketValue,
+                          //               // 'Select State',
+                          //               style: TextStyle(
+                          //                 fontSize: 14,
+                          //                 color: marketValue != null
+                          //                     ? Clr().black
+                          //                     : Color(0xff787882),
+                          //                 // color: Color(0xff787882),
+                          //                 fontFamily: 'Inter',
+                          //               ),
+                          //             ),
+                          //             isExpanded: true,
+                          //             icon: SvgPicture.asset(
+                          //                 'assets/dropdown.svg'),
+                          //             style: TextStyle(
+                          //                 color: marketValue != null
+                          //                     ? Clr().black
+                          //                     : Color(0xff000000)),
+                          //             // style: TextStyle(color: Color(0xff787882)),
+                          //             items: marketList.map((string) {
+                          //               return DropdownMenuItem<String>(
+                          //                 value: string,
+                          //                 // value: string['id'].toString(),
+                          //                 child: Text(
+                          //                   string,
+                          //                   // string['name'],
+                          //                   style: TextStyle(
+                          //                       color: Clr().black,
+                          //                       fontSize: 14),
+                          //                 ),
+                          //               );
+                          //             }).toList(),
+                          //             onChanged: (v) {
+                          //               setState(() {
+                          //                 marketValue = v.toString();
+                          //                 // totalAmountlayut(
+                          //                 //     lev: marketValue);
+                          //                 requiredFundAmt();
+                          //               });
+                          //               // setState(() {
+                          //               //   // genderValue = v.toString();
+                          //               //   // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
+                          //               //   // stateId = genderlist[postion]['id'].toString();
+                          //               //   // cityValue = null;
+                          //               //   // cityList = genderlist[postion]['city'];
+                          //               // });
+                          //             },
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           SizedBox(height: Dim().d120),
                           Text(
                             'Break up',
                             style: TextStyle(
-                                color: Color(0xFF013076), fontSize: 16),
+                                color: Clr().white, fontSize: 16),
                           ),
                           SizedBox(height: Dim().d4),
                           Divider(
-                            color: Color(0xFF013076),
+                            color: Clr().clr67,
                             thickness: 1.2,
                           ),
                           SizedBox(height: Dim().d4),
@@ -1140,14 +1035,14 @@ class _BuyStockState extends State<BuyStock> {
                                 Text(
                                   'Market Value:- ',
                                   style: Sty().microText.copyWith(
-                                      color: Clr().clr49,
+                                      color: Clr().white,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
-                                  '${totaloMarketValue == null ? 00 : totaloMarketValue.toString().contains('.') ? double.parse(totaloMarketValue.toString()).toStringAsFixed(2) : totaloMarketValue.toString()}',
+                                  ' ${totaloMarketValue == null ? 00 : totaloMarketValue.toString().contains('.') ? double.parse(totaloMarketValue.toString()).toStringAsFixed(2) : totaloMarketValue.toString()}',
                                   style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -1159,14 +1054,14 @@ class _BuyStockState extends State<BuyStock> {
                                 Text(
                                   'Leverage:- ',
                                   style: Sty().microText.copyWith(
-                                      color: Clr().clr49,
+                                      color: Clr().white,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
                                   '${marketValue}',
                                   style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -1178,14 +1073,14 @@ class _BuyStockState extends State<BuyStock> {
                                 Text(
                                   'Required Funds:- ',
                                   style: Sty().microText.copyWith(
-                                      color: Clr().clr49,
+                                      color: Clr().white,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
                                   '${requiredFund == null ? 00 : requiredFund.toString().contains('.') ? double.parse(requiredFund.toString()).toStringAsFixed(2) : requiredFund.toString()}',
                                   style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -1197,14 +1092,14 @@ class _BuyStockState extends State<BuyStock> {
                                 Text(
                                   'Leverage Amount:- ',
                                   style: Sty().microText.copyWith(
-                                      color: Clr().clr49,
+                                      color: Clr().white,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
                                   '${leverageAmtFund == null ? 00 : leverageAmtFund.toString().contains('.') ? double.parse(leverageAmtFund.toString()).toStringAsFixed(2) : leverageAmtFund.toString()}',
                                   style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -1326,14 +1221,14 @@ class _BuyStockState extends State<BuyStock> {
                 Row(
                   children: [
                     Text(
-                      'Price',
+                      'Price:',
                       style: Sty().microText.copyWith(
                           color: Clr().clr49,
                           fontSize: Dim().d12,
                           fontWeight: FontWeight.w400),
                     ),
                     Text(
-                      '₹ ${priceCtrl.text}',
+                      ' ₹ ${priceCtrl.text}',
                       style: Sty().smallText.copyWith(
                           color: Clr().clr2c,
                           fontSize: Dim().d14,

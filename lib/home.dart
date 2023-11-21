@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:dio/dio.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/material.dart';
@@ -116,34 +117,43 @@ class _HomeState extends State<Home> {
     return DoubleBack(
       message: 'Please press back once again!!',
       child: Scaffold(
-        bottomNavigationBar: bottomBarLayout(ctx, 0, stream),
-        backgroundColor: Clr().white,
-        body: updateType.isEmpty
-            ? SizedBox(
-                height: MediaQuery.of(ctx).size.height / 1.3,
-                child: Center(
-                  child: CircularProgressIndicator(color: Clr().primaryColor),
-                ),
-              )
-            : UpgradeAlert(
-                upgrader: Upgrader(
-                  canDismissDialog: false,
-                  dialogStyle: UpgradeDialogStyle.material,
-                  durationUntilAlertAgain: Duration(seconds: 2),
-                  showReleaseNotes: true,
-                  onUpdate: () {
-                    updateType['update_type'] == false
-                        ? Future.delayed(Duration(seconds: 1), () {
-                            SystemNavigator.pop();
-                          })
-                        : null;
-                    return true;
-                  },
-                  showIgnore: updateType['update_type'],
-                  showLater: updateType['update_type'],
-                ),
-                child: homeLayout()),
-      ),
+          bottomNavigationBar: bottomBarLayout(ctx, 0, stream),
+          body: SizedBox(
+            height: MediaQuery.of(ctx).size.height,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(begin: Alignment.topCenter,end: Alignment.bottomCenter,colors: [
+                Color(0xff060D15),
+                Color(0xff131F2E),
+              ])),
+              child: updateType.isEmpty
+                  ? SizedBox(
+                      height: MediaQuery.of(ctx).size.height / 1.3,
+                      child: Center(
+                        child:
+                            CircularProgressIndicator(color: Clr().white),
+                      ),
+                    )
+                  : UpgradeAlert(
+                      upgrader: Upgrader(
+                        canDismissDialog: false,
+                        dialogStyle: UpgradeDialogStyle.material,
+                        durationUntilAlertAgain: Duration(seconds: 2),
+                        showReleaseNotes: true,
+                        onUpdate: () {
+                          updateType['update_type'] == false
+                              ? Future.delayed(Duration(seconds: 1), () {
+                                  SystemNavigator.pop();
+                                })
+                              : null;
+                          return true;
+                        },
+                        showIgnore: updateType['update_type'],
+                        showLater: updateType['update_type'],
+                      ),
+                      child: homeLayout()),
+            ),
+          )),
     );
   }
 
@@ -157,290 +167,298 @@ class _HomeState extends State<Home> {
           });
         });
       },
-      color: Clr().primaryColor,
+      color: Clr().white,
+      backgroundColor: Clr().black,
       child: SingleChildScrollView(
+        padding:
+            EdgeInsets.symmetric(horizontal: Dim().d16, vertical: Dim().d56),
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Image.asset('assets/homelogo.png', height: Dim().d40),
+                    SizedBox(width: Dim().d12),
+                    Text('Hi, ${profileList == null ? '' : profileList['name']}',
+                        style: Sty().mediumText.copyWith(
+                            color: Clr().white,
+                            fontSize: Dim().d20,
+                            fontWeight: FontWeight.w600))
+                  ],
+                ),
+                InkWell(
+                    onTap: () {
+                      STM().replacePage(ctx, SearchStocks(type: 'home'));
+                    },
+                    child: SvgPicture.asset('assets/search.svg')),
+              ],
+            ),
+            SizedBox(height: Dim().d28),
             Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(Dim().d28),
-                      bottomRight: Radius.circular(Dim().d28)),
-                  color: Clr().clr01),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    left: Dim().d16, top: Dim().d56, right: Dim().d20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Image.asset('assets/sp.png', height: Dim().d36),
-                            SizedBox(width: Dim().d12),
-                            Text('SPECTRAI',
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.white10, spreadRadius: 1, )
+                  ],
+                  color: Clr().black,
+                  border: Border.all(color: Clr().white, width: 0.2),
+                  borderRadius: BorderRadius.all(Radius.circular(Dim().d12))),
+              child: BlurryContainer(
+                blur: 10,
+                width: double.infinity,
+                color: Clr().transparent,
+                elevation: 1.0,
+                borderRadius: BorderRadius.all(Radius.circular(Dim().d12)),
+                child: Padding(
+                  padding: EdgeInsets.all(Dim().d14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text('${indesList[0]['symbol']}  :',
+                                  style: Sty().mediumText.copyWith(
+                                      color: Clr().white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: Dim().d14)),
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  indesList[0]['net_change']
+                                          .toString()
+                                          .contains('-')
+                                      ? Image.asset(
+                                          'assets/failedarrow.png',
+                                          height: Dim().d24,
+                                          width: Dim().d16,
+                                        )
+                                      : Image.asset(
+                                          'assets/successarrow.png',
+                                          height: Dim().d24,
+                                          width: Dim().d16,
+                                        ),
+                                  Text(
+                                    '${indesList[0]['last_price']}',
+                                    style: Sty().mediumText.copyWith(
+                                          fontSize: Dim().d16,
+                                          color: indesList[0]['net_change']
+                                                  .toString()
+                                                  .contains('-')
+                                              ? Clr().red
+                                              : Clr().green,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            children: [
+                              Text(
+                                '${indesList[0]['net_change']}',
                                 style: Sty().mediumText.copyWith(
-                                    color: Clr().white,
-                                    fontSize: Dim().d20,
-                                    fontWeight: FontWeight.w600))
-                          ],
-                        ),
-                        InkWell(
-                            onTap: () {
-                              STM()
-                                  .replacePage(ctx, SearchStocks(type: 'home'));
+                                    color: Clr().clr67,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: Dim().d14),
+                              ),
+                              Text(
+                                ' (${indesList[0]['net_change_ercentage']})',
+                                style: Sty().mediumText.copyWith(
+                                    color: Clr().clr67,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: Dim().d14),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Divider(
+                        color: Clr().clr67,
+                        height: Dim().d20,
+                        thickness: 0.2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text('${indesList[1]['symbol']}  :',
+                                  style: Sty().mediumText.copyWith(
+                                      color: Clr().white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: Dim().d14)),
+                              Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  indesList[1]['net_change']
+                                          .toString()
+                                          .contains('-')
+                                      ? Image.asset(
+                                          'assets/failedarrow.png',
+                                          height: Dim().d24,
+                                          width: Dim().d16,
+                                        )
+                                      : Image.asset(
+                                          'assets/successarrow.png',
+                                          height: Dim().d24,
+                                          width: Dim().d16,
+                                        ),
+                                  Text(
+                                    '${indesList[1]['last_price']}',
+                                    style: Sty().mediumText.copyWith(
+                                          fontSize: Dim().d16,
+                                          color: indesList[1]['net_change']
+                                                  .toString()
+                                                  .contains('-')
+                                              ? Clr().red
+                                              : Clr().green,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          Wrap(
+                            children: [
+                              Text(
+                                '${indesList[1]['net_change']}',
+                                style: Sty().mediumText.copyWith(
+                                    color: Clr().clr67,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: Dim().d14),
+                              ),
+                              Text(
+                                ' (${indesList[1]['net_change_ercentage']})',
+                                style: Sty().mediumText.copyWith(
+                                    color: Clr().clr67,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: Dim().d14),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: Dim().d32),
+            Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.white10, spreadRadius: 1, )
+                  ],
+                  color: Clr().black,
+                  border: Border.all(color: Clr().white, width: 0.2),
+                  borderRadius: BorderRadius.all(Radius.circular(Dim().d12))),
+              child: BlurryContainer(
+                blur: 10,
+                width: double.infinity,
+                color: Clr().transparent,
+                elevation: 1.0,
+                borderRadius: BorderRadius.all(Radius.circular(Dim().d12)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dim().d8, horizontal: Dim().d12),
+                      child: Text(
+                        'Market Today',
+                        style: Sty().largeText.copyWith(
+                            color: Clr().white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: Dim().d20),
+                      ),
+                    ),
+                    StreamBuilder(
+                        stream: stream,
+                        builder: (context, AsyncSnapshot snapshot) {
+                          return ListView.separated(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: stockList.length,
+                            // itemCount: 3,//stockList.length,
+                            itemBuilder: (ctx, index) {
+                              return marketLayout(ctx, index,
+                                  stockList[index]); //stockList[index]
                             },
-                            child: SvgPicture.asset('assets/search.svg',
-                                color: Clr().white)),
-                      ],
-                    ),
-                    SizedBox(height: Dim().d28),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(Dim().d12),
-                                border: Border.all(color: Clr().clr164a)),
-                            child: Padding(
-                              padding: EdgeInsets.all(Dim().d8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('${indesList[0]['symbol']}',
-                                      style: Sty().mediumText.copyWith(
-                                          color: Clr().white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: Dim().d14)),
-                                  Divider(
-                                    color: Clr().clr164a,
-                                    thickness: 1,
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset('assets/nifty.png',
-                                          height: Dim().d20),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Wrap(
-                                            crossAxisAlignment:
-                                                WrapCrossAlignment.center,
-                                            children: [
-                                              indesList[0]['net_change']
-                                                      .toString()
-                                                      .contains('-')
-                                                  ? Image.asset(
-                                                      'assets/failedarrow.png',
-                                                      height: Dim().d24,
-                                                      width: Dim().d16,
-                                                    )
-                                                  : Image.asset(
-                                                      'assets/successarrow.png',
-                                                      height: Dim().d24,
-                                                      width: Dim().d16,
-                                                    ),
-                                              Text(
-                                                '${indesList[0]['last_price']}',
-                                                style: Sty()
-                                                    .mediumText
-                                                    .copyWith(
-                                                      fontSize: Dim().d24,
-                                                      color: indesList[0]
-                                                                  ['net_change']
-                                                              .toString()
-                                                              .contains('-')
-                                                          ? Clr().red
-                                                          : Clr().green,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(height: Dim().d12),
-                                          Text(
-                                            '${indesList[0]['net_change']}',
-                                            style: Sty().mediumText.copyWith(
-                                                color: Clr().clr56,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: Dim().d14),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: Dim().d12),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(Dim().d12),
-                                border: Border.all(color: Clr().clr164a)),
-                            child: Padding(
-                              padding: EdgeInsets.all(Dim().d8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('${indesList[1]['symbol']}',
-                                      style: Sty().mediumText.copyWith(
-                                          color: Clr().white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: Dim().d14)),
-                                  Divider(
-                                    color: Clr().clr164a,
-                                    thickness: 1,
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset('assets/nifty.png',
-                                          height: Dim().d20),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Wrap(
-                                            crossAxisAlignment:
-                                                WrapCrossAlignment.center,
-                                            children: [
-                                              indesList[1]['net_change']
-                                                      .toString()
-                                                      .contains('-')
-                                                  ? Image.asset(
-                                                      'assets/failedarrow.png',
-                                                      height: Dim().d24,
-                                                      width: Dim().d16,
-                                                    )
-                                                  : Image.asset(
-                                                      'assets/successarrow.png',
-                                                      height: Dim().d24,
-                                                      width: Dim().d16,
-                                                    ),
-                                              Text(
-                                                '${indesList[1]['last_price']}',
-                                                style: Sty()
-                                                    .mediumText
-                                                    .copyWith(
-                                                      fontSize: Dim().d24,
-                                                      color: indesList[1]
-                                                                  ['net_change']
-                                                              .toString()
-                                                              .contains('-')
-                                                          ? Clr().red
-                                                          : Clr().green,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                    ),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(height: Dim().d12),
-                                          Text(
-                                            '${indesList[1]['net_change']}',
-                                            style: Sty().mediumText.copyWith(
-                                                color: Clr().clr56,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: Dim().d14),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Dim().d20),
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: Dim().d8,
+                              );
+                            },
+                          );
+                        }),
                   ],
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dim().d12, vertical: Dim().d16),
-              child: Text(
-                'Market Today',
-                style: Sty().largeText.copyWith(
-                    color: Clr().primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: Dim().d20),
-              ),
-            ),
-            // stockList.isEmpty
-            //     ? Container()
-            //     :
-            StreamBuilder(
-                stream: stream,
-                builder: (context, AsyncSnapshot snapshot) {
-                  return ListView.separated(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    itemCount: stockList.length,
-                    // itemCount: 3,//stockList.length,
-                    itemBuilder: (ctx, index) {
-                      return marketLayout(
-                          ctx, index, stockList[index]); //stockList[index]
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(
-                        height: Dim().d8,
-                      );
-                    },
-                  );
-                }),
             SizedBox(
               height: Dim().d28,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dim().d12, vertical: Dim().d24),
-              child: Text(
-                'Top Companies',
-                style: Sty().largeText.copyWith(
-                    color: Clr().primaryColor, fontWeight: FontWeight.w600),
+            Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.white10, spreadRadius: 1, )
+                  ],
+                  color: Clr().black,
+                  border: Border.all(color: Clr().white, width: 0.2),
+                  borderRadius: BorderRadius.all(Radius.circular(Dim().d12))),
+              child: BlurryContainer(
+                blur: 10,
+                width: double.infinity,
+                color: Clr().transparent,
+                elevation: 1.0,
+                borderRadius: BorderRadius.all(Radius.circular(Dim().d12)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dim().d8, horizontal: Dim().d12),
+                      child: Text(
+                        'Top Companies',
+                        style: Sty().largeText.copyWith(
+                            color: Clr().white, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    ListView.separated(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: topCompList.length,
+                      // itemCount: 3,
+                      itemBuilder: (ctx, index) {
+                        return marketLayout(ctx, index, topCompList[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: Dim().d8,
+                        );
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: BouncingScrollPhysics(),
-              itemCount: topCompList.length,
-              // itemCount: 3,
-              itemBuilder: (ctx, index) {
-                return marketLayout(ctx, index, topCompList[index]);
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: Dim().d8,
-                );
-              },
-            )
           ],
         ),
       ),
@@ -448,158 +466,158 @@ class _HomeState extends State<Home> {
   }
 
   Widget marketLayout(ctx, index, v) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: Dim().d12),
-      child: InkWell(
-        onTap: () {
-          // STM().redirect2page(context, BuyStock(details: '',));
-          print(v);
-          STM().finishAffinity(
-              ctx,
-              StockChart(
-                details: v,
-                type: 'home',
-              ));
-        },
+    return InkWell(
+      onTap: () {
+        // STM().redirect2page(context, BuyStock(details: '',));
+        print(v);
+        STM().finishAffinity(
+            ctx,
+            StockChart(
+              details: v,
+              type: 'home',
+            ));
+      },
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: Dim().d12, vertical: Dim().d8),
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dim().d12),
-              border: Border.all(color: Clr().clrec, width: 1.0)),
-          child: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            // 'TITAN',
-                            '${v['symbol']}',
-                            style: Sty().smallText.copyWith(
-                                color: Clr().clr2c,
-                                fontSize: Dim().d14,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: Dim().d8,
-                          ),
-                          Text(
-                            // 'Titan Company Limited',
-                            '${v['company_name']}',
-                            style: Sty().microText.copyWith(
-                                color: Clr().clr49,
-                                fontSize: Dim().d12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
+              border:
+                  Border(bottom: BorderSide(color: Clr().clr67, width: 0.2))),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          // 'TITAN',
+                          '${v['symbol']}',
+                          style: Sty().smallText.copyWith(
+                              color: Clr().white,
+                              fontSize: Dim().d14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: Dim().d12,
+                        ),
+                        Text(
+                          // 'Titan Company Limited',
+                          '${v['company_name']}',
+                          style: Sty().microText.copyWith(
+                              color: Clr().clr67,
+                              fontSize: Dim().d12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: Dim().d12,
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              v['net_change'].toString().contains('-')
-                                  ? Icon(Icons.arrow_downward_outlined,
-                                      color: Clr().red, size: Dim().d16)
-                                  : Icon(Icons.arrow_upward_outlined,
-                                      color: Clr().green, size: Dim().d16),
-                              // Icon(Icons.arrow_downward_outlined,
-                              //     color: Clr().red, size: Dim().d16),
-                              SizedBox(
-                                width: Dim().d8,
-                              ),
-                              // LiveDataBuilder(
-                              //     builder: (BuildContext context, value) {
-                              //       return Text(
-                              //         '${v['last_price']}',
-                              //         style: Sty().smallText.copyWith(
-                              //             fontSize: Dim().d16,
-                              //             fontWeight: FontWeight.w500,
-                              //             color:
-                              //                 v['net_change'].toString().contains('-')
-                              //                     ? Clr().red
-                              //                     : Clr().green),
-                              //       );
-                              //     },
-                              //     data: ),
-                              // xData(v['last_price']),
-                              Text(
-                                // '212.66',
-                                '${v['last_price']}',
-                                style: Sty().smallText.copyWith(
-                                    fontSize: Dim().d14,
-                                    fontWeight: FontWeight.w600,
-                                    color:
-                                        v['net_change'].toString().contains('-')
-                                            ? Clr().red
-                                            : Clr().green),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: Dim().d8,
-                          ),
-                          Text(
-                            // '-1.26 (-0.59%)',
-                            '${v['net_change']} (${v['net_change_ercentage']})',
-                            style: Sty().microText.copyWith(
-                                color: Clr().clr49,
-                                fontSize: Dim().d12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            v['net_change'].toString().contains('-')
+                                ? Icon(Icons.arrow_downward_outlined,
+                                    color: Clr().red, size: Dim().d16)
+                                : Icon(Icons.arrow_upward_outlined,
+                                    color: Clr().green, size: Dim().d16),
+                            // Icon(Icons.arrow_downward_outlined,
+                            //     color: Clr().red, size: Dim().d16),
+                            SizedBox(
+                              width: Dim().d8,
+                            ),
+                            // LiveDataBuilder(
+                            //     builder: (BuildContext context, value) {
+                            //       return Text(
+                            //         '${v['last_price']}',
+                            //         style: Sty().smallText.copyWith(
+                            //             fontSize: Dim().d16,
+                            //             fontWeight: FontWeight.w500,
+                            //             color:
+                            //                 v['net_change'].toString().contains('-')
+                            //                     ? Clr().red
+                            //                     : Clr().green),
+                            //       );
+                            //     },
+                            //     data: ),
+                            // xData(v['last_price']),
+                            Text(
+                              // '212.66',
+                              '${v['last_price']}',
+                              style: Sty().smallText.copyWith(
+                                  fontSize: Dim().d14,
+                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      v['net_change'].toString().contains('-')
+                                          ? Clr().red
+                                          : Clr().green),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: Dim().d8,
+                        ),
+                        Text(
+                          // '-1.26 (-0.59%)',
+                          '${v['net_change']} (${v['net_change_ercentage']})',
+                          style: Sty().microText.copyWith(
+                              color: Clr().clr67,
+                              fontSize: Dim().d12,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: Dim().d16),
-                    isLike.map((e) => e.toString()).contains(v['id'].toString())
-                        ? InkWell(
-                            onTap: () {
-                              apiType(
-                                  apiname: 'remove_favourite',
-                                  type: 'post',
-                                  value: v['id']);
-                              if (isdislike.contains(v['id'])) {
-                                setState(() {
-                                  isdislike.remove(v['id']);
-                                });
-                              } else {
-                                setState(() {
-                                  isLike.remove(v['id']);
-                                  isdislike.add(v['id']);
-                                });
-                              }
-                            },
-                            child: SvgPicture.asset('assets/star.svg'))
-                        : InkWell(
-                            onTap: () {
-                              apiType(
-                                  apiname: 'add_favourite',
-                                  type: 'post',
-                                  value: v['id']);
-                              if (isLike.contains(v['id'])) {
-                                setState(() {
-                                  isLike.remove(v['id']);
-                                });
-                              } else {
-                                setState(() {
-                                  isdislike.remove(v['id']);
-                                  isLike.add(v['id']);
-                                });
-                              }
-                            },
-                            child:
-                                SvgPicture.asset('assets/watchlisticon.svg')),
-                    // SvgPicture.asset('assets/watchlisticon.svg')
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  SizedBox(width: Dim().d16),
+                  isLike.map((e) => e.toString()).contains(v['id'].toString())
+                      ? InkWell(
+                          onTap: () {
+                            apiType(
+                                apiname: 'remove_favourite',
+                                type: 'post',
+                                value: v['id']);
+                            if (isdislike.contains(v['id'])) {
+                              setState(() {
+                                isdislike.remove(v['id']);
+                              });
+                            } else {
+                              setState(() {
+                                isLike.remove(v['id']);
+                                isdislike.add(v['id']);
+                              });
+                            }
+                          },
+                          child: SvgPicture.asset('assets/star.svg'))
+                      : InkWell(
+                          onTap: () {
+                            apiType(
+                                apiname: 'add_favourite',
+                                type: 'post',
+                                value: v['id']);
+                            if (isLike.contains(v['id'])) {
+                              setState(() {
+                                isLike.remove(v['id']);
+                              });
+                            } else {
+                              setState(() {
+                                isdislike.remove(v['id']);
+                                isLike.add(v['id']);
+                              });
+                            }
+                          },
+                          child: SvgPicture.asset('assets/watchlisticon.svg')),
+                  // SvgPicture.asset('assets/watchlisticon.svg')
+                ],
+              ),
+            ],
           ),
         ),
       ),

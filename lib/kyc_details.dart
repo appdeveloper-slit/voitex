@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -100,7 +101,7 @@ class _KYCDetailsState extends State<KYCDetails> {
         if (type == 1) {
           kycDetail();
         } else {
-          if (widget.type == 'bank') {
+          if (verify == 1) {
             kycDetail();
           } else {
             if (aadhar == true) {
@@ -207,700 +208,623 @@ class _KYCDetailsState extends State<KYCDetails> {
         return false;
       },
       child: Scaffold(
-          backgroundColor: Clr().white,
-          bottomSheet: Container(
-            decoration: BoxDecoration(color: Clr().white, boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 3,
-                spreadRadius: 1,
-              )
-            ]),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(Dim().d14),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: aadhar == true ? Clr().clr01 : Color(0xffa6ccd3),
-                      borderRadius: BorderRadius.circular(Dim().d16),
-                    ),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            if (widget.type == 'edit') {
-                              aadhar == true ? validates(0) : null;
-                            } else {
-                              if (profile != null) {
-                                aadhar == true ? validates(0) : null;
-                              }
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            primary: Colors.transparent,
-                            onSurface: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5))),
-                        child: Text(
-                          'Next',
-                          style: Sty().largeText.copyWith(
-                              fontSize: 16,
-                              color: Clr().f5,
-                              fontWeight: FontWeight.w600),
-                        )),
-                  ),
-                ),
-                aadhar == true
-                    ? Container()
-                    : widget.type == 'edit'
-                        ? Container()
-                        : InkWell(
-                            onTap: () {
-                              validates(1);
-                            },
-                            child: Text('skip',
-                                style: Sty().mediumText.copyWith(
-                                    color: Clr().clr00,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: Dim().d12)),
-                          ),
-                SizedBox(height: Dim().d12),
-              ],
-            ),
-          ),
+          backgroundColor: Clr().black,
           appBar: AppBar(
-            backgroundColor: Clr().white,
+            backgroundColor: Clr().black,
             elevation: 0,
-            // leading: InkWell(
-            //     onTap: () {
-            //       STM().back2Previous(ctx);
-            //     },
-            //     child: Icon(Icons.arrow_back, color: Clr().primaryColor)),
-            title: Text('KYC Details',
-                style: Sty().mediumText.copyWith(
-                    color: Clr().primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: Dim().d20)),
-            centerTitle: true,
+            leading: InkWell(
+                onTap: () {
+                  STM().back2Previous(ctx);
+                },
+                child: Icon(Icons.arrow_back_ios,
+                    size: Dim().d16, color: Clr().white)),
+            // title: Text('KYC Details',
+            //     style: Sty().mediumText.copyWith(
+            //         color: Clr().primaryColor,
+            //         fontWeight: FontWeight.w600,
+            //         fontSize: Dim().d20)),
+            // centerTitle: true,
             actions: [
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dim().d14, vertical: Dim().d20),
                 child: Text('Step 2 of 3',
                     style: Sty().smallText.copyWith(
-                        color: Clr().clr00,
+                        color: Clr().white,
                         fontSize: Dim().d12,
                         fontWeight: FontWeight.w400)),
               ),
             ],
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(Dim().d16),
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    controller: aadharNum,
-                    cursorColor: Clr().primaryColor,
-                    style: Sty().smallText.copyWith(
-                        color: Clr().clr16,
-                        fontSize: Dim().d14,
-                        fontWeight: FontWeight.w400),
-                    keyboardType: TextInputType.number,
-                    textInputAction: TextInputAction.done,
-                    onTap: () {
-                      setState(() {
-                        _selectIndex = 0;
-                      });
-                    },
-                    decoration: Sty().textFileddarklinestyle.copyWith(
-                          fillColor: Clr().white,
-                          filled: true,
-                          suffixIcon: aadhar == true
-                              ? Icon(
-                                  Icons.check_circle,
-                                  color: Clr().green,
-                                )
-                              : null,
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: SvgPicture.asset('assets/pan.svg',
-                                color: aadharNum.text.isNotEmpty
-                                    ? Clr().primaryColor
-                                    : Clr().a4),
-                          ),
-                          hintStyle: Sty().smallText.copyWith(
-                                color: Clr().a4,
-                                fontWeight: FontWeight.w400,
-                                fontSize: Dim().d14,
-                              ),
-                          hintText: "Enter Aadhaar Card Number",
-                          counterText: "",
-                        ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Aadhaar card number is required';
-                      }
-                      if (!RegExp(r'^[2-9]\d{11}').hasMatch(value)) {
-                        return "Please enter a valid aadhaar card number";
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: Dim().d12,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: Clr().background1,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(Dim().d14),
-                                            topRight:
-                                                Radius.circular(Dim().d14))),
-                                    builder: (index) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: Dim().d12,
-                                                vertical: Dim().d20),
-                                            child: Text('Aadhaar Front Photo',
-                                                style: Sty().mediumBoldText),
-                                          ),
-                                          SizedBox(height: Dim().d28),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  _getProfile(
-                                                      ImageSource.camera,
-                                                      'aadhar front');
-                                                },
-                                                child: Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  color: Clr().primaryColor,
-                                                  size: Dim().d32,
-                                                ),
-                                              ),
-                                              InkWell(
-                                                  onTap: () {
-                                                    _getProfile(
-                                                        ImageSource.gallery,
-                                                        'aadhar front');
-                                                  },
-                                                  child: Icon(
-                                                    Icons.yard_outlined,
-                                                    size: Dim().d32,
-                                                    color: Clr().primaryColor,
-                                                  )),
-                                            ],
-                                          ),
-                                          SizedBox(height: Dim().d40),
-                                        ],
-                                      );
-                                    });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Clr().white,
-                                    borderRadius:
-                                        BorderRadius.circular(Dim().d16),
-                                    border: Border.all(
-                                        color: aadharBck != null
-                                            ? Clr().primaryColor
-                                            : Clr().a4,
-                                        width: 0.5)),
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: Dim().d8),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: SvgPicture.asset(
-                                            'assets/upload.svg',
-                                            color: aadharFrt != null
-                                                ? Clr().primaryColor
-                                                : Clr().a4,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            aadharFrt != null
-                                                ? 'Image selected'
-                                                : 'Upload Aadhaar Front Card',
-                                            style: Sty().smallText.copyWith(
-                                                  color: aadharFrt != null
-                                                      ? Clr().primaryColor
-                                                      : Clr().a4,
-                                                ),
-                                          ),
-                                        )
-                                      ],
-                                    )),
-                              ),
-                            ),
-                            if (aadharFrtTxt != '' && aadharFrtTxt != null)
-                              Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dim().d20),
-                                  child: Text('${aadharFrtTxt}',
-                                      style: Sty()
-                                          .smallText
-                                          .copyWith(color: Clr().errorRed))),
-                            if (aadharFrtTxt != '' && aadharFrtTxt != null)
-                              SizedBox(height: Dim().d12),
-                            SizedBox(height: Dim().d12),
-                            imageLayout(
-                                'Front Side',
-                                widget.type == 'edit'
-                                    ? widget.data[1]['aadhar_front']
-                                    : aadharFrtFile),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: Dim().d8),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: Clr().background1,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(Dim().d14),
-                                            topRight:
-                                                Radius.circular(Dim().d14))),
-                                    builder: (index) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: Dim().d12,
-                                                vertical: Dim().d20),
-                                            child: Text('Aadhaar Back Photo',
-                                                style: Sty().mediumBoldText),
-                                          ),
-                                          SizedBox(height: Dim().d28),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  _getProfile(
-                                                      ImageSource.camera,
-                                                      'aadhar back');
-                                                },
-                                                child: Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  color: Clr().primaryColor,
-                                                  size: Dim().d32,
-                                                ),
-                                              ),
-                                              InkWell(
-                                                  onTap: () {
-                                                    _getProfile(
-                                                        ImageSource.gallery,
-                                                        'aadhar back');
-                                                  },
-                                                  child: Icon(
-                                                    Icons.yard_outlined,
-                                                    size: Dim().d32,
-                                                    color: Clr().primaryColor,
-                                                  )),
-                                            ],
-                                          ),
-                                          SizedBox(height: Dim().d40),
-                                        ],
-                                      );
-                                    });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(Dim().d16),
-                                    color: Clr().white,
-                                    border: Border.all(
-                                        color: aadharBck != null
-                                            ? Clr().primaryColor
-                                            : Clr().a4,
-                                        width: 0.5)),
-                                child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: Dim().d8),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 1,
-                                          child: SvgPicture.asset(
-                                            'assets/upload.svg',
-                                            color: aadharBck != null
-                                                ? Clr().primaryColor
-                                                : Clr().a4,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 3,
-                                          child: Text(
-                                            aadharBck != null
-                                                ? 'Image selected'
-                                                : 'Upload Aadhaar Back Card',
-                                            style: Sty().smallText.copyWith(
-                                                  color: aadharBck != null
-                                                      ? Clr().primaryColor
-                                                      : Clr().a4,
-                                                ),
-                                          ),
-                                        )
-                                      ],
-                                    )),
-                              ),
-                            ),
-                            if (aadharBckTxt != '' && aadharBckTxt != null)
-                              Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dim().d20),
-                                  child: Text('${aadharBckTxt}',
-                                      style: Sty()
-                                          .smallText
-                                          .copyWith(color: Clr().errorRed))),
-                            if (aadharBckTxt != '' && aadharBckTxt != null)
-                              SizedBox(height: Dim().d12),
-                            SizedBox(height: Dim().d12),
-                            imageLayout(
-                                'Back Side',
-                                widget.type == 'edit'
-                                    ? widget.data[1]['aadhar_back']
-                                    : aadharBckFile),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: Dim().d20),
-                  aadhar == true
-                      ? Container()
-                      : Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Clr().clr01,
-                            borderRadius: BorderRadius.circular(Dim().d16),
-                          ),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                // STM().redirect2page(ctx, KYCDetails());
-                                validates(0);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  primary: Colors.transparent,
-                                  onSurface: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5))),
-                              child: Text(
-                                'Get OTP',
-                                style: Sty().largeText.copyWith(
-                                    fontSize: 16,
-                                    color: Clr().f5,
-                                    fontWeight: FontWeight.w600),
-                              )),
-                        ),
-                  SizedBox(height: Dim().d20),
-                  TextFormField(
-                    controller: panName,
-                    readOnly: panCheck == true ? true : false,
-                    cursorColor: Clr().primaryColor,
-                    style: Sty().smallText.copyWith(
-                        color: Clr().clr16,
-                        fontSize: Dim().d14,
-                        fontWeight: FontWeight.w400),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    onTap: () {
-                      setState(() {
-                        _selectIndex = 1;
-                      });
-                    },
-                    decoration: Sty().textFileddarklinestyle.copyWith(
-                          fillColor: Clr().white,
-                          filled: true,
-                          suffixIcon: panCheck == true
-                              ? Icon(
-                                  Icons.check_circle,
-                                  color: Clr().green,
-                                )
-                              : null,
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: SvgPicture.asset('assets/pan.svg',
-                                color: panName.text.isNotEmpty
-                                    ? Clr().primaryColor
-                                    : Clr().a4),
-                          ),
-                          hintStyle: Sty().smallText.copyWith(
-                                color: Clr().a4,
-                                fontWeight: FontWeight.w400,
-                                fontSize: Dim().d14,
-                              ),
-                          hintText: "Enter the same name on the PAN card",
-                          counterText: "",
-                        ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Enter the same name on the PAN card";
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: Dim().d12,
-                  ),
-                  TextFormField(
-                    controller: panNum,
-                    readOnly: panCheck == true ? true : false,
-                    cursorColor: Clr().primaryColor,
-                    style: Sty().smallText.copyWith(
-                        color: Clr().clr16,
-                        fontSize: Dim().d14,
-                        fontWeight: FontWeight.w400),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    onTap: () {
-                      setState(() {
-                        _selectIndex = 2;
-                      });
-                    },
-                    decoration: Sty().textFileddarklinestyle.copyWith(
-                          fillColor: Clr().white,
-                          filled: true,
-                          suffixIcon: panCheck == true
-                              ? Icon(
-                                  Icons.check_circle,
-                                  color: Clr().green,
-                                )
-                              : null,
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: SvgPicture.asset('assets/pan.svg',
-                                color: panNum.text.isNotEmpty
-                                    ? Clr().primaryColor
-                                    : Clr().a4),
-                          ),
-                          hintStyle: Sty().smallText.copyWith(
-                                color: Clr().a4,
-                                fontWeight: FontWeight.w400,
-                                fontSize: Dim().d14,
-                              ),
-                          hintText: "Enter Pan Card Number",
-                          counterText: "",
-                        ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Pan card number is required";
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: Dim().d12,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: Clr().background1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(Dim().d14),
-                                  topRight: Radius.circular(Dim().d14))),
-                          builder: (index) {
-                            return Column(
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: Dim().d56,
+                        left: Dim().d12,
+                        right: Dim().d12,
+                        bottom: Dim().d100),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                            top: -50.0,
+                            right: 2.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dim().d12,
-                                      vertical: Dim().d20),
-                                  child: Text('Profile Photo',
-                                      style: Sty().mediumBoldText),
-                                ),
-                                SizedBox(height: Dim().d28),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                Image.asset('assets/b1.png', height: Dim().d40),
+                                Image.asset('assets/b1.png',
+                                    height: Dim().d140),
+                              ],
+                            )),
+                        Positioned(
+                            left: 2.0,
+                            bottom: -56.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('assets/b1.png',
+                                    height: Dim().d120),
+                              ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: Dim().d24),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Clr().white, width: 0.2),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(Dim().d12))),
+                            child: BlurryContainer(
+                              blur: 10,
+                              width: double.infinity,
+                              color: Clr().transparent,
+                              elevation: 1.0,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(Dim().d12)),
+                              child: Padding(
+                                padding: EdgeInsets.all(Dim().d14),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        _getProfile(ImageSource.camera, 'kyc');
-                                      },
-                                      child: Icon(
-                                        Icons.camera_alt_outlined,
-                                        color: Clr().primaryColor,
-                                        size: Dim().d32,
-                                      ),
-                                    ),
-                                    InkWell(
-                                        onTap: () {
-                                          _getProfile(
-                                              ImageSource.gallery, 'kyc');
-                                        },
-                                        child: Icon(
-                                          Icons.yard_outlined,
-                                          size: Dim().d32,
-                                          color: Clr().primaryColor,
-                                        )),
+                                    adharCardLayout(),
+                                    panCardLayout(),
+                                    nextandskipbutton(),
                                   ],
                                 ),
-                                SizedBox(height: Dim().d40),
-                              ],
-                            );
-                          });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Clr().white,
-                          borderRadius: BorderRadius.circular(Dim().d16),
-                          border: Border.all(
-                              color: profile != null
-                                  ? Clr().primaryColor
-                                  : Clr().a4,
-                              width: 0.5)),
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: Dim().d14),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: Dim().d14),
-                                child: SvgPicture.asset(
-                                  'assets/upload.svg',
-                                  color: profile != null
-                                      ? Clr().primaryColor
-                                      : Clr().a4,
-                                ),
                               ),
-                              Text(
-                                profile != null
-                                    ? 'Pan card Image selected'
-                                    : 'Upload PAN Card',
-                                style: Sty().smallText.copyWith(
-                                      color: profile != null
-                                          ? Clr().primaryColor
-                                          : Clr().a4,
-                                    ),
-                              )
-                            ],
-                          )),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  if (panImgTxt != '' && panImgTxt != null)
-                    SizedBox(height: Dim().d12),
-                  if (panImgTxt != '' && panImgTxt != null)
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dim().d20),
-                        child: Text('${panImgTxt}',
-                            style: Sty()
-                                .smallText
-                                .copyWith(color: Clr().errorRed))),
-                  SizedBox(height: Dim().d12),
-                  imageLayout(
-                      'Pan Card',
-                      widget.type == 'edit'
-                          ? widget.data[0]['image']
-                          : imageFile),
-                  SizedBox(
-                    height: Dim().d120,
-                  ),
-                  // Row(
-                  //   children: [
-                  //     isChanged
-                  //         ? Expanded(
-                  //             child: AnimatedContainer(
-                  //               duration: Duration(milliseconds: 60),
-                  //               height: 50,
-                  //               decoration: BoxDecoration(
-                  //                   gradient: LinearGradient(
-                  //                 begin: Alignment(-1.0, 0.0),
-                  //                 end: Alignment(1.0, 0.0),
-                  //                 colors: [
-                  //                   Color(0xFF30B530),
-                  //                   Color(0xFF36B235),
-                  //                   Color(0xFF8CDE89),
-                  //                 ],
-                  //               )),
-                  //               child: ElevatedButton(
-                  //                   onPressed: () {
-                  //                     validates(0);
-                  //                   },
-                  //                   style: ElevatedButton.styleFrom(
-                  //                       elevation: 0,
-                  //                       primary: Colors.transparent,
-                  //                       onSurface: Colors.transparent,
-                  //                       shadowColor: Colors.transparent,
-                  //                       shape: RoundedRectangleBorder(
-                  //                           borderRadius:
-                  //                               BorderRadius.circular(5))),
-                  //                   child: Text(
-                  //                     isOtp
-                  //                         ? aadhar == true
-                  //                             ? 'Next'
-                  //                             : 'Submit OTP'
-                  //                         : 'Verify KYC Details',
-                  //                     style: Sty().largeText.copyWith(
-                  //                         fontSize: 16,
-                  //                         color: Clr().white,
-                  //                         fontWeight: FontWeight.w600),
-                  //                   )
-                  //
-                  //                   //     : Lottie.asset('animations/tick.json',
-                  //                   //     height: 100,
-                  //                   //     reverse: false,
-                  //                   //     repeat: true,
-                  //                   //     fit: BoxFit.cover
-                  //                   // ),
-                  //                   ),
-                  //             ),
-                  //           )
-                  //         : Align(
-                  //             alignment: Alignment.center,
-                  //             child: CircularProgressIndicator(
-                  //                 color: Clr().primaryColor),
-                  //           ),
-                  //   ],
-                  // ),
                 ],
               ),
             ),
           )),
+    );
+  }
+
+  /// panCardLayout
+  panCardLayout() {
+    return Column(
+      children: [
+        SizedBox(height: Dim().d20),
+        TextFormField(
+          controller: panName,
+          readOnly: panCheck == true ? true : false,
+          cursorColor: Clr().white,
+          style: Sty().smallText.copyWith(
+              color: Clr().white,
+              fontSize: Dim().d14,
+              fontWeight: FontWeight.w400),
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.done,
+          onTap: () {
+            setState(() {
+              _selectIndex = 1;
+            });
+          },
+          decoration: Sty().textFieldUnderlineStyle.copyWith(
+                suffixIcon: panCheck == true
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Clr().green,
+                      )
+                    : null,
+                hintStyle: Sty().smallText.copyWith(
+                      color: Clr().clr67,
+                      fontWeight: FontWeight.w400,
+                      fontSize: Dim().d14,
+                    ),
+                hintText: "Enter the same name on the PAN card",
+                counterText: "",
+              ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Enter the same name on the PAN card";
+            }
+          },
+        ),
+        SizedBox(
+          height: Dim().d12,
+        ),
+        TextFormField(
+          controller: panNum,
+          readOnly: panCheck == true ? true : false,
+          cursorColor: Clr().white,
+          style: Sty().smallText.copyWith(
+              color: Clr().white,
+              fontSize: Dim().d14,
+              fontWeight: FontWeight.w400),
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.done,
+          onTap: () {
+            setState(() {
+              _selectIndex = 2;
+            });
+          },
+          decoration: Sty().textFieldUnderlineStyle.copyWith(
+                suffixIcon: panCheck == true
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Clr().green,
+                      )
+                    : null,
+                hintStyle: Sty().smallText.copyWith(
+                      color: Clr().clr67,
+                      fontWeight: FontWeight.w400,
+                      fontSize: Dim().d14,
+                    ),
+                hintText: "Enter Pan Card Number",
+                counterText: "",
+              ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Pan card number is required";
+            }
+          },
+        ),
+        SizedBox(
+          height: Dim().d12,
+        ),
+        InkWell(
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                backgroundColor: Clr().background1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Dim().d14),
+                        topRight: Radius.circular(Dim().d14))),
+                builder: (index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dim().d12, vertical: Dim().d20),
+                        child:
+                            Text('Profile Photo', style: Sty().mediumBoldText),
+                      ),
+                      SizedBox(height: Dim().d28),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _getProfile(ImageSource.camera, 'kyc');
+                            },
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Clr().primaryColor,
+                              size: Dim().d32,
+                            ),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                _getProfile(ImageSource.gallery, 'kyc');
+                              },
+                              child: Icon(
+                                Icons.yard_outlined,
+                                size: Dim().d32,
+                                color: Clr().primaryColor,
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: Dim().d40),
+                    ],
+                  );
+                });
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Clr().black,
+                borderRadius: BorderRadius.circular(Dim().d8),
+                border: Border.all(
+                    color: profile != null ? Clr().white : Clr().clr67,
+                    width: 0.5)),
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: Dim().d14),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dim().d14),
+                      child: SvgPicture.asset(
+                        'assets/upload.svg',
+                        color: profile != null ? Clr().white : Clr().clr67,
+                      ),
+                    ),
+                    Text(
+                      profile != null
+                          ? 'Pan card Image selected'
+                          : 'Upload PAN Card',
+                      style: Sty().smallText.copyWith(
+                            color: profile != null ? Clr().white : Clr().clr67,
+                          ),
+                    )
+                  ],
+                )),
+          ),
+        ),
+        if (panImgTxt != '' && panImgTxt != null) SizedBox(height: Dim().d12),
+        if (panImgTxt != '' && panImgTxt != null)
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dim().d20),
+              child: Text('${panImgTxt}',
+                  style: Sty().smallText.copyWith(color: Clr().errorRed))),
+        SizedBox(height: Dim().d12),
+        imageLayout('Pan Card',
+            widget.type == 'edit' ? widget.data[0]['image'] : imageFile),
+      ],
+    );
+  }
+
+  /// nextand skip button
+  nextandskipbutton() {
+    return Column(
+      children: [
+        SizedBox(
+          height: Dim().d20,
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: aadhar == true ? Clr().clr52 : Colors.blueGrey.shade100,
+            borderRadius: BorderRadius.circular(Dim().d8),
+          ),
+          child: ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  if (widget.type == 'edit') {
+                    aadhar == true ? validates(0) : null;
+                  } else {
+                    if (profile != null) {
+                      aadhar == true ? validates(0) : null;
+                    }
+                  }
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  primary: Colors.transparent,
+                  onSurface: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5))),
+              child: Text(
+                'Next',
+                style: Sty().largeText.copyWith(
+                    fontSize: 16, color: Clr().f5, fontWeight: FontWeight.w600),
+              )),
+        ),
+        SizedBox(height: Dim().d8),
+        aadhar == true
+            ? Container()
+            : widget.type == 'edit'
+                ? Container()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          validates(1);
+                        },
+                        child: Text('skip',
+                            style: Sty().mediumText.copyWith(
+                                color: Clr().clref,
+                                fontWeight: FontWeight.w600,
+                                fontSize: Dim().d16)),
+                      ),
+                    ],
+                  ),
+      ],
+    );
+  }
+
+  ///adharcardLayout
+  adharCardLayout() {
+    return Column(
+      children: [
+        TextFormField(
+          controller: aadharNum,
+          cursorColor: Clr().primaryColor,
+          style: Sty().smallText.copyWith(
+              color: Clr().white,
+              fontSize: Dim().d14,
+              fontWeight: FontWeight.w400),
+          keyboardType: TextInputType.number,
+          maxLength: 12,
+          textInputAction: TextInputAction.done,
+          onTap: () {
+            setState(() {
+              _selectIndex = 0;
+            });
+          },
+          decoration: Sty().textFieldUnderlineStyle.copyWith(
+                suffixIcon: aadhar == true
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Clr().green,
+                      )
+                    : null,
+                hintStyle: Sty().smallText.copyWith(
+                      color: Clr().clr67,
+                      fontWeight: FontWeight.w400,
+                      fontSize: Dim().d14,
+                    ),
+                hintText: "Enter Aadhaar Card Number",
+                counterText: "",
+              ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Aadhaar card number is required';
+            }
+            if (!RegExp(r'^[2-9]\d{11}').hasMatch(value)) {
+              return "Please enter a valid aadhaar card number";
+            }
+            return null;
+          },
+        ),
+        SizedBox(
+          height: Dim().d12,
+        ),
+        InkWell(
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                backgroundColor: Clr().background1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Dim().d14),
+                        topRight: Radius.circular(Dim().d14))),
+                builder: (index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dim().d12, vertical: Dim().d20),
+                        child: Text('Aadhaar Front Photo',
+                            style: Sty().mediumBoldText),
+                      ),
+                      SizedBox(height: Dim().d28),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _getProfile(ImageSource.camera, 'aadhar front');
+                            },
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Clr().primaryColor,
+                              size: Dim().d32,
+                            ),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                _getProfile(
+                                    ImageSource.gallery, 'aadhar front');
+                              },
+                              child: Icon(
+                                Icons.yard_outlined,
+                                size: Dim().d32,
+                                color: Clr().primaryColor,
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: Dim().d40),
+                    ],
+                  );
+                });
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: Clr().black,
+                borderRadius: BorderRadius.circular(Dim().d8),
+                border: Border.all(
+                    color: aadharBck != null ? Clr().white : Clr().clr67,
+                    width: 0.5)),
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: Dim().d14),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: SvgPicture.asset(
+                        'assets/upload.svg',
+                        color: aadharFrt != null ? Clr().white : Clr().clr67,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        aadharFrt != null
+                            ? 'Image selected'
+                            : 'Upload Aadhaar Front Card',
+                        style: Sty().smallText.copyWith(
+                              color:
+                                  aadharFrt != null ? Clr().white : Clr().clr67,
+                            ),
+                      ),
+                    )
+                  ],
+                )),
+          ),
+        ),
+        if (aadharFrtTxt != '' && aadharFrtTxt != null)
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dim().d20),
+              child: Text('${aadharFrtTxt}',
+                  style: Sty().smallText.copyWith(color: Clr().errorRed))),
+        if (aadharFrtTxt != '' && aadharFrtTxt != null)
+          SizedBox(height: Dim().d12),
+        SizedBox(height: Dim().d12),
+        imageLayout(
+            'Front Side',
+            widget.type == 'edit'
+                ? widget.data[1]['aadhar_front']
+                : aadharFrtFile),
+        SizedBox(
+          height: Dim().d12,
+        ),
+        InkWell(
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                backgroundColor: Clr().background1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Dim().d14),
+                        topRight: Radius.circular(Dim().d14))),
+                builder: (index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dim().d12, vertical: Dim().d20),
+                        child: Text('Aadhaar Back Photo',
+                            style: Sty().mediumBoldText),
+                      ),
+                      SizedBox(height: Dim().d28),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _getProfile(ImageSource.camera, 'aadhar back');
+                            },
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              color: Clr().primaryColor,
+                              size: Dim().d32,
+                            ),
+                          ),
+                          InkWell(
+                              onTap: () {
+                                _getProfile(ImageSource.gallery, 'aadhar back');
+                              },
+                              child: Icon(
+                                Icons.yard_outlined,
+                                size: Dim().d32,
+                                color: Clr().primaryColor,
+                              )),
+                        ],
+                      ),
+                      SizedBox(height: Dim().d40),
+                    ],
+                  );
+                });
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Dim().d8),
+                color: Clr().black,
+                border: Border.all(
+                    color: aadharBck != null ? Clr().white : Clr().clr67,
+                    width: 0.5)),
+            child: Padding(
+                padding: EdgeInsets.symmetric(vertical: Dim().d14),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: SvgPicture.asset(
+                        'assets/upload.svg',
+                        color: aadharBck != null ? Clr().white : Clr().clr67,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        aadharBck != null
+                            ? 'Image selected'
+                            : 'Upload Aadhaar Back Card',
+                        style: Sty().smallText.copyWith(
+                              color:
+                                  aadharBck != null ? Clr().white : Clr().clr67,
+                            ),
+                      ),
+                    )
+                  ],
+                )),
+          ),
+        ),
+        if (aadharBckTxt != '' && aadharBckTxt != null)
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: Dim().d20),
+              child: Text('${aadharBckTxt}',
+                  style: Sty().smallText.copyWith(color: Clr().errorRed))),
+        if (aadharBckTxt != '' && aadharBckTxt != null)
+          SizedBox(height: Dim().d12),
+        SizedBox(height: Dim().d12),
+        imageLayout(
+            'Back Side',
+            widget.type == 'edit'
+                ? widget.data[1]['aadhar_back']
+                : aadharBckFile),
+        SizedBox(height: Dim().d20),
+        aadhar == true
+            ? Container()
+            : Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Clr().clr52,
+                  borderRadius: BorderRadius.circular(Dim().d8),
+                ),
+                child: ElevatedButton(
+                    onPressed: () {
+                      validates(0);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: Colors.transparent,
+                        onSurface: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5))),
+                    child: Text(
+                      'Get OTP',
+                      style: Sty().largeText.copyWith(
+                          fontSize: 16,
+                          color: Clr().f5,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+      ],
     );
   }
 
@@ -996,6 +920,7 @@ class _KYCDetailsState extends State<KYCDetails> {
         dismissOnBackKeyPress: false,
         dismissOnTouchOutside: false,
         dialogType: DialogType.noHeader,
+        dialogBackgroundColor: Clr().black,
         width: 600.0,
         isDense: true,
         context: ctx,
@@ -1006,42 +931,36 @@ class _KYCDetailsState extends State<KYCDetails> {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dim().d20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('OTP Verification',
                         style: Sty().mediumBoldText.copyWith(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                             fontSize: Dim().d24,
-                            color: Clr().primaryColor)),
+                            color: Clr().white)),
                     SizedBox(height: Dim().d8),
                     Text(
                         "Code has been sent to a mobile number which is linked to your Aadhaar card",
                         style: Sty().smallText.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: Dim().d16,
-                            color: Clr().threezero),
+                            fontWeight: FontWeight.w300,
+                            fontSize: Dim().d12,
+                            color: Clr().white),
                         textAlign: TextAlign.center),
                     SizedBox(height: Dim().d12),
                     TextFormField(
-                      cursorColor: Clr().primaryColor,
-                      style: Sty().mediumText,
+                      cursorColor: Clr().white,
+                      style: Sty().mediumText.copyWith(color: Clr().white),
                       controller: otpCtrl,
                       keyboardType: TextInputType.number,
                       maxLength: 6,
-                      decoration: Sty().textFieldOutlineStyle.copyWith(
+                      decoration: Sty().textFieldUnderlineStyle.copyWith(
                             counterText: "",
                             hintStyle: Sty().smallText.copyWith(
-                                  color: Clr().grey,
+                                  color: Clr().clr67,
                                 ),
                             hintText: "Enter OTP sent on linked mobile",
                             border: InputBorder.none,
-                            // suffixIcon: aadhar == true
-                            //     ? Icon(
-                            //         Icons.check_circle,
-                            //         color: Clr().green,
-                            //       )
-                            //     : null,
                           ),
                       validator: (value) {
                         if (value!.isEmpty ||
@@ -1054,11 +973,10 @@ class _KYCDetailsState extends State<KYCDetails> {
                     ),
                     SizedBox(height: Dim().d12),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.70,
-                      height: 50,
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Clr().clr0130,
-                        borderRadius: BorderRadius.circular(Dim().d16),
+                        color: Clr().clr52,
+                        borderRadius: BorderRadius.circular(Dim().d8),
                       ),
                       child: ElevatedButton(
                           onPressed: () {
@@ -1073,12 +991,15 @@ class _KYCDetailsState extends State<KYCDetails> {
                               shadowColor: Colors.transparent,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5))),
-                          child: Text(
-                            'Verify',
-                            style: Sty().largeText.copyWith(
-                                fontSize: 16,
-                                color: Clr().white,
-                                fontWeight: FontWeight.w600),
+                          child: Padding(
+                            padding:  EdgeInsets.symmetric(vertical: Dim().d14),
+                            child: Text(
+                              'Verify',
+                              style: Sty().largeText.copyWith(
+                                  fontSize: 16,
+                                  color: Clr().white,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           )),
                     ),
                     SizedBox(height: Dim().d8),
@@ -1090,7 +1011,7 @@ class _KYCDetailsState extends State<KYCDetails> {
                           style: Sty().smallText.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Clr().textcolor),
+                              color: Clr().white),
                         ),
                         Visibility(
                           visible: !again,
@@ -1117,7 +1038,7 @@ class _KYCDetailsState extends State<KYCDetails> {
                                     " $minutes:$seconds",
                                     textAlign: TextAlign.center,
                                     style: Sty().smallText.copyWith(
-                                        color: Clr().clr00,
+                                        color: Clr().clref,
                                         fontWeight: FontWeight.w600),
                                   ),
                                 );
@@ -1140,7 +1061,7 @@ class _KYCDetailsState extends State<KYCDetails> {
                             child: Text(
                               'Resend',
                               style: Sty().smallText.copyWith(
-                                  color: Clr().accentColor,
+                                  color: Clr().clref,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -1265,21 +1186,21 @@ class _KYCDetailsState extends State<KYCDetails> {
         if (data != null) STM().redirect2page(ctx, viewImage(img: data));
       },
       child: SizedBox(
-        width: side == 'Pan Card' ? Dim().d160 : null,
+        width: double.infinity,
         child: DottedBorder(
           // height: Dim().d160,
           // width: double.infinity,
           // decoration: BoxDecoration(border: Border.all(color: Clr().a4,width: 0.5)),
           strokeWidth: 0.5,
           dashPattern: [6, 4],
-          radius: Radius.circular(Dim().d16),
+          radius: Radius.circular(Dim().d8),
           borderType: BorderType.RRect,
-          color: Clr().a4,
+          color: Clr().clr67,
           child: data != null
               ? data.toString().contains('https://')
                   ? SizedBox(
                       height: Dim().d120 + 5,
-                      width: side == 'Pan Card' ? Dim().d160 : double.infinity,
+                      width: double.infinity,
                       child: ClipRRect(
                         borderRadius:
                             BorderRadius.all(Radius.circular(Dim().d16)),
@@ -1298,38 +1219,38 @@ class _KYCDetailsState extends State<KYCDetails> {
                     )
                   : SizedBox(
                       height: Dim().d120 + 5,
-                      width: side == 'Pan Card' ? Dim().d160 : double.infinity,
+                      width: double.infinity,
                       child: ClipRRect(
                         borderRadius:
                             BorderRadius.all(Radius.circular(Dim().d16)),
                         child: Image.file(data, fit: BoxFit.fitWidth),
                       ),
                     )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(height: Dim().d4),
-                    Image.asset('assets/kycbg.png',
-                        height: Dim().d64, fit: BoxFit.cover),
-                    Text(side,
-                        style: Sty().mediumText.copyWith(
-                              color: Color(0xff6C6C6C),
-                              fontSize: Dim().d14,
-                              fontWeight: FontWeight.w600,
-                            )),
-                    SizedBox(height: Dim().d4),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dim().d4),
-                      child: Text('You will see uploaded image of your card.',
-                          textAlign: TextAlign.center,
+              : Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: Dim().d4),
+                      Image.asset('assets/kycbg.png',
+                          height: Dim().d64, fit: BoxFit.cover),
+                      Text(side,
                           style: Sty().mediumText.copyWith(
-                              color: Color(0xff6C6C6C),
-                              fontWeight: FontWeight.w400,
-                              fontSize: Dim().d12)),
-                    ),
-                    SizedBox(height: Dim().d4),
-                  ],
+                                color: Clr().clr67,
+                                fontSize: Dim().d14,
+                                fontWeight: FontWeight.w600,
+                              )),
+                      SizedBox(height: Dim().d4),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: Dim().d4),
+                        child: Text('You will see uploaded image of your card.',
+                            textAlign: TextAlign.center,
+                            style: Sty().mediumText.copyWith(
+                                color: Clr().clr67,
+                                fontWeight: FontWeight.w400,
+                                fontSize: Dim().d12)),
+                      ),
+                      SizedBox(height: Dim().d8),
+                    ],
+                  ),
                 ),
         ),
       ),

@@ -125,10 +125,10 @@ class _StockChartState extends State<StockChart> {
       },
       child: Scaffold(
         bottomNavigationBar: bottomBarLayout(ctx, 0, stream, b: true),
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Clr().white,
+          backgroundColor: Clr().black,
           leadingWidth: 40,
           leading: InkWell(
             onTap: () {
@@ -149,7 +149,7 @@ class _StockChartState extends State<StockChart> {
             child: Padding(
               padding: EdgeInsets.only(
                   left: Dim().d16, top: Dim().d12, bottom: Dim().d12),
-              child: SvgPicture.asset('assets/back.svg', height: Dim().d20),
+              child: SvgPicture.asset('assets/back.svg', color: Clr().white,height: Dim().d20),
             ),
           ),
           centerTitle: true,
@@ -157,7 +157,7 @@ class _StockChartState extends State<StockChart> {
             'Stock Page',
             style: Sty()
                 .mediumText
-                .copyWith(color: Clr().textcolor, fontWeight: FontWeight.w600),
+                .copyWith(color: Clr().white, fontWeight: FontWeight.w600),
           ),
           actions: [
             Padding(
@@ -243,7 +243,7 @@ class _StockChartState extends State<StockChart> {
                         }
                       },
                       child: SvgPicture.asset(
-                          'assets/unfillstar.svg')),
+                          'assets/unfillstar.svg',color: Clr().clr67)),
 
                   // InkWell(
                   //     onTap: () {
@@ -372,7 +372,7 @@ class _StockChartState extends State<StockChart> {
         // ),
         body: data == null
             ? Center(
-                child: CircularProgressIndicator(color: Clr().primaryColor))
+                child: CircularProgressIndicator(color: Clr().white))
             : SingleChildScrollView(
                 child: Column(
                   children: [
@@ -390,7 +390,7 @@ class _StockChartState extends State<StockChart> {
                               children: [
                                 Text(
                                   '${data['symbol']}',
-                                  style: Sty().smallText.copyWith(color: Clr().clr2c,fontSize: Dim().d14,fontWeight: FontWeight.w600),
+                                  style: Sty().smallText.copyWith(color: Clr().white,fontSize: Dim().d14,fontWeight: FontWeight.w600),
                                 ),
                                 // SizedBox(
                                 //   width: Dim().d4,
@@ -417,7 +417,7 @@ class _StockChartState extends State<StockChart> {
                             ),
                             Text(
                               '${data['company_name']}',
-                              style: Sty().microText.copyWith(color: Clr().clr49,fontSize: Dim().d12,fontWeight: FontWeight.w400),
+                              style: Sty().microText.copyWith(color: Clr().clr67,fontSize: Dim().d12,fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
@@ -460,7 +460,7 @@ class _StockChartState extends State<StockChart> {
                                     '${data['net_change']} (${data['net_change_ercentage']})',
                                     style: Sty()
                                         .microText
-                                        .copyWith(color: Clr().clr49, fontSize: Dim().d12,fontWeight: FontWeight.w400),
+                                        .copyWith(color: Clr().clr67, fontSize: Dim().d12,fontWeight: FontWeight.w400),
 
                                     // style: Sty().microText.copyWith(color: Clr().grey),
                                   ),

@@ -1,3 +1,4 @@
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,24 +76,26 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         return false;
       },
       child: Scaffold(
-          backgroundColor: Clr().white,
-          resizeToAvoidBottomInset: false,
+          backgroundColor: Clr().black,
           appBar: AppBar(
-            backgroundColor: Clr().white,
+            backgroundColor: Clr().black,
             elevation: 0,
-            title: Text('Personal Info',
-                style: Sty().mediumText.copyWith(
-                    color: Clr().primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: Dim().d20)),
-            centerTitle: true,
+            leading: IconButton(
+                onPressed: () {
+                  STM().back2Previous(ctx);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: Dim().d16,
+                  color: Clr().white,
+                )),
             actions: [
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: Dim().d14, vertical: Dim().d20),
                 child: Text('Step 1 of 3',
                     style: Sty().smallText.copyWith(
-                        color: Clr().clr00,
+                        color: Clr().white,
                         fontSize: Dim().d12,
                         fontWeight: FontWeight.w400)),
               ),
@@ -100,364 +103,355 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           ),
           body: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SingleChildScrollView(
-                  padding: EdgeInsets.all(Dim().d16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: Dim().d12,
-                      ),
-                      TextFormField(
-                        controller: nameCtrl,
-                        cursorColor: Clr().primaryColor,
-                        style: Sty().smallText.copyWith(
-                            color: Clr().clr16,
-                            fontSize: Dim().d14,
-                            fontWeight: FontWeight.w400),
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.done,
-                        onTap: () {
-                          setState(() {
-                            _selectIndex = 0;
-                          });
-                        },
-                        decoration: Sty().textFileddarklinestyle.copyWith(
-                              fillColor: Clr().white,
-                              filled: true,
-                              prefixIcon: Icon(
-                                  nameCtrl.text.isNotEmpty
-                                      ? Icons.person
-                                      : Icons.person_outline_sharp,
-                                  color: nameCtrl.text.isNotEmpty
-                                      ? Clr().primaryColor
-                                      : Clr().a4),
-                              hintStyle: Sty().smallText.copyWith(
-                                    color: Clr().a4,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Dim().d14,
-                                  ),
-                              hintText: "Enter Full Name",
-                              counterText: "",
-                              // prefixIcon: Icon(
-                              //   Icons.call,
-                              //   color: Clr().lightGrey,
-                              // ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: Dim().d56, left: Dim().d12, right: Dim().d12),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                            top: -50.0,
+                            right: 2.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('assets/b1.png', height: Dim().d40),
+                                Image.asset('assets/b1.png',
+                                    height: Dim().d140),
+                              ],
+                            )),
+                        Positioned(
+                            left: 2.0,
+                            bottom: -56.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset('assets/b1.png',
+                                    height: Dim().d120),
+                              ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: Dim().d24),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Clr().white,width: 0.2),
+                                borderRadius: BorderRadius.all(Radius.circular(Dim().d12))
                             ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Full name is required';
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: Dim().d12,
-                      ),
-                      TextFormField(
-                        controller: emailCtrl,
-                        cursorColor: Clr().primaryColor,
-                        style: Sty().smallText.copyWith(
-                            color: Clr().clr16,
-                            fontSize: Dim().d14,
-                            fontWeight: FontWeight.w400),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        onTap: () {
-                          setState(() {
-                            _selectIndex = 1;
-                          });
-                        },
-                        decoration: Sty().textFileddarklinestyle.copyWith(
-                              fillColor: Clr().white,
-                              filled: true,
-                              prefixIcon: Icon(
-                                  emailCtrl.text.isNotEmpty
-                                      ? Icons.mail
-                                      : Icons.mail_outline_sharp,
-                                  color: emailCtrl.text.isNotEmpty
-                                      ? Clr().primaryColor
-                                      : Clr().a4),
-                              hintStyle: Sty().smallText.copyWith(
-                                    color: Clr().a4,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Dim().d14,
-                                  ),
-                              hintText: "Enter Email Address",
-                              counterText: "",
-                              // prefixIcon: Icon(
-                              //   Icons.call,
-                              //   color: Clr().lightGrey,
-                              // ),
-                            ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Email is required';
-                          }
-                          if (!RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(value)) {
-                            return "Please enter a valid email address";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: Dim().d12,
-                      ),
-                      TextFormField(
-                        controller: dateofbirthCtrl,
-                        cursorColor: Clr().primaryColor,
-                        style: Sty().smallText.copyWith(
-                            color: Clr().clr16,
-                            fontSize: Dim().d14,
-                            fontWeight: FontWeight.w400),
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.done,
-                        onTap: () {
-                          setState(() {
-                            datePicker();
-                            _selectIndex = 2;
-                          });
-                        },
-                        decoration: Sty().textFileddarklinestyle.copyWith(
-                              fillColor: Clr().white,
-                              filled: true,
-                              prefixIcon: Icon(
-                                  dateofbirthCtrl.text.isNotEmpty
-                                      ? Icons.calendar_month_sharp
-                                      : Icons.calendar_month,
-                                  color: dateofbirthCtrl.text.isNotEmpty
-                                      ? Clr().primaryColor
-                                      : Clr().a4),
-                              hintStyle: Sty().smallText.copyWith(
-                                    color: Clr().a4,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Dim().d14,
-                                  ),
-                              hintText: dateofbirthCtrl.text.isEmpty
-                                  ? "Select Date Of Birth"
-                                  : dateofbirthCtrl.text,
-                              counterText: "",
-                              // prefixIcon: Icon(
-                              //   Icons.call,
-                              //   color: Clr().lightGrey,
-                              // ),
-                            ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Date of birth is required';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: Dim().d12,
-                      ),
-                      DropdownButtonHideUnderline(
-                        child: DropdownButtonFormField<dynamic>(
-                          // value: sState,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Gender is required';
-                            }
-                          },
-                          onTap: () {
-                            setState(() {
-                              _selectIndex = 3;
-                            });
-                          },
-                          hint: Text(
-                            genderValue ?? 'Select Gender',
-                            // 'Select State',
-                            style: Sty().smallText.copyWith(
-                                  color: genderValue != null
-                                      ? Clr().clr16
-                                      : Clr().a4,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: Dim().d14,
+                            child: BlurryContainer(
+                              blur: 10,
+                              width: double.infinity,
+                              color: Clr().transparent,
+                              elevation: 1.0,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(Dim().d12)),
+                              child: Padding(
+                                padding: EdgeInsets.all(Dim().d14),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Personal Details',
+                                      style: Sty().extraLargeText.copyWith(
+                                          color: Clr().white,
+                                          fontSize: Dim().d24,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d12,
+                                    ),
+                                    TextFormField(
+                                      controller: nameCtrl,
+                                      cursorColor: Clr().white,
+                                      style: Sty().smallText.copyWith(
+                                          color: Clr().white,
+                                          fontSize: Dim().d14,
+                                          fontWeight: FontWeight.w400),
+                                      keyboardType: TextInputType.name,
+                                      textInputAction: TextInputAction.done,
+                                      onTap: () {
+                                        setState(() {
+                                          _selectIndex = 0;
+                                        });
+                                      },
+                                      decoration: Sty()
+                                          .textFieldUnderlineStyle
+                                          .copyWith(
+                                            hintStyle: Sty().smallText.copyWith(
+                                                  color: Clr().clr67,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: Dim().d14,
+                                                ),
+                                            hintText: "Enter Full Name",
+                                            counterText: "",
+                                            // prefixIcon: Icon(
+                                            //   Icons.call,
+                                            //   color: Clr().lightGrey,
+                                            // ),
+                                          ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Full name is required';
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d12,
+                                    ),
+                                    TextFormField(
+                                      controller: emailCtrl,
+                                      cursorColor: Clr().white,
+                                      style: Sty().smallText.copyWith(
+                                          color: Clr().white,
+                                          fontSize: Dim().d14,
+                                          fontWeight: FontWeight.w400),
+                                      keyboardType: TextInputType.emailAddress,
+                                      textInputAction: TextInputAction.done,
+                                      onTap: () {
+                                        setState(() {
+                                          _selectIndex = 1;
+                                        });
+                                      },
+                                      decoration: Sty()
+                                          .textFieldUnderlineStyle
+                                          .copyWith(
+                                            hintStyle: Sty().smallText.copyWith(
+                                                  color: Clr().clr67,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: Dim().d14,
+                                                ),
+                                            hintText: "Enter Email Address",
+                                            counterText: "",
+                                            // prefixIcon: Icon(
+                                            //   Icons.call,
+                                            //   color: Clr().lightGrey,
+                                            // ),
+                                          ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Email is required';
+                                        }
+                                        if (!RegExp(
+                                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                            .hasMatch(value)) {
+                                          return "Please enter a valid email address";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d12,
+                                    ),
+                                    TextFormField(
+                                      controller: dateofbirthCtrl,
+                                      cursorColor: Clr().white,
+                                      style: Sty().smallText.copyWith(
+                                          color: Clr().white,
+                                          fontSize: Dim().d14,
+                                          fontWeight: FontWeight.w400),
+                                      keyboardType: TextInputType.name,
+                                      textInputAction: TextInputAction.done,
+                                      onTap: () {
+                                        setState(() {
+                                          datePicker();
+                                          _selectIndex = 2;
+                                        });
+                                      },
+                                      decoration: Sty()
+                                          .textFieldUnderlineStyle
+                                          .copyWith(
+                                            hintStyle: Sty().smallText.copyWith(
+                                                  color: Clr().clr67,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: Dim().d14,
+                                                ),
+                                            hintText: dateofbirthCtrl.text.isEmpty
+                                                ? "Select Date Of Birth"
+                                                : dateofbirthCtrl.text,
+                                            counterText: "",
+                                            // prefixIcon: Icon(
+                                            //   Icons.call,
+                                            //   color: Clr().lightGrey,
+                                            // ),
+                                          ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Date of birth is required';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d12,
+                                    ),
+                                    DropdownButtonHideUnderline(
+                                      child: DropdownButtonFormField<dynamic>(
+                                        value: genderValue,
+                                        dropdownColor: Clr().clr67,
+                                        validator: (value) {
+                                          if (value == null) {
+                                            return 'Gender is required';
+                                          }
+                                        },
+                                        onTap: () {
+                                          setState(() {
+                                            _selectIndex = 3;
+                                          });
+                                        },
+                                        hint: Text('Select Gender',
+                                          // 'Select State',
+                                          style: Sty().smallText.copyWith(
+                                                color: genderValue != null
+                                                    ? Clr().white
+                                                    : Clr().clr67,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: Dim().d14,
+                                              ),
+                                        ),
+                                        decoration: Sty().textFieldUnderlineStyle,
+                                        isExpanded: true,
+                                        icon: Icon(
+                                          Icons.arrow_drop_down_outlined,
+                                          color: genderValue != null
+                                              ? Clr().white
+                                              : Clr().clr67,
+                                        ),
+                                        style: TextStyle(
+                                            color: genderValue != null
+                                                ? Clr().white
+                                                : Clr().clr67),
+                                        // style: TextStyle(color: Color(0xff787882)),
+                                        items: genderlist.map((string) {
+                                          return DropdownMenuItem<String>(
+                                            value: string.toString(),
+                                            // value: string['id'].toString(),
+                                            child: Text(
+                                              string,
+                                              // string['name'],
+                                              style: TextStyle(
+                                                  color: Clr().white,
+                                                  fontSize: 14),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (v) {
+                                          setState(() {
+                                            genderValue = v.toString();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d12,
+                                    ),
+                                    TextFormField(
+                                      controller: referralCtrl,
+                                      cursorColor: Clr().white,
+                                      style: Sty().smallText.copyWith(
+                                          color: Clr().white,
+                                          fontSize: Dim().d14,
+                                          fontWeight: FontWeight.w400),
+                                      keyboardType: TextInputType.name,
+                                      textInputAction: TextInputAction.done,
+                                      onTap: () {
+                                        setState(() {
+                                          _selectIndex = 4;
+                                        });
+                                      },
+                                      decoration: Sty()
+                                          .textFieldUnderlineStyle
+                                          .copyWith(
+                                            hintStyle: Sty().smallText.copyWith(
+                                                  color: Clr().clr67,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: Dim().d14,
+                                                ),
+                                            hintText: "Enter Referral Code",
+                                            counterText: "",
+                                            // prefixIcon: Icon(
+                                            //   Icons.call,
+                                            //   color: Clr().lightGrey,
+                                            // ),
+                                          ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Referral code is required';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Dim().d32,
+                                    ),
+                                    loading
+                                        ? Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: Dim().d20),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: Clr().clr52,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        Dim().d12),
+                                              ),
+                                              child: ElevatedButton(
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      personalDetails();
+                                                    }
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      elevation: 0,
+                                                      primary: Colors.transparent,
+                                                      onSurface:
+                                                          Colors.transparent,
+                                                      shadowColor:
+                                                          Colors.transparent,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                  child: Text(
+                                                    'Next',
+                                                    style: Sty()
+                                                        .largeText
+                                                        .copyWith(
+                                                            fontSize: 16,
+                                                            color: Clr().f5,
+                                                            fontWeight:
+                                                                FontWeight.w600),
+                                                  )),
+                                            ),
+                                          )
+                                        : Row(mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            CircularProgressIndicator(
+                                                color: Clr().white),
+                                          ],
+                                        ),
+                                  ],
                                 ),
-                          ),
-                          decoration: Sty().textFileddarklinestyle.copyWith(
-                              fillColor: Clr().white,
-                              filled: true,
-                              prefixIcon: Padding(
-                                padding:
-                                    EdgeInsets.symmetric(vertical: Dim().d12),
-                                child: SvgPicture.asset('assets/gender.svg',
-                                    color: genderValue != null
-                                        ? Clr().primaryColor
-                                        : Clr().a4),
-                              )),
-                          isExpanded: true,
-                          icon: Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: genderValue != null
-                                ? Clr().primaryColor
-                                : Clr().a4,
-                          ),
-                          style: TextStyle(
-                              color: genderValue != null
-                                  ? Clr().black
-                                  : Color(0xff000000)),
-                          // style: TextStyle(color: Color(0xff787882)),
-                          items: genderlist.map((string) {
-                            return DropdownMenuItem<String>(
-                              value: string.toString(),
-                              // value: string['id'].toString(),
-                              child: Text(
-                                string,
-                                // string['name'],
-                                style:
-                                    TextStyle(color: Clr().black, fontSize: 14),
                               ),
-                            );
-                          }).toList(),
-                          onChanged: (v) {
-                            setState(() {
-                              genderValue = v.toString();
-                              // int postion = genderlist.indexWhere((element) => element['name'].toString() == v.toString());
-                              // stateId = genderlist[postion]['id'].toString();
-                              // cityValue = null;
-                              // cityList = genderlist[postion]['city'];
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dim().d12,
-                      ),
-                      TextFormField(
-                        controller: referralCtrl,
-                        cursorColor: Clr().primaryColor,
-                        style: Sty().smallText.copyWith(
-                            color: Clr().clr16,
-                            fontSize: Dim().d14,
-                            fontWeight: FontWeight.w400),
-                        keyboardType: TextInputType.name,
-                        textInputAction: TextInputAction.done,
-                        onTap: () {
-                          setState(() {
-                            _selectIndex = 4;
-                          });
-                        },
-                        decoration: Sty().textFileddarklinestyle.copyWith(
-                              fillColor: Clr().white,
-                              filled: true,
-                              prefixIcon: Icon(
-                                  referralCtrl.text.isNotEmpty
-                                      ? Icons.my_library_books
-                                      : Icons.my_library_books_outlined,
-                                  color: referralCtrl.text.isNotEmpty
-                                      ? Clr().primaryColor
-                                      : Clr().a4),
-                              hintStyle: Sty().smallText.copyWith(
-                                    color: Clr().a4,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: Dim().d14,
-                                  ),
-                              hintText: "Enter Referral Code",
-                              counterText: "",
-                              // prefixIcon: Icon(
-                              //   Icons.call,
-                              //   color: Clr().lightGrey,
-                              // ),
                             ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Referral code is required';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: Dim().d32,
-                      ),
-                    ],
-                  ),
-                ),
-                loading
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dim().d20, vertical: Dim().d20),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Clr().clr01,
-                            borderRadius: BorderRadius.circular(Dim().d16),
                           ),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  personalDetails();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  primary: Colors.transparent,
-                                  onSurface: Colors.transparent,
-                                  shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5))),
-                              child: Text(
-                                'Next',
-                                style: Sty().largeText.copyWith(
-                                    fontSize: 16,
-                                    color: Clr().f5,
-                                    fontWeight: FontWeight.w600),
-                              )),
                         ),
-                      )
-                    // AnimatedContainer(
-                    //         duration: Duration(milliseconds: 60),
-                    //         width: MediaQuery.of(context).size.width * 0.70,
-                    //         height: 50,
-                    //         decoration: BoxDecoration(
-                    //             gradient: LinearGradient(
-                    //               begin: Alignment(-1.0, 0.0),
-                    //               end: Alignment(1.0, 0.0),
-                    //               colors: [
-                    //                 Color(0xFF30B530),
-                    //                 Color(0xFF36B235),
-                    //                 Color(0xFF8CDE89),
-                    //               ],
-                    //             ),
-                    //             borderRadius: isChanged
-                    //                 ? BorderRadius.circular(5)
-                    //                 : BorderRadius.circular(5)),
-                    //         child: ElevatedButton(
-                    //             onPressed: () async {
-                    //               if (_formKey.currentState!.validate()) {
-                    //                 personalDetails();
-                    //               }
-                    //             },
-                    //             style: ElevatedButton.styleFrom(
-                    //                 elevation: 0,
-                    //                 primary: Colors.transparent,
-                    //                 onSurface: Colors.transparent,
-                    //                 shadowColor: Colors.transparent,
-                    //                 shape: RoundedRectangleBorder(
-                    //                     borderRadius: BorderRadius.circular(5))),
-                    //             child: Text(
-                    //               'Next',
-                    //               style: Sty().largeText.copyWith(
-                    //                   fontSize: 16,
-                    //                   color: Clr().white,
-                    //                   fontWeight: FontWeight.w600),
-                    //             )
-                    //
-                    //             //     : Lottie.asset('animations/tick.json',
-                    //             //     height: 100,
-                    //             //     reverse: false,
-                    //             //     repeat: true,
-                    //             //     fit: BoxFit.cover
-                    //             // ),
-                    //             ),
-                    //       )
-                    : CircularProgressIndicator(color: Clr().primaryColor),
-              ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           )),
     );

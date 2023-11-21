@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -71,104 +70,104 @@ class _WatchListState extends State<WatchList> {
       },
       child: Scaffold(
         bottomNavigationBar: bottomBarLayout(ctx, 2, stream),
-        backgroundColor: Clr().white,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Clr().white,
-          leadingWidth: 40,
-          leading: InkWell(
-            onTap: () {
-              widget.type == 0
-                  ? STM().finishAffinity(ctx, Home())
-                  : STM().replacePage(ctx, Portfolio());
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: Dim().d16, top: Dim().d12, bottom: Dim().d12),
-              child: SvgPicture.asset('assets/back.svg', height: Dim().d20),
-            ),
-          ),
-          centerTitle: true,
-          title: Text(
-            'Watchlist',
-            style: Sty().mediumText.copyWith(
-                color: Clr().primaryColor,
-                fontSize: Dim().d20,
-                fontWeight: FontWeight.w600),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.all(Dim().d16),
-              child: Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        STM().redirect2page(
-                            ctx,
-                            SearchStocks(
-                              type: 'watch',
-                            ));
-                      },
-                      child: SvgPicture.asset('assets/search.svg',
-                          color: Clr().primaryColor)),
-                  SizedBox(
-                    width: Dim().d12,
+        body: SizedBox(
+          height: MediaQuery.of(ctx).size.height,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xff060D15),
+                      Color(0xff131F2E),
+                    ])),
+            child: RefreshIndicator(
+              onRefresh: () {
+                return Future.delayed(Duration(seconds: 6), () {
+                  favList(apiname: 'favourite_stock_list', type: 'get');
+                });
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child:
+                favstockList.isEmpty
+                    ? check
+                    ? SizedBox(
+                  height: MediaQuery
+                      .of(ctx)
+                      .size
+                      .height / 1.3,
+                  child: Center(
+                    child: Text(
+                        "No Favourite Stocks,Please add some stocks!!!!",
+                        textAlign: TextAlign.center,
+                        style: Sty().mediumBoldText.copyWith(color: Clr().white)),
                   ),
-                  // InkWell(
-                  //     onTap: () {
-                  //       STM().redirect2page(ctx, Notifications());
-                  //     },
-                  //     child: SvgPicture.asset('assets/bell.svg')),
-                ],
-              ),
-            )
-          ],
-        ),
-        body: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(Duration(seconds: 6), () {
-              favList(apiname: 'favourite_stock_list', type: 'get');
-            });
-          },
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child:
-            favstockList.isEmpty
-                ? check
-                ? SizedBox(
-              height: MediaQuery
-                  .of(ctx)
-                  .size
-                  .height / 1.5,
-              child: Center(
-                child: Text(
-                    "No Favourite Stocks,Please add some stocks!!!!",
-                    textAlign: TextAlign.center,
-                    style: Sty().mediumBoldText),
-              ),
-            )
-                : Container()
-                : StreamBuilder(
-                stream: stream,
-                builder: (context, AsyncSnapshot snapshot) {
-                  return Padding(
-                    padding: EdgeInsets.only(top: Dim().d12),
-                    child: ListView.separated(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      itemCount: favstockList.length,
-                      itemBuilder: (ctx, index) {
-                        return marketLayout(ctx, favstockList[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          height: Dim().d8,
-                        );
-                      },
+                )
+                    : Container()
+                    : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dim().d12),
+                      child: Column(
+                        children: [
+                          SizedBox(height: Dim().d56),
+                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  widget.type == 0
+                                      ? STM().finishAffinity(ctx, Home())
+                                      : STM().replacePage(ctx, Portfolio());
+                                },
+                                child: Image.asset(
+                                  'assets/backicon.png',
+                                  height: Dim().d36,
+                                ),
+                              ),
+                              Text(
+                                'Watchlist',
+                                style: Sty().mediumText.copyWith(
+                                    color: Clr().white,
+                                    fontSize: Dim().d20,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              InkWell(
+                                  onTap: () {
+                                    STM().redirect2page(
+                                        ctx,
+                                        SearchStocks(
+                                          type: 'watch',
+                                        ));
+                                  },
+                                  child: SvgPicture.asset('assets/search.svg')),
+                            ],
+                          ),
+                          SizedBox(height: Dim().d12),
+                          StreamBuilder(
+                          stream: stream,
+                          builder: (context, AsyncSnapshot snapshot) {
+                            return Padding(
+                              padding: EdgeInsets.only(top: Dim().d12),
+                              child: ListView.separated(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                itemCount: favstockList.length,
+                                itemBuilder: (ctx, index) {
+                                  return marketLayout(ctx, favstockList[index]);
+                                },
+                                separatorBuilder: (context, index) {
+                                  return SizedBox(
+                                    height: Dim().d8,
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
                     ),
-                  );
-                }),
+              ),
+            ),
           ),
         ),
       ),
@@ -190,7 +189,7 @@ class _WatchListState extends State<WatchList> {
         margin: EdgeInsets.symmetric(horizontal: Dim().d12),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(Dim().d14)),
-            border: Border.all(color: Clr().clrec, width: 1.0)
+            border: Border.all(color: Clr().clrec, width: 0.1)
         ),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -202,7 +201,7 @@ class _WatchListState extends State<WatchList> {
                       Text(
                         '${v['stock']['symbol']}', //'${v['stock']['symbol']}',
                         style: Sty().smallText.copyWith(
-                            color: Clr().clr2c,
+                            color: Clr().white,
                             fontSize: Dim().d14,
                             fontWeight: FontWeight.w600),
                       ),
@@ -239,14 +238,14 @@ class _WatchListState extends State<WatchList> {
                       Text(
                         '${v['stock']['company_name']}',
                         style: Sty().microText.copyWith(
-                            color: Clr().clr49,
+                            color: Clr().clr67,
                             fontWeight: FontWeight.w400,
                             fontSize: Dim().d12),
                       ),
                       Text(
                         '${v['stock']['net_change']} (${v['stock']['net_change_ercentage']})',
                         style: Sty().microText.copyWith(
-                            color: Clr().clr49,
+                            color: Clr().clr67,
                             fontWeight: FontWeight.w400,
                             fontSize: Dim().d12),
                       ),

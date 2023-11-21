@@ -9,8 +9,8 @@ import '../watchlist.dart';
 
 Widget bottomBarLayout(ctx, index, stream,{b = false}) {
   return BottomNavigationBar(
-    elevation: 3,
-    backgroundColor: Clr().white,
+    elevation: 0,
+    backgroundColor: Clr().black,
     selectedItemColor: b ? Clr().grey : Clr().primaryColor,
     unselectedItemColor: Clr().grey,
     selectedFontSize: 00.0,

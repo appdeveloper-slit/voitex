@@ -394,7 +394,7 @@ class STM {
         icon: Padding(
           padding: EdgeInsets.only(top: Dim().d12),
           child: SvgPicture.asset(
-              index == 4 ? "assets/filledprofile.svg" : "assets/unfilledprofile.svg"),
+              index == 4 ? "assets/filledprofile.svg" : "assets/unfilledprofile.svg",color: index == 4 ? Color(0xffEF682E) : Color(0xff5C6777)),
         ),
         label: '',
 

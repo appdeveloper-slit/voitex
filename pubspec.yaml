@@ -65,6 +65,7 @@ dependencies:
   web_socket_channel: ^2.4.0
   candlesticks: ^2.1.0
   webview_flutter: ^4.4.1
+  blurrycontainer: ^1.0.2
 
 dev_dependencies:
   flutter_test:

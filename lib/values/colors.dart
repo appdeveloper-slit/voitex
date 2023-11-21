@@ -9,10 +9,13 @@ class Clr {
   Color cornred = const Color(0xFFFFE6E2);
   Color ef = const Color(0xFFEFC602);
   Color a4 = const Color(0xFFA4A4A4);
+  Color clr67 = const Color(0xFF67778C);
   Color clr0130 = const Color(0xFF013076);
   Color d1 = const Color(0xFFD1E4FF);
   Color clr16 = const Color(0xFF161616);
   Color clr01 = const Color(0xFF013076);
+  Color clr52 = const Color(0xFF5294EA);
+  Color clref = const Color(0xFFEF682E);
   Color clr27 = const Color(0xFF272727);
   Color clr00 = const Color(0xFF0066FF);
   Color clr164a = const Color(0xFF164A98);

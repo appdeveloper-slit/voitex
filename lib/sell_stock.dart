@@ -191,7 +191,7 @@ class _SellStockState extends State<SellStock> {
       ),
       body: data == null
           ? Center(
-              child: CircularProgressIndicator(color: Clr().primaryColor),
+              child: CircularProgressIndicator(color: Clr().white),
             )
           : StreamBuilder(
               stream: stream,

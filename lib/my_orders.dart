@@ -69,10 +69,10 @@ class _MyOrdersState extends State<MyOrders> {
       },
       child: Scaffold(
         bottomNavigationBar: bottomBarLayout(ctx, 3, ''),
-        backgroundColor: Clr().white,
+        backgroundColor: Clr().black,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Clr().white,
+          backgroundColor: Clr().black,
           leadingWidth: 40,
           leading: InkWell(
             onTap: () {
@@ -84,7 +84,7 @@ class _MyOrdersState extends State<MyOrders> {
             },
             child: Padding(
               padding: EdgeInsets.all(Dim().d8),
-              child: SvgPicture.asset('assets/back.svg', height: Dim().d12),
+              child: SvgPicture.asset('assets/back.svg', color: Clr().white,height: Dim().d12),
             ),
           ),
           centerTitle: true,
@@ -92,7 +92,7 @@ class _MyOrdersState extends State<MyOrders> {
             'Orders Pages',
             style: Sty()
                 .mediumText
-                .copyWith(color: Clr().textcolor, fontWeight: FontWeight.w600),
+                .copyWith(color: Clr().white, fontWeight: FontWeight.w600),
           ),
         ),
         body: Padding(
@@ -103,7 +103,7 @@ class _MyOrdersState extends State<MyOrders> {
                       height: MediaQuery.of(ctx).size.height / 1.5,
                       child: Center(
                         child: Text("No Orders,Please buy some stocks!!!!",
-                            style: Sty().mediumBoldText),
+                            style: Sty().mediumBoldText.copyWith(color: Clr().white)),
                       ),
                     )
                   : Container()
@@ -131,9 +131,9 @@ class _MyOrdersState extends State<MyOrders> {
     return StatefulBuilder(builder: (context, setState) {
       return Container(
         decoration: BoxDecoration(
-            color: Clr().white,
+            color: Clr().black,
             borderRadius: BorderRadius.all(Radius.circular(Dim().d12)),
-            border: Border.all(color: Clr().clrec, width: 1.0)),
+            border: Border.all(color: Colors.white, width: 0.1)),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -145,14 +145,14 @@ class _MyOrdersState extends State<MyOrders> {
                   Text(
                     'ID: ${v['order_id']}',
                     style: Sty().microText.copyWith(
-                        color: Clr().clr49,
+                        color: Clr().clr67,
                         fontSize: Dim().d12,
                         fontWeight: FontWeight.w400),
                   ),
                   Text(
                     '${v['created_at']}',
                     style: Sty().microText.copyWith(
-                        color: Clr().clr49,
+                        color: Clr().clr67,
                         fontWeight: FontWeight.w400,
                         fontSize: Dim().d12),
                   ),
@@ -173,7 +173,7 @@ class _MyOrdersState extends State<MyOrders> {
                   Text(
                     '${v['stock']['symbol']}',
                     style: Sty().smallText.copyWith(
-                        color: Clr().clr2c,
+                        color: Clr().white,
                         fontWeight: FontWeight.w600,
                         fontSize: Dim().d16),
                   ),
@@ -210,14 +210,14 @@ class _MyOrdersState extends State<MyOrders> {
                     text: TextSpan(
                         text: 'Price : ',
                         style: Sty().mediumText.copyWith(
-                            color: Clr().clr49,
+                            color: Clr().clr67,
                             fontWeight: FontWeight.w400,
                             fontSize: Dim().d14),
                         children: [
                           TextSpan(
                               text: '₹${v['price']}',
                               style: Sty().mediumText.copyWith(
-                                  color: Clr().clr2c,
+                                  color: Clr().clr67,
                                   fontSize: Dim().d14,
                                   fontWeight: FontWeight.w400))
                         ]),
@@ -701,7 +701,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Sell Price : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -712,7 +712,7 @@ class _MyOrdersState extends State<MyOrders> {
                                           '₹ ${v['stock_trade']['selling_price']}',
                                       //'${v['stock_trade']['net_floating_p_l']}',
                                       style: Sty().smallText.copyWith(
-                                            color: Clr().clr2c,
+                                            color: Clr().clr67,
                                             fontSize: Dim().d14,
                                             fontWeight: FontWeight.w600,
                                             // v['stock_trade']['net_floating_p_l']
@@ -730,7 +730,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Quantity : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -738,7 +738,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   text: '${v['stock_trade']['quantity']}',
                                   //'${v['stock_trade']['quantity']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -756,7 +756,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Leverage : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -764,7 +764,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   text: '${v['stock_trade']['leverage']}x',
                                   //'${v['stock_trade']['leverage']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -782,7 +782,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Leverage Amount : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -791,7 +791,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       '₹ ${v['stock_trade']['leverage_amount']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -809,7 +809,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Pre-payment : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -821,7 +821,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       : '₹ ${v['stock_trade']['additional_prepayment']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -837,7 +837,7 @@ class _MyOrdersState extends State<MyOrders> {
                       text: TextSpan(
                           text: 'Market Value : ',
                           style: Sty().smallText.copyWith(
-                              color: Clr().clr49,
+                              color: Clr().clr67,
                               fontWeight: FontWeight.w400,
                               fontSize: Dim().d14),
                           children: [
@@ -845,7 +845,7 @@ class _MyOrdersState extends State<MyOrders> {
                                 text: '₹ ${v['stock_trade']['market_capital']}',
                                 //'${v['stock_trade']['net_floating_p_l']}',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600,
                                       // v['stock_trade']['net_floating_p_l']
@@ -894,7 +894,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'In-Hand Amount : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -903,7 +903,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       '₹ ${v['stock_trade']['in_hand_amount']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -921,7 +921,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Floating P/L : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -929,7 +929,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   text: '₹ ${v['stock_trade']['floating_p_l']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -947,7 +947,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Transaction Fees : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -956,7 +956,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       '₹ ${v['stock_trade']['transaction_fee']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -974,7 +974,7 @@ class _MyOrdersState extends State<MyOrders> {
                         text: TextSpan(
                             text: 'Deferred Fees : ',
                             style: Sty().smallText.copyWith(
-                                color: Clr().clr49,
+                                color: Clr().clr67,
                                 fontWeight: FontWeight.w400,
                                 fontSize: Dim().d14),
                             children: [
@@ -982,7 +982,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   text: '₹ ${v['stock_trade']['deffered_fee']}',
                                   //'${v['stock_trade']['net_floating_p_l']}',
                                   style: Sty().smallText.copyWith(
-                                        color: Clr().clr2c,
+                                        color: Clr().clr67,
                                         fontSize: Dim().d14,
                                         fontWeight: FontWeight.w600,
                                         // v['stock_trade']['net_floating_p_l']
@@ -998,7 +998,7 @@ class _MyOrdersState extends State<MyOrders> {
                       text: TextSpan(
                           text: 'Net Floating P/L : ',
                           style: Sty().smallText.copyWith(
-                              color: Clr().clr49,
+                              color: Clr().clr67,
                               fontWeight: FontWeight.w400,
                               fontSize: Dim().d14),
                           children: [
@@ -1007,7 +1007,7 @@ class _MyOrdersState extends State<MyOrders> {
                                     '₹ ${v['stock_trade']['net_floating_p_l']}',
                                 //'${v['stock_trade']['net_floating_p_l']}',
                                 style: Sty().smallText.copyWith(
-                                      color: Clr().clr2c,
+                                      color: Clr().clr67,
                                       fontSize: Dim().d14,
                                       fontWeight: FontWeight.w600,
                                       // v['stock_trade']['net_floating_p_l']
@@ -1072,7 +1072,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   Text('Lost value :',
                                       style: Sty().mediumText.copyWith(
                                           decoration: TextDecoration.none,
-                                          color: Clr().clr49,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w400)),
                                   Text(
@@ -1083,7 +1083,7 @@ class _MyOrdersState extends State<MyOrders> {
                                           : '₹ ${v['stock_trade']['stop_loss_limit']} (${v['stock_trade']['stop_loss_limit_percentage']}%)',
                                       style: Sty().mediumText.copyWith(
                                           decoration: TextDecoration.none,
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontWeight: FontWeight.w600,
                                           fontSize: Dim().d14)),
                                 ],
@@ -1103,7 +1103,7 @@ class _MyOrdersState extends State<MyOrders> {
                                   Text('Profit value :',
                                       style: Sty().mediumText.copyWith(
                                           decoration: TextDecoration.none,
-                                          color: Clr().clr49,
+                                          color: Clr().clr67,
                                           fontSize: Dim().d14,
                                           fontWeight: FontWeight.w400)),
                                   Text(v['stock_trade']['profit_limit']
@@ -1113,7 +1113,7 @@ class _MyOrdersState extends State<MyOrders> {
                                       : '₹ ${v['stock_trade']['profit_limit']} (${v['stock_trade']['profit_limit_percentage']}%)',
                                       style: Sty().mediumText.copyWith(
                                           decoration: TextDecoration.none,
-                                          color: Clr().clr2c,
+                                          color: Clr().clr67,
                                           fontWeight: FontWeight.w600,
                                           fontSize: Dim().d14)),
                                 ],
